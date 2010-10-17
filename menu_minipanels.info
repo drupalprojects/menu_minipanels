@@ -1,0 +1,7 @@
+; $Id$
+name = Menu Minipanels
+description = Specify a mini panel to appear when a user hovers over a menu item.
+core = 6.x
+package = "Menu"
+dependencies[] = menu
+dependencies[] = panels_mini
