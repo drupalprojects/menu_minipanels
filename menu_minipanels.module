@@ -154,7 +154,7 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
 
       _menu_minipanels_hover_settings_form($form['menu']['options'], $form['menu']['#item']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
     }
-    
+
     // This is prepended to the array to ensure it is executed before menu_edit_item_submit
     // If it is executed after menu_edit_item_submit, then the menu_minipanels_hover
     // array will be saved to the database anyway, and the intercept would be pointless.
@@ -168,6 +168,10 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
 function menu_minipanels_menu_edit_item_submit($form, &$form_state) {
   if ($form_state['values']['menu']['options']['minipanel'] == '') {
     unset($form_state['values']['menu']['options']['menu_minipanels_hover']);
+  }
+  else {
+    // Store mlid for later use in uniquely identifiying menu configs in the javascript
+    $form_state['values']['menu']['options']['menu_minipanels_hover']['mlid'] = $form_state['values']['menu']['mlid'];
   }
 }
 
@@ -229,7 +233,7 @@ function menu_minipanels_preprocess_links($links, $attributes = array('class' =>
       }
       // Only set the class names, don't include the code. That has already been done
       // earlier in @menu_minipanels_preprocess_links_at_init().
-      $link['attributes']['class'] = $prefix . _menu_minipanels_link_class_name($link['minipanel']);
+      $link['attributes']['class'] = $prefix . _menu_minipanels_link_class_name($link['menu_minipanels_hover']['mlid']);
     }
   }
   $registry = theme_get_registry();
@@ -311,18 +315,22 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
     unset($menu_config['style']['tip']);
   }
 
+  $mlid = $menu_config['mlid'];
+  unset($menu_config['mlid']);
+
   $settings = array(
     'menuMinipanels' => array(
-    	'panels' => array(
-        $minipanel_name => $menu_config
+      'panels' => array(
+        'panel_' . $mlid => $menu_config
       )
     )
   );
+
   drupal_add_js($settings, 'setting');
-  
-  $html = '<div class="menu-minipanels ' . $minipanel_name . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
+
+  $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
   menu_minipanels_panels($html);
-  return _menu_minipanels_link_class_name($minipanel_name);
+  return _menu_minipanels_link_class_name($mlid);
 }
 
 /**

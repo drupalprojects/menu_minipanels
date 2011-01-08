@@ -27,9 +27,9 @@ Drupal.behaviors.menuMiniPanels = function(context) {
 
   // Add the hovers to each appropriate menu item.
   $('ul li a.menu-minipanel').each(function() {
-    var matches = $(this).attr('class').match('menu-minipanel-([0-9a-zA-Z\_]+)');
-    var html = $('div.' + matches[1]).clone().show();
-    var settings = Drupal.settings.menuMinipanels.panels[matches[1]];
+	var matches = $(this).parent().attr('class').match('menu-([0-9]+)');
+    var html = $('div.menu-minipanel-' + matches[1]).clone().show();
+    var settings = Drupal.settings.menuMinipanels.panels['panel_' + matches[1]];
     settings['hide']['fixed'] = true;
     settings['content'] = html;
     $(this).qtip(settings);
