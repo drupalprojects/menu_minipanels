@@ -303,7 +303,19 @@ function menu_minipanels_panels($html = NULL) {
  * @param $menu_config The configuration array for qtip, as configued in menu item edit
  */
 function _menu_minipanels_include($minipanel_name, $menu_config) {
-
+  $mlid = $menu_config['mlid'];
+  unset($menu_config['mlid']);
+  
+  // The same panel/mlid may be added multiple times, if the same menu is added to a page more than once
+  // I.E The primary links, plus primary links also added as a block
+  static $added = array();
+  if (!isset($added[$mlid])) {
+    $added[$mlid] = TRUE;
+  }
+  else {
+    return _menu_minipanels_link_class_name($mlid);
+  }
+    
   // qTip interprets the absence of the 'position' array element as 'false'.
   // specifying 'false' doesn't work.
   if ($menu_config['position']['target'] == 'element') {
@@ -314,10 +326,7 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   if ($menu_config['style']['tip'] == 'none') {
     unset($menu_config['style']['tip']);
   }
-
-  $mlid = $menu_config['mlid'];
-  unset($menu_config['mlid']);
-
+  
   $settings = array(
     'menuMinipanels' => array(
       'panels' => array(
@@ -325,7 +334,6 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
       )
     )
   );
-
   drupal_add_js($settings, 'setting');
 
   $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
