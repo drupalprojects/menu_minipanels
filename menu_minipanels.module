@@ -62,9 +62,10 @@ function menu_minipanels_init() {
   // They are usually themed by a function call inside page.tpl.php so we can't wait until theme_links is called,
   // because by that time, $closure has already been created, and therefore our code would not be included.
   // Therefore, we ought to load any mini panels primary and secondary links may have.
-  $primary_links = theme_get_setting('toggle_primary_links') ? menu_primary_links() : array();
+  $theme_settings = theme_get_settings();
+  $primary_links = $theme_settings['toggle_primary_links'] ? menu_primary_links() : array();
   menu_minipanels_preprocess_links_at_init($primary_links);
-  $secondary_links = theme_get_setting('toggle_secondary_links') ? menu_secondary_links() : array();
+  $secondary_links = $theme_settings['toggle_secondary_links'] ? menu_secondary_links() : array();
   menu_minipanels_preprocess_links_at_init($secondary_links);
 }
 
