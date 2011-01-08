@@ -128,7 +128,15 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
       // Create options for select box
       $options = array('' => 'None');
       foreach ($panel_minis as $panel_mini) {
-        $options[check_plain($panel_mini->name)] = check_plain($panel_mini->title);
+        // Compatibility with older versions of minipanels.
+        $title = '';
+        if(!empty($panel_mini->title)) {
+          $title = check_plain($panel_mini->title);
+        }
+        else {
+          $title = check_plain($panel_mini->admin_title);
+        }
+        $options[check_plain($panel_mini->name)] = $title;
       }
 
       $item = $form['menu']['#item'];
