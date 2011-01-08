@@ -267,24 +267,25 @@ function menu_minipanels_preprocess_menu_item_link($link) {
  * See @_menu_minipanels_include
  */
 function menu_minipanels_footer() {
-  $panels = menu_minipanels_panels();
   $output = '';
-  foreach (menu_minipanels_panels() as $panel) {
-    $output .= $panel;
+  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
+    $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
+    $output .= $html;
   }
   return $output;
 }
 
 /**
- * Stores all rendered minipanels through the page load.
+ * Stores the names of all rendered minipanels through the page load.
  * Will later be used by @menu_minipanels_footer to add all required minipanels to $closure.
  * See @menu_minipanels_footer and @_menu_minipanels_include
- * @param String $html The rendered html output of the minipanel.
+ * @param Int $mlid - the menu item id that needs the minipanel rendered
+ * @param String $minipanel - the name of the minipanel to render
  */
-function menu_minipanels_panels($html = NULL) {
+function menu_minipanels_panels($mlid = NULL, $name = NULL) {
   static $panels = array();
-  if ($html != NULL) {
-    $panels[] = $html;
+  if ($name != NULL) {
+    $panels[$mlid] = $name;
   }
   else {
     return $panels;
@@ -336,8 +337,7 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   );
   drupal_add_js($settings, 'setting');
 
-  $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
-  menu_minipanels_panels($html);
+  menu_minipanels_panels($mlid, $minipanel_name);
   return _menu_minipanels_link_class_name($mlid);
 }
 
