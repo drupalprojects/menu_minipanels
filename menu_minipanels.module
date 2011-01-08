@@ -418,18 +418,26 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#collapsed' => FALSE,
   );
   $target_options = array(
-    'element' => t('Element'),
-    'mouse' => t('Mouse')
+    'false' => t('Element'),
+    'mouse' => t('Mouse'),
+  	'custom' => t('Custom')
   );
   $base_form['menu_minipanels_hover']['position']['target'] = array(
     '#type' => 'select',
-    '#title' => t('Target'),
-    '#description' => t('The location the hover will appear relative to.'),
+    '#title' => t('Target Type'),
+    '#description' => t('The location the hover will appear relative to. If you select custom, please specific a jquery selector below.'),
     '#default_value' => isset($menu_minipanels_hover['position']['target']) ? $menu_minipanels_hover['position']['target'] : $defaults['position']['target'],
     '#options' => $target_options,
     '#required' => FALSE,
   );
-
+  $base_form['menu_minipanels_hover']['position']['target_custom'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Target Custom'),
+    '#description' => t('If custom is selected above, specify a jquery selector. E.G \'#header\' without the quotes.'),
+    '#default_value' => isset($menu_minipanels_hover['position']['target_custom']) ? $menu_minipanels_hover['position']['target_custom'] : $defaults['position']['target_custom'],
+    '#required' => FALSE,
+  );
+  
   $type_options = array(
     'absolute' => t('Absolute'),
     'relative' => t('Fixed'),
@@ -634,6 +642,7 @@ function _menu_minipanels_hover_defaults() {
   $defaults = array(
     'position' => array(
       'target' =>  'element',
+      'target_custom' => '',
       'type' =>  'absolute',
       'corner' => array(
         'target' => 'topLeft',
