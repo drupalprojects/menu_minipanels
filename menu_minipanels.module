@@ -201,6 +201,9 @@ function menu_minipanels_theme_registry_alter(&$vars) {
 
   $vars['menu_item_link']['old function'] = $vars['menu_item_link']['function'];
   $vars['menu_item_link']['function'] = 'menu_minipanels_preprocess_menu_item_link';
+  // Must come first before template_preprocess, in order to be called before template css
+  // is set in template_preprocess, so that panels may add its css, and have it included.
+  $vars['page']['preprocess functions'] = array_merge(array('menu_minipanels_preprocess_page_hidden'), $vars['page']['preprocess functions']);
 }
 
 /**
@@ -261,18 +264,38 @@ function menu_minipanels_preprocess_menu_item_link($link) {
 }
 
 /**
+ * The panels need to be rendered *after* init so as to not cause theme problems, but
+ * *before* closure, so as be sure that panels css gets included.
+ * 
+ * We don't do anything with variables, we just use preprocess_page as its at called at time time.
+ */
+function menu_minipanels_preprocess_page_hidden(&$variables) {
+  $output = '';
+  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
+    $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
+    $output .= $html;
+  }
+  menu_minpanels_html($output);
+}
+
+/**
  * Implements hook_footer().
  *
  * Add all the required minipanel output to the closure.
  * See @_menu_minipanels_include
  */
 function menu_minipanels_footer() {
-  $output = '';
-  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
-    $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
-    $output .= $html;
+  return menu_minpanels_html();
+}
+
+function menu_minpanels_html($html = NULL) {
+  static $stored = '';
+  if ($html != NULL) {
+    $stored = $html;
   }
-  return $output;
+  else {
+    return $stored;
+  }
 }
 
 /**
