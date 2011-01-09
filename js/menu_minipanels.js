@@ -41,6 +41,9 @@ Drupal.behaviors.menuMiniPanels = function(context) {
         settings['position']['target'] = false; 
       }
     }
+    else {
+      settings['position']['target'] = false; 
+    }
     settings['content'] = html;
     $(this).qtip(settings);
   });
