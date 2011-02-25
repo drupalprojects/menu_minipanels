@@ -1,4 +1,3 @@
-$Id$
 
 Allows an administrator to specify a minipanel to be associated with a Drupal menu item.
 When that menu item is hovered or clicked (as per config), the minipanel content will be shown
