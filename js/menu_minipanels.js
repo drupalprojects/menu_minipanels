@@ -1,4 +1,3 @@
-// $Id$
 
 /**
  * In admin menu edit, this hides and closes the qTip config

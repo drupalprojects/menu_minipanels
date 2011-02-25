@@ -1,4 +1,3 @@
-; $Id$
 name = Menu Minipanels
 description = Specify a mini panel to appear when a user hovers over a menu item.
 core = 6.x
