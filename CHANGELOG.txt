@@ -1,3 +1,8 @@
+Menu Minipanels 7.x-1.x
+-----------------------
+
+* Initial port to Drupal 7.
+* Changed the module to load the QTip script from sites/all/libraries.
 
 Menu Minipanels 6.x-1.x, 2010-10-17
 -----------------------------------
