@@ -55,10 +55,10 @@
 function menu_minipanels_init() {
   // Add js + css
 
-  // The main QTip script file should be stored in sites/all/libraries/qtip.
+  // The main qTip script file should be stored in sites/all/libraries/qtip.
   $qtip = 'sites/all/libraries/qtip/jquery.qtip-1.0.0-rc3.min.js';
 
-  // If the QTip script isn't found, no point in continuing.
+  // If the qTip script isn't found, no point in continuing.
   if (!file_exists($qtip)) {
     return;
   }
@@ -72,7 +72,7 @@ function menu_minipanels_init() {
   // This module's custom JS.
   drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
 
-  // Load the QTip script.
+  // Load the qTip script.
   drupal_add_js($qtip, array('scope' => 'footer'));
 
   // Most themes will call primary and secondary links on every page.

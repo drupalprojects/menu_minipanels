@@ -1,5 +1,5 @@
 name = Menu Minipanels
-description = Specify a mini panel to appear when a user hovers over a menu item. Uses the QTip jQuery library to handle the popup effects.
+description = Specify a mini panel to appear when a user hovers over a menu item. Uses the qTip jQuery library to handle the popup effects.
 core = 7.x
 package = "Menu"
 dependencies[] = menu

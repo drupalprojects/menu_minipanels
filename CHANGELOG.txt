@@ -4,8 +4,13 @@ Mini_MenuPanels Changelog
 7.x-1.x-dev
 ***********
 
+* Corrected the spelling of "qTip".
+
+7.x-1.x-beta1
+*************
+
 * Initial port to Drupal 7.
-* Changed the module to load the QTip script from sites/all/libraries.
+* Changed the module to load the qTip script from sites/all/libraries.
 * Small optimization - split the JS into two files so less code is loaded for
   most page views.
 * Don't continue trying to load the menus if the qTip JS file has not been
