@@ -11,11 +11,11 @@ Mini_MenuPanels Changelog
 6.x-1.x, 2010-10-17
 *******************
 
-* Improved code as a result of a code review by @kiamlaluno
-* Final style tweaks to prepare for cvs commit to drupal.org
+* Improved code as a result of a code review by @kiamlaluno.
+* Final style tweaks to prepare for cvs commit to drupal.org.
 
 6.x-1.x, 2010-08-15
 *******************
 
-* First releasable version of the module
-* All sensible qTip configuration parameters implemented
+* First releasable version of the module.
+* All sensible qTip configuration parameters implemented.

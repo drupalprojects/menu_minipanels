@@ -1,13 +1,19 @@
 <?php
-// $Id: menu_minipanels.install,v 1.1 2010/10/17 00:20:49 willieseabrook Exp $
+/**
+ * @file
+ * Installation and update scripts for Menu_MiniPanels.
+ */
 
 /**
- * Implementation of hook_uninstall()
+ * Implements hook_uninstall().
  */
 function menu_minipanels_uninstall() {
   variable_del('menu_minipanels_hover');
 }
 
+/**
+ * Implements hook_requirements().
+ */
 function menu_minipanels_requirements($phase) {
   $t = get_t();
   $requirements = array();
@@ -17,7 +23,7 @@ function menu_minipanels_requirements($phase) {
         'title' => $t('Menu minipanels'),
         'description' => $t('Menu Minipanels module is enabled, but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt for instructions on how to download qTip.'),
         'severity' => REQUIREMENT_ERROR,
-        'value' => $t('qTip library not found')
+        'value' => $t('qTip library not found'),
       );
     }
   }

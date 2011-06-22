@@ -61,7 +61,7 @@ function menu_minipanels_init() {
   // If the QTip script isn't found, no point in continuing.
   if (!file_exists($qtip)) {
   }
-  
+
   // The path to this module.
   $path = drupal_get_path('module', 'menu_minipanels');
 
@@ -73,7 +73,7 @@ function menu_minipanels_init() {
 
   // Load the QTip script.
   drupal_add_js($qtip, array('scope' => 'footer'));
-  
+
   // Most themes will call primary and secondary links on every page.
   // They are usually themed by a function call inside page.tpl.php so we
   // can't wait until theme_links is called, because by that time, $closure
@@ -165,7 +165,7 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
       $form['original_item']['#value']['options']['menu_minipanels_hover'] = array();
     }
     _menu_minipanels_hover_settings_form($form['options'], $form['original_item']['#value']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
-  
+
     // This is prepended to the array to ensure it is executed before
     // menu_edit_item_submit.  If it is executed after menu_edit_item_submit,
     // then the menu_minipanels_hover array will be saved to the database
@@ -276,7 +276,6 @@ function menu_minipanels_panels($html = NULL) {
  * @param $menu_config The configuration array for qtip, as configued in menu item edit
  */
 function _menu_minipanels_include($minipanel_name, $menu_config) {
-
   // qTip interprets the absence of the 'position' array element as 'false'.
   // specifying 'false' doesn't work.
   if ($menu_config['position']['target'] == 'element') {
@@ -326,23 +325,23 @@ function _menu_minipanels_render_panel($minipanel_name) {
 
 /**
  * The configuration form for the qtip. This form simply mirrors the options
- * specified at http://craigsworks.com/projects/qtip/docs/reference/
+ * specified at: http://craigsworks.com/projects/qtip/docs/reference/
  */
 function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hover, $defaults) {
   // Setting up select lists used in the config form
-  // Used for both show and hide effect options
+  // Used for both show and hide effect options.
   $effect_options = array(
     'false' => t('None'),
     'fade' => t('Fade'),
     'slide' => t('Slide'),
     'grow' => t('Grow')
   );
-  // Used in many places
+  // Used in many places.
   $boolean_options = array(
     'true' => t('True'),
     'false' => t('False')
   );
-  // Used in many places
+  // Used in many places.
   $options_tips = array(
     'topLeft' => t('Top Left'),
     'topMiddle' => t('Top Middle'),
@@ -358,24 +357,22 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     'leftTop' => t('Left Top'),
   );
 
-  // Make this a #tree structure, so that form data collapses nicely
-  // into an associate array so that we can simply print it out as javascript and
-  // it fits the data structure that qtip is expecting.
-  // Also, add a surrounding div that our javascript code can use to hide/show the
-  // qtip configuration when a minipanel is selected.
+  // Make this a #tree structure, so that form data collapses nicely into an
+  // associate array so that we can simply print it out as javascript and it
+  // fits the data structure that qtip is expecting.  Also, add a surrounding
+  // div that our javascript code can use to hide/show the qtip configuration
+  // when a minipanel is selected.
   $base_form['menu_minipanels_hover'] = array(
     '#tree' => TRUE,
     '#prefix' => '<div id="menu-minipanels-hover-settings">',
     '#suffix' => '</div>'
   );
 
-  /*
-   * This section - tooltip position
-   */
+  // This section - tooltip position.
   $base_form['menu_minipanels_hover']['position'] = array(
   	'#type' => 'fieldset',
-    '#title' => t('Hover position configuration'), 
-    '#collapsible' => TRUE, 
+    '#title' => t('Hover position configuration'),
+    '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
   $target_options = array(
@@ -424,16 +421,14 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#required' => FALSE,
   );
 
-  /*
-   * This section - showing the tooltip.
-   */
+  // This section - showing the tooltip.
   $base_form['menu_minipanels_hover']['show'] = array(
   	'#type' => 'fieldset',
-    '#title' => t('Show effect configuration'), 
-    '#collapsible' => TRUE, 
+    '#title' => t('Show effect configuration'),
+    '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
-  
+
   $base_form['menu_minipanels_hover']['show']['delay'] = array(
     '#type' => 'textfield',
     '#title' => t('Delay'),
@@ -474,16 +469,14 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#required' => FALSE,
   );
 
-  /*
-   * This section - hiding the tooltip.
-   */
+  // This section - hiding the tooltip.
   $base_form['menu_minipanels_hover']['hide'] = array(
   	'#type' => 'fieldset',
-    '#title' => t('Hide effect configuration'), 
-    '#collapsible' => TRUE, 
+    '#title' => t('Hide effect configuration'),
+    '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
-  
+
   $base_form['menu_minipanels_hover']['hide']['fixed'] = array(
     '#type' => 'select',
     '#title' => t('Fixed'),
@@ -509,16 +502,14 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#required' => FALSE,
   );
 
-  /*
-   * This section - style configuration
-   */
+  // This section - style configuration.
   $base_form['menu_minipanels_hover']['style'] = array(
   	'#type' => 'fieldset',
-    '#title' => t('Style configuration'), 
-    '#collapsible' => TRUE, 
+    '#title' => t('Style configuration'),
+    '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
-  
+
   $options_style = array(
     'cream' => t('Cream'),
     'light' => t('Light'),
@@ -643,6 +634,9 @@ function _menu_minipanels_hover_defaults() {
   return $defaults;
 }
 
+/**
+ * Implements template_preprocess_page().
+ */
 function menu_minipanels_preprocess_page(&$variables) {
   $output = '';
   foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $html) {

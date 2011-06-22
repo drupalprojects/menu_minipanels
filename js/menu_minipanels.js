@@ -6,7 +6,7 @@
 /**
  * In admin menu edit, this hides and closes the qTip config depending on
  * whether a minipanel is selected.
- * 
+ *
  * On every page, it adds minipanel hovers to any menu items that have
  * minipanel qTip config arrays specified in the page footer.
  */
@@ -25,12 +25,12 @@
           $('#menu-minipanels-hover-settings').slideDown(500);
         }
       }
-        
+
       $('#edit-options-minipanel').change(function(e) {
         toggleHoverSettings();
       });
-        
-      // Set appropriate on load
+
+      // Set appropriate on load.
       toggleHoverSettings();
 
 
