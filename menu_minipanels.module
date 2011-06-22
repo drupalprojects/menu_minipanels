@@ -541,7 +541,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['style']['width'] = array();
   $base_form['menu_minipanels_hover']['style']['width']['min'] = array(
     '#type' => 'textfield',
-    '#title' => t('Style / Width / Min width'),
+    '#title' => t('Min width'),
     '#description' => t('Minimum width of the tooltip in pixels (excl. px).'),
     '#default_value' => isset($menu_minipanels_hover['style']['width']['min']) ? $menu_minipanels_hover['style']['width']['min'] : $defaults['style']['width']['min'],
     '#required' => FALSE,
@@ -549,7 +549,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
 
   $base_form['menu_minipanels_hover']['style']['width']['max'] = array(
     '#type' => 'textfield',
-    '#title' => t('Style / Width / Max width'),
+    '#title' => t('Max width'),
     '#description' => t('Maximum width of the tooltip in pixels (excl. px).'),
     '#default_value' => isset($menu_minipanels_hover['style']['width']['max']) ? $menu_minipanels_hover['style']['width']['max'] : $defaults['style']['width']['max'],
     '#required' => FALSE,
@@ -558,15 +558,15 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['style']['border'] = array();
   $base_form['menu_minipanels_hover']['style']['border']['width'] = array(
     '#type' => 'textfield',
-    '#title' => t('Style / Border / Width'),
-    '#description' => t('Witdth of the border in pixels (excl. px).'),
+    '#title' => t('Border width'),
+    '#description' => t('Width of the border in pixels (excl. px).'),
     '#default_value' => isset($menu_minipanels_hover['style']['border']['width']) ? $menu_minipanels_hover['style']['border']['width'] : $defaults['style']['border']['width'],
     '#required' => FALSE,
   );
 
   $base_form['menu_minipanels_hover']['style']['border']['color'] = array(
     '#type' => 'textfield',
-    '#title' => t('Style / Border / Color'),
+    '#title' => t('Border color'),
     '#description' => t('Color of the border. Incl. #.'),
     '#default_value' => isset($menu_minipanels_hover['style']['border']['color']) ? $menu_minipanels_hover['style']['border']['color'] : $defaults['style']['border']['color'],
     '#required' => FALSE,
@@ -574,15 +574,15 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
 
   $base_form['menu_minipanels_hover']['style']['border']['radius'] = array(
     '#type' => 'textfield',
-    '#title' => t('Style / Border / Radius'),
+    '#title' => t('Border radius'),
     '#description' => t('Determines the roundness of the tooltip border.'),
     '#default_value' => isset($menu_minipanels_hover['style']['border']['radius']) ? $menu_minipanels_hover['style']['border']['radius'] : $defaults['style']['border']['radius'],
     '#required' => FALSE,
   );
   $base_form['menu_minipanels_hover']['style']['tip'] = array(
     '#type' => 'select',
-    '#title' => t('Tip style'),
-    '#description' => t('Choose the style of the tip.'),
+    '#title' => t('Arrow position'),
+    '#description' => t('Choose the location of the arrow tip on the popup box.'),
     '#default_value' => isset($menu_minipanels_hover['style']['tip']) ? $menu_minipanels_hover['style']['tip'] : $defaults['style']['tip'],
     '#options' => array_merge(array('none' => 'None'), $options_tips),
     '#required' => FALSE,
@@ -600,8 +600,8 @@ function _menu_minipanels_hover_defaults() {
       'target' =>  'element',
       'type' =>  'absolute',
       'corner' => array(
-        'target' => 'topLeft',
-        'tooltip' => 'topRight',
+        'target' => 'bottomLeft',
+        'tooltip' => 'topLeft',
       ),
       'adjust' => array(
         'x' => 0,

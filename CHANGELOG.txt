@@ -13,6 +13,9 @@ Mini_MenuPanels Changelog
 * If no Mini Panels are available, show a message on the menu admin page.
 * Fixed a JS error that would occur if some of the main menu items did not
   contain a minipanel definition.
+* Changed some labels to be less confusing.
+* Changed the defaults so that the minipanel shows up underneath the menu,
+  rather than on top.
 
 
 6.x-1.x, 2010-10-17
