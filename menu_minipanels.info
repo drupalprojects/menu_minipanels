@@ -1,13 +1,6 @@
-; $Id: menu_minipanels.info,v 1.1 2010/10/17 00:20:49 willieseabrook Exp $
 name = Menu Minipanels
-description = Specify a mini panel to appear when a user hovers over a menu item.
+description = Specify a mini panel to appear when a user hovers over a menu item. Uses the QTip jQuery library to handle the popup effects.
 core = 7.x
 package = "Menu"
 dependencies[] = menu
 dependencies[] = panels_mini
-; Information added by drupal.org packaging script on 2010-10-17
-version = "7.x-1.0"
-core = "7.x"
-project = "menu_minipanels"
-datestamp = "1287276984"
-
