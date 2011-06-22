@@ -183,7 +183,6 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
       // anyway, and the intercept would be pointless.
       array_unshift($form['#submit'], 'menu_minipanels_menu_edit_item_submit');
     }
-    kpr($form);
   }
 }
 
