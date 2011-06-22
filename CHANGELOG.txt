@@ -6,6 +6,10 @@ Mini_MenuPanels Changelog
 
 * Initial port to Drupal 7.
 * Changed the module to load the QTip script from sites/all/libraries.
+* Small optimization - split the JS into two files so less code is loaded for
+  most page views.
+* Don't continue trying to load the menus if the qTip JS file has not been
+  installed.
 
 
 6.x-1.x, 2010-10-17
