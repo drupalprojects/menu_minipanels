@@ -10,6 +10,7 @@ Mini_MenuPanels Changelog
   most page views.
 * Don't continue trying to load the menus if the qTip JS file has not been
   installed.
+* If no Mini Panels are available, show a message on the menu admin page.
 
 
 6.x-1.x, 2010-10-17
