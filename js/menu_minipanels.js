@@ -11,7 +11,7 @@
   Drupal.behaviors.menuMiniPanels = {
     attach: function(context, settings) {
       // Add the hovers to each appropriate menu item.
-      $('ul#main-menu-links li a').each(function() {
+      $('ul#main-menu li a').each(function() {
         var matches = $(this).attr('class').match('menu-minipanel-([a-zA-Z0-9\_]+)');
         // Only proceed if this menu item has a minipanel.
         if (matches != undefined) {

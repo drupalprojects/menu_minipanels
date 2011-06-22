@@ -5,6 +5,7 @@ Mini_MenuPanels Changelog
 ***********
 
 * Corrected the spelling of "qTip".
+* D7 uses the class name 'main-menu' for the main menu UL by default.
 
 7.x-1.x-beta1
 *************
