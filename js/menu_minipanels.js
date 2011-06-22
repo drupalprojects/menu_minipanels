@@ -13,11 +13,14 @@
       // Add the hovers to each appropriate menu item.
       $('ul#main-menu-links li a').each(function() {
         var matches = $(this).attr('class').match('menu-minipanel-([a-zA-Z0-9\_]+)');
-        var html = $('div.' + matches[1]).clone().show();
-        var panel_settings = settings.menuMinipanels.panels[matches[1]];
-        panel_settings['hide']['fixed'] = true;
-        panel_settings['content'] = html;
-        $(this).qtip(panel_settings);
+        // Only proceed if this menu item has a minipanel.
+        if (matches != undefined) {
+          var html = $('div.' + matches[1]).clone().show();
+          var panel_settings = settings.menuMinipanels.panels[matches[1]];
+          panel_settings['hide']['fixed'] = true;
+          panel_settings['content'] = html;
+          $(this).qtip(panel_settings);
+        }
       });
     }
   };
