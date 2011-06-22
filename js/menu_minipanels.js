@@ -18,15 +18,15 @@
       // In the administration section, hide hover settings unless a minipanel
       // is selected.
       var toggleHoverSettings = function() {
-        if ($('#edit-menu-options-minipanel').val() == '' && $('#menu-minipanels-hover-settings').is(':visible')) {
+        if ($('#edit-options-minipanel').val() == '' && $('#menu-minipanels-hover-settings').is(':visible')) {
           $('#menu-minipanels-hover-settings').slideUp(500);
         }
-        else if ($('#edit-menu-options-minipanel').val() != '') {
+        else if ($('#edit-options-minipanel').val() != '') {
           $('#menu-minipanels-hover-settings').slideDown(500);
         }
       }
         
-      $('#edit-menu-options-minipanel').change(function(e) {
+      $('#edit-options-minipanel').change(function(e) {
         toggleHoverSettings();
       });
         
