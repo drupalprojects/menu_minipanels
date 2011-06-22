@@ -1,17 +1,21 @@
-Menu Minipanels 7.x-1.x
------------------------
+Mini_MenuPanels Changelog
+*************************
+
+7.x-1.x-dev
+***********
 
 * Initial port to Drupal 7.
 * Changed the module to load the QTip script from sites/all/libraries.
 
-Menu Minipanels 6.x-1.x, 2010-10-17
------------------------------------
 
-- Improved code as a result of a code review by @kiamlaluno
-- Final style tweaks to prepare for cvs commit to drupal.org
+6.x-1.x, 2010-10-17
+*******************
 
-Menu Minipanels 6.x-1.x, 2010-08-15
------------------------------------
+* Improved code as a result of a code review by @kiamlaluno
+* Final style tweaks to prepare for cvs commit to drupal.org
 
-- First releasable version of the module
-- All sensible qTip configuration parameters implemented
+6.x-1.x, 2010-08-15
+*******************
+
+* First releasable version of the module
+* All sensible qTip configuration parameters implemented
