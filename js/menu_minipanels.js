@@ -4,38 +4,12 @@
  */
 
 /**
- * In admin menu edit, this hides and closes the qTip config depending on
- * whether a minipanel is selected.
- *
- * On every page, it adds minipanel hovers to any menu items that have
- * minipanel qTip config arrays specified in the page footer.
+ * Adds minipanel hovers to any menu items that have minipanel qTip config
+ * arrays specified in the page footer.
  */
 (function($) {
   Drupal.behaviors.menuMiniPanels = {
     attach: function(context, settings) {
-      // Site admin.
-
-      // In the administration section, hide hover settings unless a minipanel
-      // is selected.
-      var toggleHoverSettings = function() {
-        if ($('#edit-options-minipanel').val() == '' && $('#menu-minipanels-hover-settings').is(':visible')) {
-          $('#menu-minipanels-hover-settings').slideUp(500);
-        }
-        else if ($('#edit-options-minipanel').val() != '') {
-          $('#menu-minipanels-hover-settings').slideDown(500);
-        }
-      }
-
-      $('#edit-options-minipanel').change(function(e) {
-        toggleHoverSettings();
-      });
-
-      // Set appropriate on load.
-      toggleHoverSettings();
-
-
-      // Normal use.
-
       // Add the hovers to each appropriate menu item.
       $('ul#main-menu-links li a').each(function() {
         var matches = $(this).attr('class').match('menu-minipanel-([a-zA-Z0-9\_]+)');
