@@ -60,6 +60,7 @@ function menu_minipanels_init() {
 
   // If the QTip script isn't found, no point in continuing.
   if (!file_exists($qtip)) {
+    return;
   }
 
   // The path to this module.
