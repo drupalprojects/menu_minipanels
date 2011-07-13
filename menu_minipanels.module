@@ -651,8 +651,8 @@ function _menu_minipanels_hover_defaults() {
  */
 function menu_minipanels_preprocess_page(&$variables) {
   $output = '';
-  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $html) {
-    $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . $html . '</div>';
+  foreach (menu_minipanels_panels() as $ctr => $html) {
+    $output .= '<div class="menu-minipanels menu-minipanel-' . $ctr . '">' . $html . '</div>';
   }
   $variables['page']['footer']['menu_minipanels'] = array(
     '#markup' => $output,
