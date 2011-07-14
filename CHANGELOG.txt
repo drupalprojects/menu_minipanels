@@ -3,9 +3,10 @@ Mini_MenuPanels Changelog
 
 7.x-1.x-beta2
 *************
-
 * Corrected the spelling of "qTip".
 * D7 uses the class name 'main-menu' for the main menu UL by default.
+* Changed to using hook_page_alter() instead of template_preprocess_page() to
+  output the menus, seems like the correct option for D7.
 
 7.x-1.x-beta1
 *************

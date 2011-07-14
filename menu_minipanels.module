@@ -647,14 +647,16 @@ function _menu_minipanels_hover_defaults() {
 }
 
 /**
- * Implements template_preprocess_page().
+ * Implements hook_page_alter().
  */
-function menu_minipanels_preprocess_page(&$variables) {
+function menu_minipanels_page_alter(&$page) {
   $output = '';
   foreach (menu_minipanels_panels() as $ctr => $html) {
-    $output .= '<div class="menu-minipanels menu-minipanel-' . $ctr . '">' . $html . '</div>';
+    $output .= '<div class="menu-minipanels menu-minipanel-' . $ctr . '" class="display:none;">' . $html . '</div>';
   }
-  $variables['page']['footer']['menu_minipanels'] = array(
-    '#markup' => $output,
-  );
+  if (!empty($output)) {
+    $page['page_bottom']['menu_minipanels'] = array(
+      '#markup' => $output,
+    );
+  }
 }
