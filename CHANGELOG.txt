@@ -5,6 +5,7 @@ Mini_MenuPanels Changelog
 **********************
 * Added hook_menu_minipanels_defaults_alter() to allow the defaults to be
   customized.
+* Indicated that the Length fields are stored in milliseconds.
 
 7.x-1.x-beta2
 *************
