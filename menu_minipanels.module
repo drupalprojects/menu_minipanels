@@ -444,7 +444,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['show']['delay'] = array(
     '#type' => 'textfield',
     '#title' => t('Delay'),
-    '#description' => t('How long in milliseconds the tooltip should wait before showing.'),
+    '#description' => t('How long (in milliseconds) the tooltip should wait before showing.'),
     '#default_value' => isset($menu_minipanels_hover['show']['delay']) ? $menu_minipanels_hover['show']['delay'] : $defaults['show']['delay'],
     '#required' => FALSE,
   );
@@ -476,7 +476,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['show']['effect']['length'] = array(
     '#type' => 'textfield',
     '#title' => t('Length'),
-    '#description' => t('Length of the effect.'),
+    '#description' => t('Length of the effect (milliseconds).'),
     '#default_value' => isset($menu_minipanels_hover['show']['effect']['length']) ? $menu_minipanels_hover['show']['effect']['length'] : $defaults['show']['effect']['length'],
     '#required' => FALSE,
   );
@@ -509,7 +509,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['hide']['effect']['length'] = array(
     '#type' => 'textfield',
     '#title' => t('Length'),
-    '#description' => t('Length of the effect.'),
+    '#description' => t('Length of the effect (milliseconds).'),
     '#default_value' => isset($menu_minipanels_hover['hide']['effect']['length']) ? $menu_minipanels_hover['hide']['effect']['length'] : $defaults['hide']['effect']['length'],
     '#required' => FALSE,
   );
