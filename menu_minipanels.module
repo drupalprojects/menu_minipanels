@@ -643,6 +643,11 @@ function _menu_minipanels_hover_defaults() {
       'tip' => 'topLeft',
     )
   );
+
+  // Implement hook_menu_minipanels_defaults_alter() in a module to override
+  // the settings above.
+  drupal_alter('menu_minipanels_defaults', $defaults);
+
   return $defaults;
 }
 

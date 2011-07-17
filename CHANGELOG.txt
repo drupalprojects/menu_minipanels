@@ -1,6 +1,11 @@
 Mini_MenuPanels Changelog
 *************************
 
+7.x-1.x-dev xxxx-xx-xx
+**********************
+* Added hook_menu_minipanels_defaults_alter() to allow the defaults to be
+  customized.
+
 7.x-1.x-beta2
 *************
 * Corrected the spelling of "qTip".
