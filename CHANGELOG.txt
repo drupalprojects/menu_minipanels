@@ -6,6 +6,7 @@ Mini_MenuPanels Changelog
 * Added hook_menu_minipanels_defaults_alter() to allow the defaults to be
   customized.
 * Indicated that the Length fields are stored in milliseconds.
+* #1185506 by DamienMcKenna: The style Name field is actually required.
 
 7.x-1.x-beta2
 *************

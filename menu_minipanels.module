@@ -535,7 +535,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('The name of the style to apply.'),
     '#default_value' => isset($menu_minipanels_hover['style']['name']) ? $menu_minipanels_hover['style']['name'] : $defaults['style']['name'],
     '#options' => $options_style,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
 
   $base_form['menu_minipanels_hover']['style']['width'] = array();
