@@ -20,8 +20,8 @@ Installation
 Author
 ------
 
-Willie Seabrook
-willie@themesandmodules.com
+Maintainer: Willie Seabrook (http://drupal.org/user/373883)
+Co-maintainer: Damien McKenna (http://drupal.org/user/108450)
 
-Drupal 7 port by uk (http://drupal.org/user/1100194) and DamienMcKenna
-(http://drupal.org/user/108450).
+Thanks to uk (http://drupal.org/user/1100194) for greatly contributing on the
+Drupal 7 port.
