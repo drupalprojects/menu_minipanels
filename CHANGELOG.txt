@@ -1,24 +1,26 @@
 Mini_MenuPanels Changelog
 *************************
 
-7.x-1.x-dev xxxx-xx-xx
-**********************
+Menu_MiniPanels 7.x-1.x-dev xxxx-xx-xx
+**************************************
 * #1221566 by DamienMcKenna: Added hook_menu_minipanels_defaults_alter() to
   allow the defaults to be customized.
 * Indicated that the Length fields are stored in milliseconds.
 * #1185506 by DamienMcKenna: The style Name field is actually required.
 
-7.x-1.x-beta2
-*************
+
+Menu_MiniPanels 7.x-1.x-beta2, 2011-01-22
+*****************************************
+Bug fixes:
 * Corrected the spelling of "qTip".
 * D7 uses the class name 'main-menu' for the main menu UL by default.
 * Changed to using hook_page_alter() instead of template_preprocess_page() to
   output the menus, seems like the correct option for D7.
 
-7.x-1.x-beta1
-*************
 
-* Initial port to Drupal 7.
+Menu_MiniPanels 7.x-1.x-beta1, 2011-01-22
+*****************************************
+Initial port to Drupal 7.
 * Changed the module to load the qTip script from sites/all/libraries.
 * Small optimization - split the JS into two files so less code is loaded for
   most page views.
@@ -32,14 +34,45 @@ Mini_MenuPanels Changelog
   rather than on top.
 
 
-6.x-1.x, 2010-10-17
-*******************
+Menu_MiniPanels 6.x-1.2, 2011-01-09
+***********************************
+All users advised to upgrade from 1.1 and 1.0.
 
-* Improved code as a result of a code review by @kiamlaluno.
-* Final style tweaks to prepare for cvs commit to drupal.org.
+NOTE: (If not already done in 1.1 upgrade) Manual update process required. If
+you are upgrading an existing site that uses Menu_MiniPanels, you'll need to
+edit and save (without changing options) each menu item that uses a
+menu_minipanel to make it work.
 
-6.x-1.x, 2010-08-15
-*******************
+* Fix issue introduced in last update. Any menu item that didn't have a
+  specific element set was broken.
+* #991246 - Additional fix. Moving minipanel rendering from init to footer,
+  broke panels css display, because minipanels were rendered after css had
+  already been added to page.
 
-* First releasable version of the module.
-* All sensible qTip configuration parameters implemented.
+
+Menu_MiniPanels 6.x-1.1, 2011-01-08
+***********************************
+NOTE: Manual update process required. If you are upgrading an existing site
+that uses Menu_MiniPanels, you'll need to edit and save (without changing
+options) each menu item that uses a menu minipanel to make it work.
+
+* #997476 - Suggestion from sammo. Add ability to set custom target for the
+  minipanel, to enable things like full width drop downs.
+* #980592 - Not working when using same menu. When the same menu was added on
+  the same page (e.g primary links in a block), Drupal.settings was being set
+  twice and breaking javascript. Thus add a check if the mlid has already
+  been added. This also fixes an issue introduced in previous commit that
+  meant minipanels would only work with primary and secondary links.
+* #945886 - Using the same minipanel for more than one menu item doesn't work.
+  This is fixed with some re-engineering to use the mlid in the
+  drupal.settings array and panel id. This fix will break existing sites until
+  the menu items are edited and resaved. The time required to write an
+  automated upgrade path is not justified when a few manual clicks will do.
+* #945884 - Minipanels that had a system name containing a number weren't
+  working because the regex didn't have numbers in the character class.
+
+
+Menu_MiniPanels 6.x-1.0, 2010-10-16
+***********************************
+- Improved code as a result of a code review by @kiamlaluno.
+- All sensible qTip configuration parameters implemented.
