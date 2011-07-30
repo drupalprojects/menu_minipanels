@@ -1,12 +1,19 @@
 <?php
+/**
+ * @file
+ * Installation and update scripts for Menu_MiniPanels.
+ */
 
 /**
- * Implementation of hook_uninstall()
+ * Implementation of hook_uninstall().
  */
 function menu_minipanels_uninstall() {
   variable_del('menu_minipanels_hover');
 }
 
+/**
+ * Implementation of hook_requirements().
+ */
 function menu_minipanels_requirements($phase) {
   $t = get_t();
   $requirements = array();
