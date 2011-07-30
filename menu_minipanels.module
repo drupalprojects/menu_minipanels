@@ -61,9 +61,10 @@ function menu_minipanels_init() {
   // They are usually themed by a function call inside page.tpl.php so we can't wait until theme_links is called,
   // because by that time, $closure has already been created, and therefore our code would not be included.
   // Therefore, we ought to load any mini panels primary and secondary links may have.
-  $primary_links = theme_get_setting('toggle_primary_links') ? menu_primary_links() : array();
+  $theme_settings = theme_get_settings();
+  $primary_links = $theme_settings['toggle_primary_links'] ? menu_primary_links() : array();
   menu_minipanels_preprocess_links_at_init($primary_links);
-  $secondary_links = theme_get_setting('toggle_secondary_links') ? menu_secondary_links() : array();
+  $secondary_links = $theme_settings['toggle_secondary_links'] ? menu_secondary_links() : array();
   menu_minipanels_preprocess_links_at_init($secondary_links);
 }
 
@@ -127,7 +128,15 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
       // Create options for select box
       $options = array('' => 'None');
       foreach ($panel_minis as $panel_mini) {
-        $options[check_plain($panel_mini->name)] = check_plain($panel_mini->title);
+        // Compatibility with older versions of minipanels.
+        $title = '';
+        if(!empty($panel_mini->title)) {
+          $title = check_plain($panel_mini->title);
+        }
+        else {
+          $title = check_plain($panel_mini->admin_title);
+        }
+        $options[check_plain($panel_mini->name)] = $title;
       }
 
       $item = $form['menu']['#item'];
@@ -144,7 +153,7 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
 
       _menu_minipanels_hover_settings_form($form['menu']['options'], $form['menu']['#item']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
     }
-    
+
     // This is prepended to the array to ensure it is executed before menu_edit_item_submit
     // If it is executed after menu_edit_item_submit, then the menu_minipanels_hover
     // array will be saved to the database anyway, and the intercept would be pointless.
@@ -158,6 +167,10 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
 function menu_minipanels_menu_edit_item_submit($form, &$form_state) {
   if ($form_state['values']['menu']['options']['minipanel'] == '') {
     unset($form_state['values']['menu']['options']['menu_minipanels_hover']);
+  }
+  else {
+    // Store mlid for later use in uniquely identifiying menu configs in the javascript
+    $form_state['values']['menu']['options']['menu_minipanels_hover']['mlid'] = $form_state['values']['menu']['mlid'];
   }
 }
 
@@ -187,6 +200,9 @@ function menu_minipanels_theme_registry_alter(&$vars) {
 
   $vars['menu_item_link']['old function'] = $vars['menu_item_link']['function'];
   $vars['menu_item_link']['function'] = 'menu_minipanels_preprocess_menu_item_link';
+  // Must come first before template_preprocess, in order to be called before template css
+  // is set in template_preprocess, so that panels may add its css, and have it included.
+  $vars['page']['preprocess functions'] = array_merge(array('menu_minipanels_preprocess_page_hidden'), $vars['page']['preprocess functions']);
 }
 
 /**
@@ -219,7 +235,7 @@ function menu_minipanels_preprocess_links($links, $attributes = array('class' =>
       }
       // Only set the class names, don't include the code. That has already been done
       // earlier in @menu_minipanels_preprocess_links_at_init().
-      $link['attributes']['class'] = $prefix . _menu_minipanels_link_class_name($link['minipanel']);
+      $link['attributes']['class'] = $prefix . _menu_minipanels_link_class_name($link['menu_minipanels_hover']['mlid']);
     }
   }
   $registry = theme_get_registry();
@@ -247,30 +263,51 @@ function menu_minipanels_preprocess_menu_item_link($link) {
 }
 
 /**
+ * The panels need to be rendered *after* init so as to not cause theme problems, but
+ * *before* closure, so as be sure that panels css gets included.
+ * 
+ * We don't do anything with variables, we just use preprocess_page as its at called at time time.
+ */
+function menu_minipanels_preprocess_page_hidden(&$variables) {
+  $output = '';
+  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
+    $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
+    $output .= $html;
+  }
+  menu_minpanels_html($output);
+}
+
+/**
  * Implements hook_footer().
  *
  * Add all the required minipanel output to the closure.
  * See @_menu_minipanels_include
  */
 function menu_minipanels_footer() {
-  $panels = menu_minipanels_panels();
-  $output = '';
-  foreach (menu_minipanels_panels() as $panel) {
-    $output .= $panel;
+  return menu_minpanels_html();
+}
+
+function menu_minpanels_html($html = NULL) {
+  static $stored = '';
+  if ($html != NULL) {
+    $stored = $html;
   }
-  return $output;
+  else {
+    return $stored;
+  }
 }
 
 /**
- * Stores all rendered minipanels through the page load.
+ * Stores the names of all rendered minipanels through the page load.
  * Will later be used by @menu_minipanels_footer to add all required minipanels to $closure.
  * See @menu_minipanels_footer and @_menu_minipanels_include
- * @param String $html The rendered html output of the minipanel.
+ * @param Int $mlid - the menu item id that needs the minipanel rendered
+ * @param String $minipanel - the name of the minipanel to render
  */
-function menu_minipanels_panels($html = NULL) {
+function menu_minipanels_panels($mlid = NULL, $name = NULL) {
   static $panels = array();
-  if ($html != NULL) {
-    $panels[] = $html;
+  if ($name != NULL) {
+    $panels[$mlid] = $name;
   }
   else {
     return $panels;
@@ -289,7 +326,19 @@ function menu_minipanels_panels($html = NULL) {
  * @param $menu_config The configuration array for qtip, as configued in menu item edit
  */
 function _menu_minipanels_include($minipanel_name, $menu_config) {
-
+  $mlid = $menu_config['mlid'];
+  unset($menu_config['mlid']);
+  
+  // The same panel/mlid may be added multiple times, if the same menu is added to a page more than once
+  // I.E The primary links, plus primary links also added as a block
+  static $added = array();
+  if (!isset($added[$mlid])) {
+    $added[$mlid] = TRUE;
+  }
+  else {
+    return _menu_minipanels_link_class_name($mlid);
+  }
+    
   // qTip interprets the absence of the 'position' array element as 'false'.
   // specifying 'false' doesn't work.
   if ($menu_config['position']['target'] == 'element') {
@@ -300,19 +349,18 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   if ($menu_config['style']['tip'] == 'none') {
     unset($menu_config['style']['tip']);
   }
-
+  
   $settings = array(
     'menuMinipanels' => array(
-    	'panels' => array(
-        $minipanel_name => $menu_config
+      'panels' => array(
+        'panel_' . $mlid => $menu_config
       )
     )
   );
   drupal_add_js($settings, 'setting');
-  
-  $html = '<div class="menu-minipanels ' . $minipanel_name . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
-  menu_minipanels_panels($html);
-  return _menu_minipanels_link_class_name($minipanel_name);
+
+  menu_minipanels_panels($mlid, $minipanel_name);
+  return _menu_minipanels_link_class_name($mlid);
 }
 
 /**
@@ -392,18 +440,26 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#collapsed' => FALSE,
   );
   $target_options = array(
-    'element' => t('Element'),
-    'mouse' => t('Mouse')
+    'false' => t('Element'),
+    'mouse' => t('Mouse'),
+  	'custom' => t('Custom')
   );
   $base_form['menu_minipanels_hover']['position']['target'] = array(
     '#type' => 'select',
-    '#title' => t('Target'),
-    '#description' => t('The location the hover will appear relative to.'),
+    '#title' => t('Target Type'),
+    '#description' => t('The location the hover will appear relative to. If you select custom, please specific a jquery selector below.'),
     '#default_value' => isset($menu_minipanels_hover['position']['target']) ? $menu_minipanels_hover['position']['target'] : $defaults['position']['target'],
     '#options' => $target_options,
     '#required' => FALSE,
   );
-
+  $base_form['menu_minipanels_hover']['position']['target_custom'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Target Custom'),
+    '#description' => t('If custom is selected above, specify a jquery selector. E.G \'#header\' without the quotes.'),
+    '#default_value' => isset($menu_minipanels_hover['position']['target_custom']) ? $menu_minipanels_hover['position']['target_custom'] : $defaults['position']['target_custom'],
+    '#required' => FALSE,
+  );
+  
   $type_options = array(
     'absolute' => t('Absolute'),
     'relative' => t('Fixed'),
@@ -608,6 +664,7 @@ function _menu_minipanels_hover_defaults() {
   $defaults = array(
     'position' => array(
       'target' =>  'element',
+      'target_custom' => '',
       'type' =>  'absolute',
       'corner' => array(
         'target' => 'topLeft',
