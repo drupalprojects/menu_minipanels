@@ -10,6 +10,8 @@ Menu_MiniPanels 7.x-1.x-dev xxxx-xx-xx
 * #1230622 by davidwhthomas, DamienMcKenna: Separated admin functionality.
 * #1148958 by lussoluca, DamienMcKenna: Added hook_menu_minipanels_style()
   and hook_menu_minipanels_styles() to allow creation of custom styles.
+* #1185506 by DamienMcKenna: Indicate which fields are really required, don't
+  output settings which are not required.
 
 
 Menu_MiniPanels 7.x-1.x-beta2, 2011-01-22

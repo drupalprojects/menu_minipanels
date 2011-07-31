@@ -74,7 +74,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('The location the hover will appear relative to.'),
     '#default_value' => isset($menu_minipanels_hover['position']['target']) ? $menu_minipanels_hover['position']['target'] : $defaults['position']['target'],
     '#options' => $target_options,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
 
   $type_options = array(
@@ -89,7 +89,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('Choose how the menu is positioned.'),
     '#default_value' => isset($menu_minipanels_hover['position']['type']) ? $menu_minipanels_hover['position']['type'] : $defaults['position']['type'],
     '#options' => $type_options,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
 
   $base_form['menu_minipanels_hover']['position']['corner'] = array();
@@ -99,7 +99,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('Choose the tooltip target.'),
     '#default_value' => isset($menu_minipanels_hover['position']['corner']['target']) ? $menu_minipanels_hover['position']['corner']['target'] : $defaults['position']['corner']['target'],
     '#options' => $options_tips,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
   $base_form['menu_minipanels_hover']['position']['corner']['tooltip'] = array(
     '#type' => 'select',
@@ -107,7 +107,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('Choose the tooltip position.'),
     '#default_value' => isset($menu_minipanels_hover['position']['corner']['tooltip']) ? $menu_minipanels_hover['position']['corner']['tooltip'] : $defaults['position']['corner']['tooltip'],
     '#options' => $options_tips,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
 
   // This section - showing the tooltip.
@@ -121,7 +121,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['show']['delay'] = array(
     '#type' => 'textfield',
     '#title' => t('Delay'),
-    '#description' => t('How long (in milliseconds) the tooltip should wait before showing.'),
+    '#description' => t('How long (in milliseconds) the tooltip should wait before showing. Leave blank to use the default of 140ms.'),
     '#default_value' => isset($menu_minipanels_hover['show']['delay']) ? $menu_minipanels_hover['show']['delay'] : $defaults['show']['delay'],
     '#required' => FALSE,
   );
@@ -139,7 +139,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('When the menu should appear.'),
     '#default_value' => isset($menu_minipanels_hover['show']['when']['event']) ? $menu_minipanels_hover['show']['when']['event'] : $defaults['show']['when']['event'],
     '#options' => $when_options,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
   $base_form['menu_minipanels_hover']['show']['effect'] = array();
   $base_form['menu_minipanels_hover']['show']['effect']['type'] = array(
@@ -148,12 +148,12 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('Choose an effect.'),
     '#default_value' => isset($menu_minipanels_hover['show']['effect']['type']) ? $menu_minipanels_hover['show']['effect']['type'] : $defaults['show']['effect']['type'],
     '#options' => $effect_options,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
   $base_form['menu_minipanels_hover']['show']['effect']['length'] = array(
     '#type' => 'textfield',
     '#title' => t('Length'),
-    '#description' => t('Length of the effect (milliseconds).'),
+    '#description' => t('Length of the effect (milliseconds). Leave blank to use the default of 100ms.'),
     '#default_value' => isset($menu_minipanels_hover['show']['effect']['length']) ? $menu_minipanels_hover['show']['effect']['length'] : $defaults['show']['effect']['length'],
     '#required' => FALSE,
   );
@@ -172,7 +172,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('Should the tooltip remain or dissapear.'),
     '#default_value' => isset($menu_minipanels_hover['hide']['fixed']) ? $menu_minipanels_hover['hide']['fixed'] : $defaults['hide']['fixed'],
     '#options' => $boolean_options,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
   $base_form['menu_minipanels_hover']['hide']['effect'] = array();
   $base_form['menu_minipanels_hover']['hide']['effect']['type'] = array(
@@ -181,7 +181,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#description' => t('Choose an effect.'),
     '#default_value' => isset($menu_minipanels_hover['hide']['effect']['type']) ? $menu_minipanels_hover['hide']['effect']['type'] : $defaults['hide']['effect']['type'],
     '#options' => $effect_options,
-    '#required' => FALSE,
+    '#required' => TRUE,
   );
   $base_form['menu_minipanels_hover']['hide']['effect']['length'] = array(
     '#type' => 'textfield',
@@ -195,6 +195,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['style'] = array(
   	'#type' => 'fieldset',
     '#title' => t('Style configuration'),
+    '#description' => t('Leave these values blank to inherit the style\'s default value.'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );

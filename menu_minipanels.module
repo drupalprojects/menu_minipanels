@@ -290,6 +290,38 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
     unset($menu_config['style']['tip']);
   }
 
+  // Remove blank values.
+  if (isset($menu_config['hide']['effect']['length']) && $menu_config['hide']['effect']['length'] == '') {
+    unset($menu_config['hide']['effect']['length']);
+  }
+  if (isset($menu_config['show']['effect']['delay']) && $menu_config['show']['effect']['delay'] == '') {
+    unset($menu_config['show']['effect']['delay']);
+  }
+  if (isset($menu_config['show']['effect']['length']) && $menu_config['show']['effect']['length'] == '') {
+    unset($menu_config['show']['effect']['length']);
+  }
+  if (isset($menu_config['style']['border']['color']) && $menu_config['style']['border']['color'] == '') {
+    unset($menu_config['style']['border']['color']);
+  }
+  if (isset($menu_config['style']['border']['radius']) && $menu_config['style']['border']['radius'] == '') {
+    unset($menu_config['style']['border']['radius']);
+  }
+  if (isset($menu_config['style']['border']['width']) && $menu_config['style']['border']['width'] == '') {
+    unset($menu_config['style']['border']['width']);
+  }
+  if (isset($menu_config['style']['border']) && empty($menu_config['style']['border'])) {
+    unset($menu_config['style']['border']);
+  }
+  if (isset($menu_config['style']['width']['max']) && $menu_config['style']['width']['max'] == '') {
+    unset($menu_config['style']['width']['max']);
+  }
+  if (isset($menu_config['style']['width']['min']) && $menu_config['style']['width']['min'] == '') {
+    unset($menu_config['style']['width']['min']);
+  }
+  if (isset($menu_config['style']['width']) && empty($menu_config['style']['width'])) {
+    unset($menu_config['style']['width']);
+  }
+
   $settings = array(
     'menuMinipanels' => array(
     	'panels' => array(
