@@ -9,6 +9,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 * #1221566 by DamienMcKenna: Added hook_menu_minipanels_defaults_alter() to
   allow the defaults to be customized.
 * #1230622 by davidwhthomas, DamienMcKenna: Separated admin functionality.
+* #1148958 by lussoluca, DamienMcKenna: Added hook_menu_minipanels_style()
+  and hook_menu_minipanels_styles() to allow creation of custom styles.
 
 
 Menu_MiniPanels 6.x-1.2, 2011-01-09

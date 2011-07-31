@@ -365,11 +365,14 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   $settings = array(
     'menuMinipanels' => array(
       'panels' => array(
-        'panel_' . $mlid => $menu_config
+        'panel_' . $mlid => $menu_config,
       )
     )
   );
   drupal_add_js($settings, 'setting');
+
+  // Load the necessary style JS file.
+  module_invoke_all('menu_minipanels_style', $menu_config);
 
   menu_minipanels_panels($mlid, $minipanel_name);
   return _menu_minipanels_link_class_name($mlid);
