@@ -8,6 +8,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
   standards.
 * #1221566 by DamienMcKenna: Added hook_menu_minipanels_defaults_alter() to
   allow the defaults to be customized.
+* #1230622 by davidwhthomas, DamienMcKenna: Separated admin functionality.
 
 
 Menu_MiniPanels 6.x-1.2, 2011-01-09
