@@ -50,18 +50,25 @@
  * Implements hook_init().
  */
 function menu_minipanels_init() {
-  // Add js + css.
+  // The path to this module.
   $path = drupal_get_path('module', 'menu_minipanels');
-  drupal_add_js($path . '/js/menu_minipanels.js');
-  if (file_exists($path . '/js/lib/jquery.qtip-1.0.0-rc3.min.js')) {
-    drupal_add_js($path . '/js/lib/jquery.qtip-1.0.0-rc3.min.js');
-  }
-  else {
-    // Don't do anything more, there's no point as the module will not function
-    // without the qtip library.
+
+  // The main qTip script file should be stored in sites/all/libraries/qtip.
+  $qtip = $path . '/js/lib/jquery.qtip-1.0.0-rc3.min.js';
+
+  // If the qTip script isn't found, no point in continuing.
+  if (!file_exists($qtip)) {
     return;
   }
+
+  // Load the module's custom CSS.
   drupal_add_css($path . '/css/menu_minipanels.css', 'module', 'all', TRUE);
+
+  // This module's custom JS.
+  drupal_add_js($path . '/js/menu_minipanels.js');
+
+  // Load the qTip script.
+  drupal_add_js($qtip);
 
   // Most themes will call primary and secondary links on every page.
   // They are usually themed by a function call inside page.tpl.php so we
