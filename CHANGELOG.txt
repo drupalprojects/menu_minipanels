@@ -1,8 +1,8 @@
 Mini_MenuPanels Changelog
 *************************
 
-Menu_MiniPanels 7.x-1.x-dev xxxx-xx-xx
-**************************************
+Menu_MiniPanels 7.x-1.0-beta3 2011-07-30
+****************************************
 * #1221566 by DamienMcKenna: Added hook_menu_minipanels_defaults_alter() to
   allow the defaults to be customized.
 * Indicated that the Length fields are stored in milliseconds.
@@ -15,7 +15,7 @@ Menu_MiniPanels 7.x-1.x-dev xxxx-xx-xx
 * #1230686 by muhleder, DamienMcKenna: Prevent duplicate content on DOM change.
 
 
-Menu_MiniPanels 7.x-1.x-beta2, 2011-01-22
+Menu_MiniPanels 7.x-1.0-beta2, 2011-01-22
 *****************************************
 Bug fixes:
 * Corrected the spelling of "qTip".
@@ -24,7 +24,7 @@ Bug fixes:
   output the menus, seems like the correct option for D7.
 
 
-Menu_MiniPanels 7.x-1.x-beta1, 2011-01-22
+Menu_MiniPanels 7.x-1.0-beta1, 2011-01-22
 *****************************************
 Initial port to Drupal 7.
 * Changed the module to load the qTip script from sites/all/libraries.
