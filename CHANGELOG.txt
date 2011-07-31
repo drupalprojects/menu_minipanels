@@ -12,6 +12,7 @@ Menu_MiniPanels 7.x-1.x-dev xxxx-xx-xx
   and hook_menu_minipanels_styles() to allow creation of custom styles.
 * #1185506 by DamienMcKenna: Indicate which fields are really required, don't
   output settings which are not required.
+* #1230686 by muhleder, DamienMcKenna: Prevent duplicate content on DOM change.
 
 
 Menu_MiniPanels 7.x-1.x-beta2, 2011-01-22
