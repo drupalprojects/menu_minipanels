@@ -1,8 +1,14 @@
 Mini_MenuPanels Changelog
 *************************
 
-Menu_MiniPanels 7.x-1.0-beta3 2011-07-30
-****************************************
+Menu_MiniPanels 7.x-1.0-beta4, 2011-07-31
+*****************************************
+
+* #1230686 by davidwhthomas: Fatfingered the last patch.
+
+
+Menu_MiniPanels 7.x-1.0-beta3, 2011-07-30
+*****************************************
 * #1221566 by DamienMcKenna: Added hook_menu_minipanels_defaults_alter() to
   allow the defaults to be customized.
 * Indicated that the Length fields are stored in milliseconds.

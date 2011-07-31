@@ -13,7 +13,7 @@
       // Add the hovers to each appropriate menu item.
       $('ul#main-menu li a:not(.minipanel-processed)', context).each(function() {
         // Ensure that the panels are only processed once.
-        $(this).addClass('minipanels-processed');
+        $(this).addClass('minipanel-processed');
 
         var matches = $(this).attr('class').match('menu-minipanel-([a-zA-Z0-9\_]+)');
         // Only proceed if this menu item has a minipanel.
