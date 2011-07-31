@@ -8,6 +8,8 @@ Menu_MiniPanels 7.x-1.x-dev xxxx-xx-xx
 * Indicated that the Length fields are stored in milliseconds.
 * #1185506 by DamienMcKenna: The style Name field is actually required.
 * #1230622 by davidwhthomas, DamienMcKenna: Separated admin functionality.
+* #1148958 by lussoluca, DamienMcKenna: Added hook_menu_minipanels_style()
+  and hook_menu_minipanels_styles() to allow creation of custom styles.
 
 
 Menu_MiniPanels 7.x-1.x-beta2, 2011-01-22

@@ -199,19 +199,12 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#collapsed' => FALSE,
   );
 
-  $options_style = array(
-    'cream' => t('Cream'),
-    'light' => t('Light'),
-    'dark' => t('Dark'),
-    'green' => t('Green'),
-    'red' => t('Red'),
-  );
   $base_form['menu_minipanels_hover']['style']['name'] = array(
     '#type' => 'select',
     '#title' => t('Style name'),
     '#description' => t('The name of the style to apply.'),
     '#default_value' => isset($menu_minipanels_hover['style']['name']) ? $menu_minipanels_hover['style']['name'] : $defaults['style']['name'],
-    '#options' => $options_style,
+    '#options' => _menu_minipanels_get_styles(),
     '#required' => TRUE,
   );
 
@@ -326,4 +319,33 @@ function _menu_minipanels_hover_defaults() {
   drupal_alter('menu_minipanels_defaults', $defaults);
 
   return $defaults;
+}
+
+/**
+ * Looks for hook_menu_minipanels_styles implementation.
+ */
+function _menu_minipanels_get_styles() {
+  $styles = module_invoke_all('menu_minipanels_styles');
+
+  // Ensure that $styles is an array.
+  if (!is_array($styles)) {
+    $styles = array();
+  }
+
+  return $styles;
+}
+
+/**
+ * Implements hook_menu_minipanels_styles().
+ */
+function menu_minipanels_menu_minipanels_styles() {
+   $options_style = array(
+    'cream' => t('Cream'),
+    'light' => t('Light'),
+    'dark' => t('Dark'),
+    'green' => t('Green'),
+    'red' => t('Red'),
+  );
+  
+  return $options_style;
 }

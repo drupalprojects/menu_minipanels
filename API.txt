@@ -2,7 +2,102 @@ Menu_MiniPanels API
 -------------------
 The following is an overview of using the Menu_MiniPanels API.
 
+
 Override menu display defaults
 ------------------------------
 By implementing hook_menu_minipanels_defaults_alter() a module may override
 the default display settings that are given to new menus.
+
+
+Add custom styles
+-----------------
+By implementing hook_menu_minipanels_style() and hook_menu_minipanels_styles()
+a module can add new display styles.  There are three parts to this:
+
+Step 1: Add a JS file called e.g. "mymodule_style.js" with the desired style
+settings.
+
+/**
+ * @file
+ * Custom style(s) for Menu_MiniPanels.
+ */
+
+// Last part is the internal name of the style.
+jQuery.fn.qtip.styles.mystyle = {
+  background: '#A2D959',
+  border: {
+    color: '#A2D959',
+    radius: 5,
+    width: 7,
+  },
+  color: 'black',
+};
+
+Part 2: List the new styles.
+
+<?php
+/**
+ * Implements hook_menu_minipanels_styles().
+ */
+function mymodule_menu_minipanels_styles() {
+  $styles = array(
+    'mystyle' => t('My new style'),
+  );
+  return $styles;
+}
+?>
+
+Step 3: Tell Drupal to load the new JS file.
+
+<?php
+/**
+ * Implements hook_menu_minipanels_style().
+ */
+function mymodule_menu_minipanels_style($menu_config) {
+  drupal_add_js(drupal_get_path('module', 'puam_styles') . '/menu_minipanels_styles.js', array('scope' => 'footer'));
+}
+?>
+
+Note:
+* Because the qTips script is loaded in the footer scope, the custom styles
+  should also be added to the footer scope.
+
+To help deciding on what settings to use, the qTips defaults are:
+{
+  background: 'white',
+  color: '#111',
+  overflow: 'hidden',
+  textAlign: 'left',
+  width: {
+    min: 0,
+    max: 250,
+  },
+  padding: '5px 9px',
+  border: {
+    width: 1,
+    radius: 0,
+    color: '#d3d3d3',
+  },
+  tip: {
+    corner: false,
+    color: false,
+    size: { width: 13, height: 13 },
+    opacity: 1,
+  },
+  title: {
+    background: '#e1e1e1',
+    fontWeight: 'bold',
+    padding: '7px 12px',
+  },
+  button: {
+    cursor: 'pointer'
+  },
+  classes: {
+    target: '',
+    tip: 'qtip-tip',
+    title: 'qtip-title',
+    button: 'qtip-button',
+    content: 'qtip-content',
+    active: 'qtip-active',
+  }
+}

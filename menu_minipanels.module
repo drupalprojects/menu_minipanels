@@ -293,11 +293,14 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   $settings = array(
     'menuMinipanels' => array(
     	'panels' => array(
-        $minipanel_name => $menu_config
+        $minipanel_name => $menu_config,
       )
     )
   );
   drupal_add_js($settings, 'setting');
+
+  // Load the necessary style JS file.
+  module_invoke_all('menu_minipanels_style', $menu_config);
 
   $html = '<div class="menu-minipanels ' . $minipanel_name . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
   menu_minipanels_panels($html);
