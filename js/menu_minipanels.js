@@ -11,7 +11,7 @@ Drupal.behaviors.menuMiniPanels = function(context) {
   // Add the hovers to each appropriate menu item.
   $('ul li a.menu-minipanel:not(.minipanel-processed)', context).each(function() {
     // Ensure that the panels are only processed once.
-    $(this).addClass('minipanels-processed');
+    $(this).addClass('minipanel-processed');
 
     var matches = $(this).attr('class').match('menu-minipanel-([0-9]+)');
     var html = $('div.menu-minipanel-' + matches[1]).clone().show();
