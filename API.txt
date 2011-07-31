@@ -1,0 +1,8 @@
+Menu_MiniPanels API
+-------------------
+The following is an overview of using the Menu_MiniPanels API.
+
+Override menu display defaults
+------------------------------
+By implementing hook_menu_minipanels_defaults_alter() a module may override
+the default display settings that are given to new menus.
