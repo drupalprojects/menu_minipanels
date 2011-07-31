@@ -15,6 +15,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 * #1185506 by DamienMcKenna: Indicate which fields are really required, don't
   output settings which are not required.
 * #1199412 by DamienMcKenna: Separate the admin JS into its own file.
+* #1230686 by muhleder, DamienMcKenna: Prevent duplicate content on DOM change.
 
 
 Menu_MiniPanels 6.x-1.2, 2011-01-09
