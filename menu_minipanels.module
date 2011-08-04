@@ -116,6 +116,9 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'menu_edit_item') {
     // Check to see whether the menu form exists.
     if (isset($form['menu'])) {
+      // Load the admin code necessary for this.
+      module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
+
       $path = drupal_get_path('module', 'menu_minipanels');
       drupal_add_js($path . '/js/menu_minipanels_admin.js');
 
