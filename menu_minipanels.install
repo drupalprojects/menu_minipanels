@@ -71,3 +71,14 @@ function menu_minipanels_requirements($phase) {
   }
   return $requirements;
 }
+
+/**
+ * Implementations of hook_update_N().
+ */
+
+/**
+ * Warn the user to re-save their menu configurations.
+ */
+function menu_minipanels_update_7100() {
+  drupal_set_message('Recent changes to the Menu MiniPanels module require that any menus with attached MiniPanels have their configuration re-saved.');
+}

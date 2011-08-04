@@ -97,6 +97,7 @@ function menu_minipanels_init() {
 function menu_minipanels_get_qtip_path() {
   static $qtip_path = FALSE;
 
+  // Only proceed if the path wasn't compiled before.
   if (empty($qtip_path)) {
     $cid = 'menu_minipanels_qtip_path';
     $cache = cache_get($cid);
@@ -188,7 +189,7 @@ function menu_minipanels_menu() {
 function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
   // Add the minipanel selector & associated settings to the menu item editor.
   if ($form_id == 'menu_edit_item') {
-    // Load minipanels
+    // Load minipanels.
     ctools_include('plugins', 'panels');
     $panel_minis = panels_mini_load_all();
 
@@ -253,6 +254,11 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
 function menu_minipanels_menu_edit_item_submit($form, &$form_state) {
   if ($form_state['values']['options']['minipanel'] == '') {
     unset($form_state['values']['options']['menu_minipanels_hover']);
+  }
+  else {
+    // Store mlid for later use in uniquely identifiying menu configs in the
+    // Javascript.
+    $form_state['values']['options']['menu_minipanels_hover']['mlid'] = $form_state['values']['mlid'];
   }
 }
 
@@ -325,12 +331,13 @@ function menu_minipanels__preprocess_link($link) {
  * Stores all rendered minipanels through the page load.
  * Will later be used by @menu_minipanels_footer to add all required minipanels to $closure.
  * See @menu_minipanels_footer and @_menu_minipanels_include
- * @param String $html The rendered html output of the minipanel.
+ * @param Int $mlid - the menu item id that needs the minipanel rendered.
+ * @param String $minipanel_name - the name of the minipanel to render.
  */
-function menu_minipanels_panels($html = NULL) {
+function menu_minipanels_panels($mlid = NULL, $minipanel_name = NULL) {
   static $panels = array();
-  if ($html != NULL) {
-    $panels[] = $html;
+  if ($minipanel_name != NULL) {
+    $panels[$mlid] = $minipanel_name;
   }
   else {
     return $panels;
@@ -349,6 +356,32 @@ function menu_minipanels_panels($html = NULL) {
  * @param $menu_config The configuration array for qtip, as configued in menu item edit
  */
 function _menu_minipanels_include($minipanel_name, $menu_config) {
+  // Early betas did not have this value and the menu settings need to be
+  // re-saved in order to be compatible.
+  if (!isset($menu_config['mlid'])) {
+    // Leave a warning message for the 
+    static $logged_warning = FALSE;
+    if (!$logged_warning) {
+      watchdog('Menu MiniPanels', t('Recent changes to the Menu MiniPanels module require that any menus with attached MiniPanels have their configuration re-saved.'), array(), WATCHDOG_WARNING, l('Menu configuration', 'admin/structure/menu'));
+      $logged_warning = TRUE;
+    }
+    return;
+  }
+
+  $mlid = $menu_config['mlid'];
+  unset($menu_config['mlid']);
+  
+  // The same panel/mlid may be added multiple times, if the same menu is added
+  // to a page more than once, i.e. the primary links, plus primary links also
+  // added as a block.
+  static $added = array();
+  if (!isset($added[$mlid])) {
+    $added[$mlid] = TRUE;
+  }
+  else {
+    return _menu_minipanels_link_class_name($mlid);
+  }
+
   // qTip interprets the absence of the 'position' array element as 'false'.
   // specifying 'false' doesn't work.
   if ($menu_config['position']['target'] == 'element') {
@@ -395,7 +428,7 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   $settings = array(
     'menuMinipanels' => array(
     	'panels' => array(
-        $minipanel_name => $menu_config,
+        'panel_' . $mlid => $menu_config,
       )
     )
   );
@@ -404,9 +437,8 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   // Load the necessary style JS file.
   module_invoke_all('menu_minipanels_style', $menu_config);
 
-  $html = '<div class="menu-minipanels ' . $minipanel_name . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
-  menu_minipanels_panels($html);
-  return _menu_minipanels_link_class_name($minipanel_name);
+  menu_minipanels_panels($mlid, $minipanel_name);
+  return _menu_minipanels_link_class_name($mlid);
 }
 
 /**
@@ -436,9 +468,12 @@ function _menu_minipanels_render_panel($minipanel_name) {
  */
 function menu_minipanels_page_alter(&$page) {
   $output = '';
-  foreach (menu_minipanels_panels() as $ctr => $html) {
-    $output .= '<div class="menu-minipanels menu-minipanel-' . $ctr . '" class="display:none;">' . $html . '</div>';
+
+  // Compile the output of each of the requested MiniPanels.
+  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
+    $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
   }
+
   if (!empty($output)) {
     $page['page_bottom']['menu_minipanels'] = array(
       '#markup' => $output,

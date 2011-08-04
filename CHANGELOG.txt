@@ -10,6 +10,14 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   paths, but cache the path to offset the performance hit.
 * #943842 by DamienMcKenna: Now includes proper Libraries API support as the
   first location checked for the qTip JS file.
+* #1234654 by DamienMcKenna: Applied changes from the v6.x-1.1 release,
+  including #997476 (custom targets), #980592 (duplicate menus), #945886
+  (duplicate minipanels) and #945884 (fixed JS regex); thanks to the respective
+  contributors for their patches. Also tidied up a few small things - comments,
+  output variables, etc. This update will require that configurations are
+  re-saved to add important extra values; a message is left via hook_update_N()
+  when updates are ran, and Watchdog will report errors on each page load until
+  the problems are resolved.
 
 
 Menu_MiniPanels 7.x-1.0-beta4, 2011-07-31
