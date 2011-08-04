@@ -1,6 +1,13 @@
 Mini_MenuPanels Changelog
 *************************
 
+Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
+***************************************
+
+* #1230622 by DamienMcKenna: Missed a line when I originally rerolled this
+  patch.
+
+
 Menu_MiniPanels 7.x-1.0-beta4, 2011-07-31
 *****************************************
 

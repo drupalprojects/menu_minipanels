@@ -132,6 +132,9 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
 
     // Mini Panels are available.
     else {
+      // Load the admin code necessary for this.
+      module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
+
       // Load the JS necessary for the admin.
       drupal_add_js(drupal_get_path('module', 'menu_minipanels') . '/js/menu_minipanels_admin.js', array('scope' => 'footer'));
 
