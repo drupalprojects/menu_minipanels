@@ -91,6 +91,7 @@ function menu_minipanels_init() {
 function menu_minipanels_get_qtip_path() {
   static $qtip_path = FALSE;
 
+  // Only proceed if the path wasn't compiled before.
   if (empty($qtip_path)) {
     $cid = 'menu_minipanels_qtip_path';
     $cache = cache_get($cid);
@@ -181,64 +182,77 @@ function menu_minipanels_menu() {
  * Implements hook_form_alter().
  */
 function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
+  // Add the minipanel selector & associated settings to the menu item editor.
   if ($form_id == 'menu_edit_item') {
     // Check to see whether the menu form exists.
     if (isset($form['menu'])) {
-      // Load the admin code necessary for this.
-      module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
-
-      $path = drupal_get_path('module', 'menu_minipanels');
-      drupal_add_js($path . '/js/menu_minipanels_admin.js');
-
-      $form['menu']['options'] = array(
-        '#type' => 'markup',
-        '#title' => t('Menu item minipanel'),
-        '#access' => user_access('administer menu'),
-        '#collapsible' => FALSE,
-        '#collapsed' => FALSE,
-        '#tree' => TRUE,
-        '#weight' => 50,
-      );
-
       // Load minipanels.
       ctools_include('plugins', 'panels');
-      $layouts = panels_get_layouts();
       $panel_minis = panels_mini_load_all();
 
-      // Create options for select box.
-      $options = array('' => 'None');
-      foreach ($panel_minis as $panel_mini) {
-        // Compatibility with older versions of minipanels.
-        $title = '';
-        if (!empty($panel_mini->title)) {
-          $title = check_plain($panel_mini->title);
-        }
-        else {
-          $title = check_plain($panel_mini->admin_title);
-        }
-        $options[check_plain($panel_mini->name)] = $title;
+      // If no Mini Panels are found, leave a message.
+      if (empty($panel_minis)) {
+        drupal_set_message(t('No Mini Panels are available, some need to be added via the <a href="!link" title="Mini Panels administrator">Mini Panels admin</a> for the Menu_MiniPanels module to work.', array('!link' => url('admin/structure/panels/settings/panels-mini'))), 'warning');
       }
 
-      $item = $form['menu']['#item'];
-      $form['menu']['options']['minipanel'] = array(
-        '#type' => 'select',
-        '#title' => t('Menu minipanel'),
-        '#description' => t('Choose the minipanel to display.'),
-        '#default_value' => isset($item['options']['minipanel']) ? $item['options']['minipanel'] : '',
-        '#options' => $options,
-        '#required' => FALSE,
-      );
+      // Mini Panels are available.
+      else {
+        // Load the admin code necessary for this.
+        module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
 
-      $form['#validate'][] = 'menu_minipanels_menu_edit_item_validate';
+        $path = drupal_get_path('module', 'menu_minipanels');
+        drupal_add_js($path . '/js/menu_minipanels_admin.js');
 
-      _menu_minipanels_hover_settings_form($form['menu']['options'], $form['menu']['#item']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
+        $form['menu']['options'] = array(
+          '#type' => 'markup',
+          '#title' => t('Menu item minipanel'),
+          '#access' => user_access('administer menu'),
+          '#collapsible' => FALSE,
+          '#collapsed' => FALSE,
+          '#tree' => TRUE,
+          '#weight' => 50,
+        );
+
+        // Load minipanels.
+        ctools_include('plugins', 'panels');
+        $layouts = panels_get_layouts();
+        $panel_minis = panels_mini_load_all();
+
+        // Create options for select box.
+        $options = array('' => 'None');
+        foreach ($panel_minis as $panel_mini) {
+          // Compatibility with older versions of minipanels.
+          $title = '';
+          if (!empty($panel_mini->title)) {
+            $title = check_plain($panel_mini->title);
+          }
+          else {
+            $title = check_plain($panel_mini->admin_title);
+          }
+          $options[check_plain($panel_mini->name)] = $title;
+        }
+
+        $item = $form['menu']['#item'];
+        $form['menu']['options']['minipanel'] = array(
+          '#type' => 'select',
+          '#title' => t('Menu minipanel'),
+          '#description' => t('Choose the minipanel to display.'),
+          '#default_value' => isset($item['options']['minipanel']) ? $item['options']['minipanel'] : '',
+          '#options' => $options,
+          '#required' => FALSE,
+        );
+
+        $form['#validate'][] = 'menu_minipanels_menu_edit_item_validate';
+
+        _menu_minipanels_hover_settings_form($form['menu']['options'], $form['menu']['#item']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
+
+        // This is prepended to the array to ensure it is executed before
+        // menu_edit_item_submit(). If it is executed after menu_edit_item_submit,
+        // then the menu_minipanels_hover array will be saved to the database
+        // anyway, and the intercept would be pointless.
+        array_unshift($form['#submit'], 'menu_minipanels_menu_edit_item_submit');
+      }
     }
-
-    // This is prepended to the array to ensure it is executed before
-    // menu_edit_item_submit(). If it is executed after menu_edit_item_submit,
-    // then the menu_minipanels_hover array will be saved to the database
-    // anyway, and the intercept would be pointless.
-    array_unshift($form['#submit'], 'menu_minipanels_menu_edit_item_submit');
   }
 }
 
@@ -251,7 +265,7 @@ function menu_minipanels_menu_edit_item_submit($form, &$form_state) {
   }
   else {
     // Store mlid for later use in uniquely identifiying menu configs in the
-    // javascript.
+    // Javascript.
     $form_state['values']['menu']['options']['menu_minipanels_hover']['mlid'] = $form_state['values']['menu']['mlid'];
   }
 }
@@ -359,11 +373,13 @@ function menu_minipanels_preprocess_menu_item_link($link) {
  */
 function menu_minipanels_preprocess_page_hidden(&$variables) {
   $output = '';
+
+  // Compile the output of each of the requested MiniPanels.
   foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
-    $html = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
-    $output .= $html;
+    $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
   }
-  menu_minpanels_html($output);
+
+  menu_minipanels_html($output);
 }
 
 /**
@@ -373,10 +389,10 @@ function menu_minipanels_preprocess_page_hidden(&$variables) {
  * See @_menu_minipanels_include.
  */
 function menu_minipanels_footer() {
-  return menu_minpanels_html();
+  return menu_minipanels_html();
 }
 
-function menu_minpanels_html($html = NULL) {
+function menu_minipanels_html($html = NULL) {
   static $stored = '';
   if ($html != NULL) {
     $stored = $html;
@@ -392,12 +408,12 @@ function menu_minpanels_html($html = NULL) {
  * to $closure.
  * See @menu_minipanels_footer and @_menu_minipanels_include.
  * @param Int $mlid - the menu item id that needs the minipanel rendered.
- * @param String $minipanel - the name of the minipanel to render.
+ * @param String $minipanel_name - the name of the minipanel to render.
  */
-function menu_minipanels_panels($mlid = NULL, $name = NULL) {
+function menu_minipanels_panels($mlid = NULL, $minipanel_name = NULL) {
   static $panels = array();
-  if ($name != NULL) {
-    $panels[$mlid] = $name;
+  if ($minipanel_name != NULL) {
+    $panels[$mlid] = $minipanel_name;
   }
   else {
     return $panels;

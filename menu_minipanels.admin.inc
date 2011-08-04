@@ -67,7 +67,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $target_options = array(
     'false' => t('Element'),
     'mouse' => t('Mouse'),
-    'custom' => t('Custom')
+    'custom' => t('Custom'),
   );
   $base_form['menu_minipanels_hover']['position']['target'] = array(
     '#type' => 'select',
@@ -80,7 +80,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['position']['target_custom'] = array(
     '#type' => 'textfield',
     '#title' => t('Target Custom'),
-    '#description' => t('If custom is selected above, specify a jquery selector. E.G \'#header\' without the quotes.'),
+    '#description' => t('If \'custom\' is selected above, specify a jQuery selector, e.g. \'#header\' without the quotes.'),
     '#default_value' => isset($menu_minipanels_hover['position']['target_custom']) ? $menu_minipanels_hover['position']['target_custom'] : $defaults['position']['target_custom'],
     '#required' => FALSE,
   );
