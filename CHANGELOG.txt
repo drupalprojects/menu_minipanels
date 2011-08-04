@@ -8,6 +8,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   patch.
 * #943842 by DamienMcKenna: Allow the qTip file to be loaded from multiple
   paths, but cache the path to offset the performance hit.
+* #943842 by DamienMcKenna: Now includes proper Libraries API support as the
+  first location checked for the qTip JS file.
 
 
 Menu_MiniPanels 7.x-1.0-beta4, 2011-07-31

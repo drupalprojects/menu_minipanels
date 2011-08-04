@@ -13,7 +13,9 @@ Installation
    jquery.qtip-1.0.0-rc3.min.js
 3. Place this file in the sites/all/libraries/qtip directory of your Drupal
    installation so that the file is available at:
-   sites/all/libraries/qtip/jquery.qtip-1.0.0-rc3.min.js
+     sites/all/libraries/qtip/jquery.qtip-1.0.0-rc3.min.js
+   This path may be adjusted using the Libraries API module
+   (http://drupal.org/project/libraries).
 4. Enable the module.
 5. Visit "Menu Minipanels Settings" to configure default settings for qTip.
 

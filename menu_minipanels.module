@@ -125,6 +125,14 @@ function menu_minipanels_get_qtip_path() {
         $module_path,
       );
 
+      // Proper Libraries API support.
+      if (function_exists('libraries_get_path')) {
+        $lib_path = libraries_get_path('qtip');
+        if (!empty($lib_path) && !in_array($lib_path, $possible_paths)) {
+          array_unshift($possible_paths, $lib_path);
+        }
+      }
+
       // Check each of the paths.
       foreach ($possible_paths as $path) {
         // If the file exists, this is the one we'll use.
