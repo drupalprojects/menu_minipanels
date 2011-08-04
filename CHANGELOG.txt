@@ -9,6 +9,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 * #943842 by DamienMcKenna: Allow the qTip file to be loaded from multiple
   paths, changing the default to "sites/all/libraries/qtip", but cache the
   path to offset the performance hit.
+* #943842 by DamienMcKenna: Now includes proper Libraries API support as the
+  first location checked for the qTip JS file.
 
 
 Menu_MiniPanels 6.x-1.3-beta2, 2011-07-31
