@@ -173,11 +173,12 @@ function menu_minipanels_help($path, $arg) {
 function menu_minipanels_menu() {
   $items = array();
   $items['admin/config/content/menu_minipanels'] = array(
-    'title' => 'Menu Minipanels Settings',
-    'description' => 'Configure the Menu Minipanels module',
+    'title' => 'Menu MiniPanels',
+    'description' => 'Configure the Menu MiniPanels module.',
     'page callback' => 'drupal_get_form',
     'page arguments' =>  array('menu_minipanels_admin'),
-    'access arguments' => array('administer site configuration')
+    'access arguments' => array('administer site configuration'),
+    'file' => 'menu_minipanels.admin.inc',
   );
 
   return $items;
