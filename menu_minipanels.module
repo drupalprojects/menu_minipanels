@@ -49,17 +49,16 @@
 */
 
 /**
- *
  * Implements hook_init().
  */
 function menu_minipanels_init() {
   // Add js + css
 
   // The main qTip script file should be stored in sites/all/libraries/qtip.
-  $qtip = 'sites/all/libraries/qtip/jquery.qtip-1.0.0-rc3.min.js';
+  $qtip_path = menu_minipanels_get_qtip_path();
 
   // If the qTip script isn't found, no point in continuing.
-  if (!file_exists($qtip)) {
+  if ($qtip_path === FALSE) {
     return;
   }
 
@@ -73,7 +72,7 @@ function menu_minipanels_init() {
   drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
 
   // Load the qTip script.
-  drupal_add_js($qtip, array('scope' => 'footer'));
+  drupal_add_js($qtip_path, array('scope' => 'footer'));
 
   // Most themes will call primary and secondary links on every page.
   // They are usually themed by a function call inside page.tpl.php so we
@@ -87,6 +86,66 @@ function menu_minipanels_init() {
   if (theme_get_setting('toggle_secondary_menu')) {
     menu_minipanels_preprocess_links_at_init(menu_secondary_menu());
   }
+}
+
+/**
+ * Check different paths to find the qTips JS file's path.
+ *
+ * @return The path to the required qTips file relative to base_path() if
+ *   found, FALSE if the file is not found.
+ */
+function menu_minipanels_get_qtip_path() {
+  static $qtip_path = FALSE;
+
+  if (empty($qtip_path)) {
+    $cid = 'menu_minipanels_qtip_path';
+    $cache = cache_get($cid);
+
+    // The path was previously cached, so just load that.
+    if (!empty($cache->data)) {
+      $qtip_path = $cache->data;
+    }
+
+    // There was no cached data, so get the path & cache it for later.
+    else {
+      $filename = 'jquery.qtip-1.0.0-rc3.min.js';
+      $module_path = drupal_get_path('module', 'menu_minipanels');
+
+      // An array of possible paths, in descending order of preference.
+      $possible_paths = array(
+        // Ideally should be stored here.
+        'sites/all/libraries/qtip',
+        // Legacy paths, including some possible incorrect ones, but the
+        // performance hit should be negligible.
+        $module_path . '/js/lib/qtip',
+        $module_path . '/js/lib',
+        $module_path . '/js/qtip',
+        $module_path . '/js',
+        $module_path . '/qtip',
+        $module_path,
+      );
+
+      // Check each of the paths.
+      foreach ($possible_paths as $path) {
+        // If the file exists, this is the one we'll use.
+        if (file_exists($path . '/' . $filename)) {
+          $qtip_path = $path . '/' . $filename;
+          continue;
+        }
+      }
+
+      // Save the path for later.
+      if (!empty($qtip_path)) {
+        cache_set($cid, $qtip_path);
+      }
+      else {
+        watchdog('menu_minipanels', t('Menu Minipanels module is enabled, but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt for instructions on how to download qTip.'));
+      }
+    }
+  }
+
+  // Return the qTips JS file's path, or FALSE.
+  return $qtip_path;
 }
 
 /**

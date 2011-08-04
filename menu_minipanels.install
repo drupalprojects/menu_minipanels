@@ -18,13 +18,47 @@ function menu_minipanels_requirements($phase) {
   $t = get_t();
   $requirements = array();
   if ($phase == 'runtime') {
-    if (!file_exists('sites/all/libraries/qtip/jquery.qtip-1.0.0-rc3.min.js')) {
+    $qtip_path = FALSE;
+    $filename = 'jquery.qtip-1.0.0-rc3.min.js';
+    $module_path = drupal_get_path('module', 'menu_minipanels');
+
+    // An array of possible paths, in descending order of preference.
+    $possible_paths = array(
+      // Ideally should be stored here.
+      'sites/all/libraries/qtip',
+      // Legacy paths, including some possible incorrect ones, but the
+      // performance hit should be negligible.
+      $module_path . '/js/lib/qtip',
+      $module_path . '/js/lib',
+      $module_path . '/js/qtip',
+      $module_path . '/js',
+      $module_path . '/qtip',
+      $module_path,
+    );
+
+    // Check each of the paths.
+    foreach ($possible_paths as $path) {
+      // If the file exists, this is the one we'll use.
+      if (file_exists($path . '/' . $filename)) {
+        $qtip_path = $path . '/' . $filename;
+        continue;
+      }
+    }
+
+    // If the file was not found, leave a message for the user.
+    if (empty($qtip_path)) {
       $requirements['menu_minipanels'] = array(
         'title' => $t('Menu minipanels'),
-        'description' => $t('Menu Minipanels module is enabled, but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt for instructions on how to download qTip.'),
+        'description' => $t('The Menu Minipanels module is enabled, but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt for instructions on how to download qTip.'),
         'severity' => REQUIREMENT_ERROR,
         'value' => $t('qTip library not found'),
       );
+    }
+
+    // Seeing as we're running this check at all, lets update the stored path.
+    else {
+      $cid = 'menu_minipanels_qtip_path';
+      cache_set($cid, $qtip_path);
     }
   }
   return $requirements;
