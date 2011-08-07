@@ -6,6 +6,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 
 * #1239292 by DamienMcKenna: Missed another line from rerolling the #1230622
   patch that caused the settings page to break.
+* #1116990 by kndr, DamienMcKenna: Added access to the qTips callbacks.
 
 
 Menu_MiniPanels 6.x-1.3-rc1, 2011-08-04

@@ -8,8 +8,11 @@
  * arrays specified in the page footer.
  */
 Drupal.behaviors.menuMiniPanels = function(context) {
+  // The base DOM structure to work from.
+  var dom_base = 'ul li a';
+
   // Add the hovers to each appropriate menu item.
-  $('ul li a.menu-minipanel:not(.minipanel-processed)', context).each(function() {
+  $(dom_base + '.menu-minipanel:not(.minipanel-processed)', context).each(function() {
     // Ensure that the panels are only processed once.
     $(this).addClass('minipanel-processed');
 
@@ -31,6 +34,81 @@ Drupal.behaviors.menuMiniPanels = function(context) {
       settings['position']['target'] = false; 
     }
     settings['content'] = html;
+
+    // Allowed names in qTip API.
+    settings['api'] = {};
+    var allowedNames = [
+      'beforeRender',
+      'onRender',
+      'beforePositionUpdate',
+      'onPositionUpdate',
+      'beforeShow',
+      'onShow',
+      'beforeHide',
+      'onHide',
+      'beforeContentUpdate',
+      'onContentUpdate',
+      'beforeContentLoad',
+      'onContentLoad',
+      'beforeTitleUpdate',
+      'onTitleUpdate',
+      'beforeDestroy',
+      'onDestroy',
+      'beforeFocus',
+      'onFocus'
+    ];
+    // Set function for each allowed callback.
+    jQuery.each(allowedNames, function(index, name) {
+      settings['api'][name] = function(event, content) {
+        return MenuMiniPanels.runCallback(name, this, event, content);
+      };
+    });
+
+    // Record what DOM element launched this qTip.
+    settings['activator'] = dom_base + '.' + matches[0];
+
+    // Initialize the qTip.
     $(this).qtip(settings);
   });
+};
+
+
+// Parent object for storing the callbacks.
+var MenuMiniPanels = MenuMiniPanels || {callback: {}};
+
+/**
+ * This is executed automatically by jQuery.
+ */
+MenuMiniPanels.init = function() {
+  // 'beforeShow' callback allows attaching Drupal behaviors to qTip content.
+  MenuMiniPanels.setCallback('beforeShow', function(qTip, event, content){
+    Drupal.attachBehaviors(qTip.elements.content.get(0));
+  });
+}
+
+/**
+ * Function registers callback function.
+ * It allows assign own callback functions with qTip events.
+ *
+ * Callback function should have three parameters:
+ * - qTip - qtip object
+ * - event - event object
+ * - content - content
+ *
+ *  All available qTip callback names are listed on the page
+ *  http://craigsworks.com/projects/qtip/docs/api/#callbacks
+ */
+MenuMiniPanels.setCallback = function(name, callback) {
+  this.callback[name] = callback;
+};
+
+/**
+ * Internal function - runs a given callback.
+ */
+MenuMiniPanels.runCallback = function(name, qTip, event, content) {
+  if (name in this.callback) {
+    var event = event || {};
+    var content = content || {};
+    return this.callback[name](qTip, event, content);
+  }
 };

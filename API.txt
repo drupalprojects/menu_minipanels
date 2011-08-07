@@ -1,6 +1,10 @@
 Menu_MiniPanels API
 -------------------
-The following is an overview of using the Menu_MiniPanels API.
+The following APIs are available:
+
+* Override menu display defaults (PHP).
+* Add custom styles (PHP & JS).
+* Custom callbacks (JS).
 
 
 Override menu display defaults
@@ -101,3 +105,74 @@ To help deciding on what settings to use, the qTips defaults are:
     active: 'qtip-active',
   }
 }
+
+
+Custom JavaScript callbacks
+---------------------------
+All of qTips' callbacks are available to JavaScript via the
+MenuMiniPanels.setCallback() function, e.g.:
+
+MenuMiniPanels.setCallback('onShow', function(qTip, event, content) {
+  alert('onShow');
+});
+
+The following callbacks are available:
+
+MenuMiniPanels.setCallback('beforeRender', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onRender', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforePositionUpdate', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onPositionUpdate', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforeShow', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onShow', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforeHide', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onHide', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforeContentUpdate', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onContentUpdate', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforeContentLoad', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onContentLoad', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforeTitleUpdate', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onTitleUpdate', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforeDestroy', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onDestroy', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('beforeFocus', function(qTip, event, content) {}
+MenuMiniPanels.setCallback('onFocus', function(qTip, event, content) {}
+
+Use a web browser debugging tool, e.g. Firebug or Safari's Web Inspector to
+identify the capabilities of each callback.
+
+To aid working with the menu system, the DOM path used to identify the menu
+item which activated a given MiniPanel is available from the string
+"qTip.options.activator", thus the object itself is available as
+$(qTip.options.activator).
+
+An example usage would be to make the menu item retain its 'active' state when
+its MiniPanel is displayed:
+
+/**
+ * @file
+ * Custom callbacks for Menu_MiniPanels.
+ */
+
+(function($) {
+  /**
+   * Callback for the onShow qTip event.
+   */
+  MenuMiniPanels.setCallback('onShow', function(qTip, event, content) {
+    // Only proceed if the 'activator' option is found.
+    if (qTip.options.activator !== undefined && qTip.options.activator !== null) {
+      // Make the link 'active'.
+      $(qTip.options.activator).addClass('active');
+    }
+  });
+
+  /**
+   * Callback for the onHide qTip event.
+   */
+  MenuMiniPanels.setCallback('onHide', function(qTip, event) {
+    // Only proceed if the 'activator' option is found.
+    if (qTip.options.activator !== undefined && qTip.options.activator !== null) {
+      // Stop the link being 'active'.
+      $(qTip.options.activator).removeClass('active');
+    }
+  });
+})(jQuery);
