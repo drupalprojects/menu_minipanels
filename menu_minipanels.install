@@ -5,6 +5,19 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function menu_minipanels_install() {
+  // Check the requirements.
+  $requirements = menu_minipanels_requirements('runtime');
+  // See if an error was returned.
+  if (!empty($requirements['menu_minipanels']['severity']) && $requirements['menu_minipanels']['severity'] == REQUIREMENT_ERROR) {
+    // Return the message.
+    drupal_set_message($requirements['menu_minipanels']['description'], 'warning');
+  }
+}
+
+/**
  * Implementation of hook_uninstall().
  */
 function menu_minipanels_uninstall() {
