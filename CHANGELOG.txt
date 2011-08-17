@@ -8,6 +8,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   patch that caused the settings page to break.
 * #1116990 by kndr, DamienMcKenna: Added access to the qTips callbacks.
 * #1251804 by DamienMcKenna: Indicate what qTip JS file is being used.
+* #1238890 by DamienMcKenna: Leave a warning in hook_install() if the qTip JS
+  library is not installed.
 
 
 Menu_MiniPanels 7.x-1.0-rc1, 2011-08-04
