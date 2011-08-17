@@ -37,7 +37,7 @@ jQuery.fn.qtip.styles.mystyle = {
   color: 'black',
 };
 
-Part 2: List the new styles.
+Part 2: List the new styles, to be added to mymodule.module:
 
 <?php
 /**
@@ -51,7 +51,7 @@ function mymodule_menu_minipanels_styles() {
 }
 ?>
 
-Step 3: Tell Drupal to load the new JS file.
+Step 3: Tell Drupal to load the new JS file, to be added to mymodule.module:
 
 <?php
 /**
