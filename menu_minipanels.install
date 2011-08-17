@@ -59,7 +59,7 @@ function menu_minipanels_requirements($phase) {
         'title' => $t('Menu minipanels'),
         'description' => $t('Menu Minipanels module is enabled, but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt for instructions on how to download qTip.'),
         'severity' => REQUIREMENT_ERROR,
-        'value' => $t('qTip library not found')
+        'value' => $t('qTip library not found'),
       );
     }
 
