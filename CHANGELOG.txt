@@ -10,6 +10,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 * #1251804 by DamienMcKenna: Indicate what qTip JS file is being used.
 * #1238890 by DamienMcKenna: Leave a warning in hook_install() if the qTip JS
   library is not installed.
+* #1258150 by davidwhthomas: Incorrect usage of drupal_add_css() caused CSS
+  aggregation to not work.
 
 
 Menu_MiniPanels 7.x-1.0-rc1, 2011-08-04

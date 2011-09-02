@@ -66,7 +66,7 @@ function menu_minipanels_init() {
   $path = drupal_get_path('module', 'menu_minipanels');
 
   // Load the module's custom CSS.
-  drupal_add_css($path . '/css/menu_minipanels.css', 'module', 'all', TRUE);
+  drupal_add_css($path . '/css/menu_minipanels.css');
 
   // This module's custom JS.
   drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
