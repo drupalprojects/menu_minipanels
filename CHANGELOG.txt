@@ -10,6 +10,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 * #1251804 by DamienMcKenna: Indicate what qTip JS file is being used.
 * #1238890 by DamienMcKenna: Leave a warning in hook_install() if the qTip JS
   library is not installed.
+* #1258150 by davidwhthomas, DamienMcKenna: Simplified usage of
+  drupal_add_css(), we don't need to specify default arguments.
 
 
 Menu_MiniPanels 6.x-1.3-rc1, 2011-08-04
