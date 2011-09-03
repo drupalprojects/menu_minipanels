@@ -32,7 +32,7 @@
  * config and panels html output wont work.
  *
  * The method I have used is to assume that primary_links and secondary_links
- * will always be used on a page, so load them in menu_minipanels_init(),
+ * will always be used on a page, so load them in menu_minipanels_page_alter(),
  * find any menu minipanel items, and add the code to the queue for $closure
  * that way. Then still intercept the theming functions in order to add the
  * class names.
@@ -47,46 +47,6 @@
  * I may include a configuration option for technical users at a later date
  * if there is any demand.
 */
-
-/**
- * Implements hook_init().
- */
-function menu_minipanels_init() {
-  // Add js + css
-
-  // The main qTip script file should be stored in sites/all/libraries/qtip.
-  $qtip_path = menu_minipanels_get_qtip_path();
-
-  // If the qTip script isn't found, no point in continuing.
-  if ($qtip_path === FALSE) {
-    return;
-  }
-
-  // The path to this module.
-  $path = drupal_get_path('module', 'menu_minipanels');
-
-  // Load the module's custom CSS.
-  drupal_add_css($path . '/css/menu_minipanels.css');
-
-  // This module's custom JS.
-  drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
-
-  // Load the qTip script.
-  drupal_add_js($qtip_path, array('scope' => 'footer'));
-
-  // Most themes will call primary and secondary links on every page.
-  // They are usually themed by a function call inside page.tpl.php so we
-  // can't wait until theme_links is called, because by that time, $closure
-  // has already been created, and therefore our code would not be included.
-  // Therefore, we ought to load any mini panels primary and secondary links
-  // may have.
-  if (theme_get_setting('toggle_main_menu')) {
-    menu_minipanels_preprocess_links_at_init(menu_main_menu());
-  }
-  if (theme_get_setting('toggle_secondary_menu')) {
-    menu_minipanels_preprocess_links_at_init(menu_secondary_menu());
-  }
-}
 
 /**
  * Check different paths to find the qTips JS file's path.
@@ -294,9 +254,9 @@ function menu_minipanels_theme_registry_alter(&$vars) {
 /**
  * Ensure that we capture any mini panel menus that are set in $primary_links
  * or $secondary_links. This is run on every page load.
- * See @menu_minipanels_init().
+ * See @menu_minipanels_page_alter().
  */
-function menu_minipanels_preprocess_links_at_init($links) {
+function menu_minipanels_prepare_links($links) {
   foreach ($links as $ctr => $link) {
     if (!empty($link['minipanel'])) {
       $prefix = '';
@@ -466,11 +426,50 @@ function _menu_minipanels_render_panel($minipanel_name) {
 
 /**
  * Implements hook_page_alter().
+ *
+ * This function does two things:
+ * 1. Prepare the links.
+ * 2. Build the output.
+ * This probably means the module could be refactored.
  */
 function menu_minipanels_page_alter(&$page) {
-  $output = '';
+  // Add js + css
+
+  // The main qTip script file should be stored in sites/all/libraries/qtip.
+  $qtip_path = menu_minipanels_get_qtip_path();
+
+  // If the qTip script isn't found, no point in continuing.
+  if ($qtip_path === FALSE) {
+    return;
+  }
+
+  // The path to this module.
+  $path = drupal_get_path('module', 'menu_minipanels');
+
+  // Load the module's custom CSS.
+  drupal_add_css($path . '/css/menu_minipanels.css');
+
+  // This module's custom JS.
+  drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
+
+  // Load the qTip script.
+  drupal_add_js($qtip_path, array('scope' => 'footer'));
+
+  // Most themes will call primary and secondary links on every page.
+  // They are usually themed by a function call inside page.tpl.php so we
+  // can't wait until theme_links is called, because by that time, $closure
+  // has already been created, and therefore our code would not be included.
+  // Therefore, we ought to load any mini panels primary and secondary links
+  // may have.
+  if (theme_get_setting('toggle_main_menu')) {
+    menu_minipanels_prepare_links(menu_main_menu());
+  }
+  if (theme_get_setting('toggle_secondary_menu')) {
+    menu_minipanels_prepare_links(menu_secondary_menu());
+  }
 
   // Compile the output of each of the requested MiniPanels.
+  $output = '';
   foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
     $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
   }

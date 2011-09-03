@@ -13,6 +13,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 * #1258150 by davidwhthomas: Incorrect usage of drupal_add_css() caused CSS
   aggregation to not work.
 * #1238882 by DamienMcKenna: Drush script to download the qTip script.
+* #1264738 by DamienMcKenna: Restructured how the output is built so now it now
+  also works on 404 pages.
 
 
 Menu_MiniPanels 7.x-1.0-rc1, 2011-08-04
