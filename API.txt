@@ -16,7 +16,11 @@ the default display settings that are given to new menus.
 Add custom styles
 -----------------
 By implementing hook_menu_minipanels_style() and hook_menu_minipanels_styles()
-a module can add new display styles.  There are three parts to this:
+a module can add new display styles.  Please note that due to JS dependencies,
+the custom styles must be loaded *after* the core qtip and menu_minipansls.js
+files, so this is the easiest way of handling it.
+
+There are three steps necessary in order to make this work:
 
 Step 1: Add a JS file called e.g. "mymodule_style.js" with the desired style
 settings.
