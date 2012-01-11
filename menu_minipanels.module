@@ -209,15 +209,11 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
         $path = drupal_get_path('module', 'menu_minipanels');
         drupal_add_js($path . '/js/menu_minipanels_admin.js');
 
-        $form['menu']['options'] = array(
-          '#type' => 'markup',
-          '#title' => t('Menu item minipanel'),
-          '#access' => user_access('administer menu'),
-          '#collapsible' => FALSE,
-          '#collapsed' => FALSE,
-          '#tree' => TRUE,
-          '#weight' => 50,
-        );
+        // The 'options' element already exists, just need to tweak it.
+        $form['menu']['options']['#tree'] = TRUE;
+        $form['menu']['options']['#type'] = 'markup';
+        $form['menu']['options']['#weight'] = '50';
+        unset($form['menu']['options']['#value']['attributes']);
 
         // Load minipanels.
         ctools_include('plugins', 'panels');
