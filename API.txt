@@ -152,7 +152,8 @@ item which activated a given MiniPanel is available from the string
 $(qTip.options.activator).
 
 An example usage would be to make the menu item retain its 'active' state when
-its MiniPanel is displayed:
+its MiniPanel is displayed. Note: the module already adds the class
+"qtip-hover" to the menu items, this example shows how to add another class.
 
 /**
  * @file
