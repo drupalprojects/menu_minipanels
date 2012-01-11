@@ -62,7 +62,7 @@ Step 3: Tell Drupal to load the new JS file, to be added to mymodule.module:
  * Implements hook_menu_minipanels_style().
  */
 function mymodule_menu_minipanels_style($menu_config) {
-  drupal_add_js(drupal_get_path('module', 'puam_styles') . '/menu_minipanels_styles.js', array('scope' => 'footer'));
+  drupal_add_js(drupal_get_path('module', 'mymodule_styles') . '/menu_minipanels_styles.js', array('scope' => 'footer'));
 }
 ?>
 
@@ -159,24 +159,24 @@ its MiniPanel is displayed:
 
 (function($) {
   /**
-   * Callback for the onShow qTip event.
+   * Callback for the beforeShow qTip event.
    */
-  MenuMiniPanels.setCallback('onShow', function(qTip, event, content) {
-    // Only proceed if the 'activator' option is found.
-    if (qTip.options.activator !== undefined && qTip.options.activator !== null) {
-      // Make the link 'active'.
-      $(qTip.options.activator).addClass('active');
+  MenuMiniPanels.setCallback('beforeShow', function(qTip, event, content) {
+    // Mark target element as selected.
+    var $target = $(qTip.elements.target.get(0));
+    if ($target !== undefined) {
+      $target.addClass('active');
     }
   });
 
   /**
-   * Callback for the onHide qTip event.
+   * Callback for the beforeHide qTip event.
    */
-  MenuMiniPanels.setCallback('onHide', function(qTip, event) {
-    // Only proceed if the 'activator' option is found.
-    if (qTip.options.activator !== undefined && qTip.options.activator !== null) {
-      // Stop the link being 'active'.
-      $(qTip.options.activator).removeClass('active');
+  MenuMiniPanels.setCallback('beforeHide', function(qTip, event) {
+    // Unmark target element as selected.
+    var $target = $(qTip.elements.target.get(0));
+    if ($target !== undefined) {
+      $target.removeClass('active');
     }
   });
 })(jQuery);

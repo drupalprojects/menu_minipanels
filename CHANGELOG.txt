@@ -3,6 +3,9 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #1379542 by DamienMcKenna: Added note to README.txt about a known conflict
   with the DivX Player.
 #1376860 by DamienMcKenna: Option to not output anything on admin pages.
+#1304560 by codycraven, Amitaibu, jwilson3, DamienMcKenna: Automatically
+  assign the "qtip-hover" class to the triggering menu link. Updated the
+  API.txt example accordingly.
 
 
 Menu_MiniPanels 6.x-1.3-rc2, 2011-09-03

@@ -70,6 +70,22 @@ Drupal.behaviors.menuMiniPanels = function(context) {
     // Initialize the qTip.
     $(this).qtip(settings);
   });
+
+  // Mark target element as selected.
+  MenuMiniPanels.setCallback('beforeShow', function(qTip, event, content) {
+    var $target = $(qTip.elements.target.get(0));
+    if ($target !== undefined) {
+      $target.addClass('qtip-hover');
+    }
+  });
+
+  // Unmark target element as selected.
+  MenuMiniPanels.setCallback('beforeHide', function(qTip, event, content) {
+    var $target = $(qTip.elements.target.get(0));
+    if ($target !== undefined) {
+      $target.removeClass('qtip-hover');
+    }
+  });
 };
 
 
