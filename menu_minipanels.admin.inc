@@ -8,7 +8,18 @@
  */
 function menu_minipanels_admin() {
   $form = array();
+
+  // Additional global settings.
+  $form['menu_minipanels_show_admin'] = array(
+    '#title' => 'Load on admin pages',
+    '#type' => 'checkbox',
+    '#default_value' => variable_get('menu_minipanels_show_admin', TRUE),
+    '#description' => t('Optionally hide on the admin pages.'),
+  );
+
+  // Default settings.
   _menu_minipanels_hover_settings_form($form, variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()), _menu_minipanels_hover_defaults());
+
   return system_settings_form($form);
 }
 
