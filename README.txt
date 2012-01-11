@@ -20,6 +20,14 @@ Installation
 5. Visit "Menu Minipanels Settings" to configure default settings for qTip.
 
 
+Tips
+----
+The module will add the class "qtip-hover" to the menu item which triggered the
+minipanel to display, allowing it to be themed to match the normal :hover
+state.  There is not currently a way to make it retain the :hover state while
+the pointer is over the minipanel, so this is a work-around.
+
+
 Known Issues
 ------------
 If an error "Invalid calling object" shows on IE9, there may be another script
