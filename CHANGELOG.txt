@@ -1,60 +1,53 @@
-Mini_MenuPanels Changelog
-*************************
-
 Menu_MiniPanels 6.x-1.3-rc2, 2011-09-03
-***************************************
-
-* #1239292 by DamienMcKenna: Missed another line from rerolling the #1230622
+---------------------------------------
+#1239292 by DamienMcKenna: Missed another line from rerolling the #1230622
   patch that caused the settings page to break.
-* #1116990 by kndr, DamienMcKenna: Added access to the qTips callbacks.
-* #1251804 by DamienMcKenna: Indicate what qTip JS file is being used.
-* #1238890 by DamienMcKenna: Leave a warning in hook_install() if the qTip JS
+#1116990 by kndr, DamienMcKenna: Added access to the qTips callbacks.
+#1251804 by DamienMcKenna: Indicate what qTip JS file is being used.
+#1238890 by DamienMcKenna: Leave a warning in hook_install() if the qTip JS
   library is not installed.
-* #1258150 by davidwhthomas, DamienMcKenna: Simplified usage of
+#1258150 by davidwhthomas, DamienMcKenna: Simplified usage of
   drupal_add_css(), we don't need to specify default arguments.
-* #1238882 by DamienMcKenna: Drush script to download the qTip script.
+#1238882 by DamienMcKenna: Drush script to download the qTip script.
 
 
 Menu_MiniPanels 6.x-1.3-rc1, 2011-08-04
-***************************************
-
-* #1230622 by DamienMcKenna: Missed a line when I originally rerolled this
+---------------------------------------
+#1230622 by DamienMcKenna: Missed a line when I originally rerolled this
   patch.
-* #943842 by DamienMcKenna: Allow the qTip file to be loaded from multiple
-  paths, changing the default to "sites/all/libraries/qtip", but cache the
-  path to offset the performance hit.
-* #943842 by DamienMcKenna: Now includes proper Libraries API support as the
+#943842 by DamienMcKenna: Allow the qTip file to be loaded from multiple paths,
+  changing the default to "sites/all/libraries/qtip", but cache the path to
+  offset the performance hit.
+#943842 by DamienMcKenna: Now includes proper Libraries API support as the
   first location checked for the qTip JS file.
-* #1234654 by DamienMcKenna: Slight refactoring of menu_minipanels_form_alter()
+#1234654 by DamienMcKenna: Slight refactoring of menu_minipanels_form_alter()
   to match the D7 branch more closely. Also tidied up a few small things - 
   comments, output variables, etc.
 
 
 Menu_MiniPanels 6.x-1.3-beta2, 2011-07-31
-*****************************************
-
-* #1230686 by davidwhthomas: Fatfingered the last patch.
+-----------------------------------------
+#1230686 by davidwhthomas: Fatfingered the last patch.
 
 
 Menu_MiniPanels 6.x-1.3-beta1, 2011-07-30
-*****************************************
-
-* #1199426 by DamienMcKenna: updated all comments to fit the Drupal coding
+-----------------------------------------
+#1199426 by DamienMcKenna: updated all comments to fit the Drupal coding
   standards.
-* #1221566 by DamienMcKenna: Added hook_menu_minipanels_defaults_alter() to
+#1221566 by DamienMcKenna: Added hook_menu_minipanels_defaults_alter() to
   allow the defaults to be customized.
-* #1230622 by davidwhthomas, DamienMcKenna: Separated admin functionality.
-* #1148958 by lussoluca, DamienMcKenna: Added hook_menu_minipanels_style()
+#1230622 by davidwhthomas, DamienMcKenna: Separated admin functionality.
+#1148958 by lussoluca, DamienMcKenna: Added hook_menu_minipanels_style()
   and hook_menu_minipanels_styles() to allow creation of custom styles.
-* #1234620 by DamienMcKenna: improve hook_init() implementation.
-* #1185506 by DamienMcKenna: Indicate which fields are really required, don't
+#1234620 by DamienMcKenna: improve hook_init() implementation.
+#1185506 by DamienMcKenna: Indicate which fields are really required, don't
   output settings which are not required.
-* #1199412 by DamienMcKenna: Separate the admin JS into its own file.
-* #1230686 by muhleder, DamienMcKenna: Prevent duplicate content on DOM change.
+#1199412 by DamienMcKenna: Separate the admin JS into its own file.
+#1230686 by muhleder, DamienMcKenna: Prevent duplicate content on DOM change.
 
 
 Menu_MiniPanels 6.x-1.2, 2011-01-09
-***********************************
+-----------------------------------
 All users advised to upgrade from 1.1 and 1.0.
 
 NOTE: (If not already done in 1.1 upgrade) Manual update process required. If
@@ -62,36 +55,36 @@ you are upgrading an existing site that uses Menu_MiniPanels, you'll need to
 edit and save (without changing options) each menu item that uses a
 menu_minipanel to make it work.
 
-* Fix issue introduced in last update. Any menu item that didn't have a
+Fix issue introduced in last update. Any menu item that didn't have a
   specific element set was broken.
-* #991246 - Additional fix. Moving minipanel rendering from init to footer,
+#991246 - Additional fix. Moving minipanel rendering from init to footer,
   broke panels css display, because minipanels were rendered after css had
   already been added to page.
 
 
 Menu_MiniPanels 6.x-1.1, 2011-01-08
-***********************************
+-----------------------------------
 NOTE: Manual update process required. If you are upgrading an existing site
 that uses Menu_MiniPanels, you'll need to edit and save (without changing
 options) each menu item that uses a menu minipanel to make it work.
 
-* #997476 - Suggestion from sammo. Add ability to set custom target for the
+#997476 - Suggestion from sammo. Add ability to set custom target for the
   minipanel, to enable things like full width drop downs.
-* #980592 - Not working when using same menu. When the same menu was added on
+#980592 - Not working when using same menu. When the same menu was added on
   the same page (e.g primary links in a block), Drupal.settings was being set
   twice and breaking javascript. Thus add a check if the mlid has already
   been added. This also fixes an issue introduced in previous commit that
   meant minipanels would only work with primary and secondary links.
-* #945886 - Using the same minipanel for more than one menu item doesn't work.
+#945886 - Using the same minipanel for more than one menu item doesn't work.
   This is fixed with some re-engineering to use the mlid in the
   drupal.settings array and panel id. This fix will break existing sites until
   the menu items are edited and resaved. The time required to write an
   automated upgrade path is not justified when a few manual clicks will do.
-* #945884 - Minipanels that had a system name containing a number weren't
+#945884 - Minipanels that had a system name containing a number weren't
   working because the regex didn't have numbers in the character class.
 
 
 Menu_MiniPanels 6.x-1.0, 2010-10-16
-***********************************
-- Improved code as a result of a code review by @kiamlaluno.
-- All sensible qTip configuration parameters implemented.
+-----------------------------------
+Improved code as a result of a code review by @kiamlaluno.
+All sensible qTip configuration parameters implemented.
