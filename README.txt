@@ -20,6 +20,13 @@ Installation
 5. Visit "Menu Minipanels Settings" to configure default settings for qTip.
 
 
+Known Issues
+------------
+If an error "Invalid calling object" shows on IE9, there may be another script
+loading on the page which is conflicting. In one case it was caused by DivX
+Player (http://drupal.org/node/1379542), once it was removed the problem ended.
+
+
 Author
 ------
 Maintainer: Willie Seabrook (http://drupal.org/user/373883)
