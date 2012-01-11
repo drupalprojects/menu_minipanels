@@ -6,6 +6,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1304560 by codycraven, Amitaibu, jwilson3, DamienMcKenna: Automatically
   assign the "qtip-hover" class to the triggering menu link. Updated the
   API.txt example accordingly.
+#1130664 by DamienMcKenna: Don't overwrite the $form['options'] element on the
+  menu item edit form as it breaks other modules.
 
 
 Menu_MiniPanels 7.x-1.0-rc2, 2011-09-03

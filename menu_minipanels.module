@@ -167,14 +167,11 @@ function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
       // Load the JS necessary for the admin.
       drupal_add_js(drupal_get_path('module', 'menu_minipanels') . '/js/menu_minipanels_admin.js', array('scope' => 'footer'));
 
-      $form['options'] = array(
-        '#type' => 'markup',
-        '#title' => t('Menu item minipanel'),
-        '#collapsible' => FALSE,
-        '#collapsed' => FALSE,
-        '#tree' => TRUE,
-        '#weight' => 50,
-      );
+      // The 'options' element already exists, just need to tweak it.
+      $form['options']['#tree'] = TRUE;
+      $form['options']['#type'] = 'markup';
+      $form['options']['#weight'] = '50';
+      unset($form['options']['#value']['attributes']);
 
       // Create options for select box
       $options = array('' => '- None -');
