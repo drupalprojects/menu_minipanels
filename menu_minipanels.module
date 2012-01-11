@@ -433,6 +433,11 @@ function _menu_minipanels_render_panel($minipanel_name) {
  * This probably means the module could be refactored.
  */
 function menu_minipanels_page_alter(&$page) {
+  // Optionally ignore admin pages.
+  if (arg(0) == 'admin' && !variable_get('menu_minipanels_show_admin', TRUE)) {
+    return;
+  }
+
   // Add js + css
 
   // The main qTip script file should be stored in sites/all/libraries/qtip.
