@@ -8,6 +8,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
   API.txt example accordingly.
 #1130664 by DamienMcKenna: Don't overwrite the $form['menu']['options'] element
   on the menu item edit form as it breaks other modules.
+#1379542 by DamienMcKenna: Improved the README.txt note to be slightly more
+  accurate of the problem.
 
 
 Menu_MiniPanels 6.x-1.3-rc2, 2011-09-03

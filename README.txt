@@ -30,9 +30,10 @@ the pointer is over the minipanel, so this is a work-around.
 
 Known Issues
 ------------
-If an error "Invalid calling object" shows on IE9, there may be another script
-loading on the page which is conflicting. In one case it was caused by DivX
-Player (http://drupal.org/node/1379542), once it was removed the problem ended.
+If an error "Invalid calling object" shows on IE9's Javascript console, there
+may be another script or plugin loading on the page which is conflicting. In
+one case it was caused by DivX Player (http://drupal.org/node/1379542), once it
+was removed the problem ended.
 
 
 Author
