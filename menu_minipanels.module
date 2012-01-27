@@ -138,7 +138,7 @@ function menu_minipanels_get_qtip_path() {
         // If the file exists, this is the one we'll use.
         if (file_exists($path . '/' . $filename)) {
           $qtip_path = $path . '/' . $filename;
-          continue;
+          break;
         }
       }
 

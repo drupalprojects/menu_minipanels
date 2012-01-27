@@ -1,5 +1,6 @@
 Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 ---------------------------------------
+#1370840 by DuaelFr: Stop searching for the JS file at the first matching path.
 
 
 Menu_MiniPanels 6.x-1.3-rc3, 2012-01-26
