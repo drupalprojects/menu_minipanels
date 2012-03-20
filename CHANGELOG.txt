@@ -3,6 +3,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #1370840 by DuaelFr: Stop searching for the JS file at the first matching path.
 #1491396 by DamienMcKenna: Collision between admin and non-admin JS.
 #1491502 by DamienMcKenna: Mention the Drush command in hook_requirements.
+#1491490 by DamienMcKenna: Changed to use hook_form_FORM_ID_alter().
 
 
 Menu_MiniPanels 6.x-1.3-rc3, 2012-01-26
