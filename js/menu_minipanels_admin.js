@@ -8,7 +8,7 @@
  * whether a minipanel is selected.
  */
 (function($) {
-  Drupal.behaviors.menuMiniPanels = {
+  Drupal.behaviors.menuMiniPanelsAdmin = {
     attach: function(context, settings) {
       // Hide hover settings unless a minipanel is selected.
       var toggleHoverSettings = function() {
