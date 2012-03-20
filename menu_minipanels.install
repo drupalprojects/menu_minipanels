@@ -69,7 +69,7 @@ function menu_minipanels_requirements($phase) {
     // If the file was not found, leave a message for the user.
     if (empty($qtip_path)) {
       $requirements['menu_minipanels'] = array(
-        'description' => $t('Menu Minipanels module is enabled, but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt for instructions on how to download qTip.'),
+        'description' => $t('The module is enabled but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt in the menu_minipanels directory for instructions on how to download qTip, or use <a href="http://drupal.org/project/drush">Drush</a> to download it via the following command:<br /><pre>drush download-qtip</pre>'),
         'severity' => REQUIREMENT_ERROR,
         'title' => $t('Menu MiniPanels'),
         'value' => $t('qTip library not found'),
