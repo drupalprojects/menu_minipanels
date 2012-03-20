@@ -145,64 +145,63 @@ function menu_minipanels_menu() {
 }
 
 /**
- * Implements hook_form_alter().
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add the minipanel selector & associated settings to the menu item editor.
  */
-function menu_minipanels_form_alter(&$form, $form_state, $form_id) {
-  // Add the minipanel selector & associated settings to the menu item editor.
-  if ($form_id == 'menu_edit_item') {
-    // Load minipanels.
-    ctools_include('plugins', 'panels');
-    $panel_minis = panels_mini_load_all();
+function menu_minipanels_form_menu_edit_item_alter(&$form, $form_state, $form_id) {
+  // Load minipanels.
+  ctools_include('plugins', 'panels');
+  $panel_minis = panels_mini_load_all();
 
-    // If no Mini Panels are found, leave a message.
-    if (empty($panel_minis)) {
-      drupal_set_message(t('No Mini Panels are available, some need to be added via the <a href="!link" title="Mini Panels administrator">Mini Panels admin</a> for the Menu_MiniPanels module to work.', array('!link' => url('admin/structure/panels/settings/panels-mini'))), 'warning');
+  // If no Mini Panels are found, leave a message.
+  if (empty($panel_minis)) {
+    drupal_set_message(t('No Mini Panels are available, some need to be added via the <a href="!link" title="Mini Panels administrator">Mini Panels admin</a> for the Menu_MiniPanels module to work.', array('!link' => url('admin/structure/panels/settings/panels-mini'))), 'warning');
+  }
+
+  // Mini Panels are available.
+  else {
+    // Load the admin code necessary for this.
+    module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
+
+    // Load the JS necessary for the admin.
+    drupal_add_js(drupal_get_path('module', 'menu_minipanels') . '/js/menu_minipanels_admin.js', array('scope' => 'footer'));
+
+    // The 'options' element already exists, just need to tweak it.
+    $form['options']['#tree'] = TRUE;
+    $form['options']['#type'] = 'markup';
+    $form['options']['#weight'] = '50';
+    unset($form['options']['#value']['attributes']);
+
+    // Create options for select box
+    $options = array('' => '- None -');
+    foreach ($panel_minis as $panel_mini) {
+      $options[check_plain($panel_mini->name)] = check_plain($panel_mini->admin_title);
     }
+    asort($options);
 
-    // Mini Panels are available.
-    else {
-      // Load the admin code necessary for this.
-      module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
+    $item = $form['original_item']['#value'];
+    $form['options']['minipanel'] = array(
+      '#type' => 'select',
+      '#title' => t('Menu minipanel'),
+      '#description' => t('Choose the minipanel to display.'),
+      '#default_value' => isset($item['options']['minipanel']) ? $item['options']['minipanel'] : '',
+      '#options' => $options,
+      '#required' => FALSE,
+    );
 
-      // Load the JS necessary for the admin.
-      drupal_add_js(drupal_get_path('module', 'menu_minipanels') . '/js/menu_minipanels_admin.js', array('scope' => 'footer'));
+    // $form['#validate'][] = 'menu_minipanels_menu_edit_item_validate';
 
-      // The 'options' element already exists, just need to tweak it.
-      $form['options']['#tree'] = TRUE;
-      $form['options']['#type'] = 'markup';
-      $form['options']['#weight'] = '50';
-      unset($form['options']['#value']['attributes']);
-
-      // Create options for select box
-      $options = array('' => '- None -');
-      foreach ($panel_minis as $panel_mini) {
-        $options[check_plain($panel_mini->name)] = check_plain($panel_mini->admin_title);
-      }
-      asort($options);
-
-      $item = $form['original_item']['#value'];
-      $form['options']['minipanel'] = array(
-        '#type' => 'select',
-        '#title' => t('Menu minipanel'),
-        '#description' => t('Choose the minipanel to display.'),
-        '#default_value' => isset($item['options']['minipanel']) ? $item['options']['minipanel'] : '',
-        '#options' => $options,
-        '#required' => FALSE,
-      );
-
-      // $form['#validate'][] = 'menu_minipanels_menu_edit_item_validate';
-
-      if (!isset($form['original_item']['#value']['options']['menu_minipanels_hover'])) {
-        $form['original_item']['#value']['options']['menu_minipanels_hover'] = array();
-      }
-      _menu_minipanels_hover_settings_form($form['options'], $form['original_item']['#value']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
-
-      // This is prepended to the array to ensure it is executed before
-      // menu_edit_item_submit.  If it is executed after menu_edit_item_submit,
-      // then the menu_minipanels_hover array will be saved to the database
-      // anyway, and the intercept would be pointless.
-      array_unshift($form['#submit'], 'menu_minipanels_menu_edit_item_submit');
+    if (!isset($form['original_item']['#value']['options']['menu_minipanels_hover'])) {
+      $form['original_item']['#value']['options']['menu_minipanels_hover'] = array();
     }
+    _menu_minipanels_hover_settings_form($form['options'], $form['original_item']['#value']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
+
+    // This is prepended to the array to ensure it is executed before
+    // menu_edit_item_submit.  If it is executed after menu_edit_item_submit,
+    // then the menu_minipanels_hover array will be saved to the database
+    // anyway, and the intercept would be pointless.
+    array_unshift($form['#submit'], 'menu_minipanels_menu_edit_item_submit');
   }
 }
 
