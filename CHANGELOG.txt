@@ -4,6 +4,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1491396 by DamienMcKenna: Collision between admin and non-admin JS.
 #1491502 by DamienMcKenna: Mention the Drush command in hook_requirements.
 #1491490 by DamienMcKenna: Changed to use hook_form_FORM_ID_alter().
+#1491514 by DamienMcKenna: Show minipanel name in menu edit form if the title
+  is blank.
 
 
 Menu_MiniPanels 7.x-1.0-rc3, 2012-01-26

@@ -176,7 +176,14 @@ function menu_minipanels_form_menu_edit_item_alter(&$form, $form_state, $form_id
     // Create options for select box
     $options = array('' => '- None -');
     foreach ($panel_minis as $panel_mini) {
-      $options[check_plain($panel_mini->name)] = check_plain($panel_mini->admin_title);
+      // If the admin title is empty, use the minipanel name.
+      if (!empty($panel_mini->admin_title)) {
+        $title = check_plain($panel_mini->admin_title);
+      }
+      else {
+        $title = check_plain($panel_mini->name);
+      }
+      $options[check_plain($panel_mini->name)] = check_plain($title);
     }
     asort($options);
 
