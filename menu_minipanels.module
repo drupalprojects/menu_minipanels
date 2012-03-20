@@ -223,13 +223,12 @@ function menu_minipanels_form_menu_edit_item_alter(&$form, $form_state) {
       // Create options for select box.
       $options = array('' => 'None');
       foreach ($panel_minis as $panel_mini) {
-        // Compatibility with older versions of minipanels.
-        $title = '';
-        if (!empty($panel_mini->title)) {
-          $title = check_plain($panel_mini->title);
+        // If the admin title is empty, use the minipanel name.
+        if (!empty($panel_mini->admin_title)) {
+          $title = check_plain($panel_mini->admin_title);
         }
         else {
-          $title = check_plain($panel_mini->admin_title);
+          $title = check_plain($panel_mini->name);
         }
         $options[check_plain($panel_mini->name)] = $title;
       }
