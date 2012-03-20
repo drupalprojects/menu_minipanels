@@ -7,7 +7,7 @@
  * In admin menu edit, this hides and closes the qTip config depending on
  * whether a minipanel is selected.
  */
-Drupal.behaviors.menuMiniPanels = function(context) {
+Drupal.behaviors.menuMiniPanelsAdmin = function(context) {
   // In the administration section, hide hover settings unless a minipanel is
   // selected.
   var toggleHoverSettings = function() {
