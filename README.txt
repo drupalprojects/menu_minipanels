@@ -37,6 +37,10 @@ may be another script or plugin loading on the page which is conflicting. In
 one case it was caused by DivX Player (http://drupal.org/node/1379542), once it
 was removed the problem ended.
 
+The qTip library takes over the tooltip display DOM events so it is not
+possible to display normal link title tooltips on menu items which have
+minipanels attached.
+
 
 Author
 ------
