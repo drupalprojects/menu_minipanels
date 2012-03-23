@@ -8,6 +8,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   is blank.
 #1199790 by DamienMcKenna: Rewrote how the menus were identified, allowing all
   menus to be used and not just the primary & secondary links.
+#1491398 by DamienMckenna: Improved default settings so the popup looks more
+  like a popup menu rather than a tooltip.
 
 
 Menu_MiniPanels 7.x-1.0-rc3, 2012-01-26
