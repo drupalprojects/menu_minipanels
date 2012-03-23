@@ -102,7 +102,11 @@ function menu_minipanels_requirements($phase) {
 function _menu_minipanels_enable_menus() {
   // Ignore the Devel and Navigation menus, those have to be manually enabled.
   $ignore_menus = array('devel', 'navigation');
-  foreach (menu_get_names() as $menu) {
+
+  // Only work with the custom menus, don't look at the shortcut sets.
+  $result = db_query("SELECT * FROM {menu_custom} ORDER BY title", array(), array('fetch' => PDO::FETCH_ASSOC));
+
+  foreach ($result as $menu) {
     if (in_array($menu, $ignore_menus)) {
       variable_get('menu_minipanels_' . $menu . '_enabled', FALSE);
     }

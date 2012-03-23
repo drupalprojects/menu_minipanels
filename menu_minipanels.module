@@ -489,7 +489,9 @@ function menu_minipanels_page_alter(&$page) {
 
   // Load each of the menus that are configured as menu_minipanels. This
   // happens during hook_init() due to needing to work around the execution
-  // path of Drupal 6.
+  // path of Drupal 7. It is safe to use menu_get_names() here as the data is
+  // cached, and it won't be possible that the shortcut sets have been
+  // accidentally added.
   $load_requirements = FALSE;
   foreach (menu_get_names() as $menu) {
     if (variable_get('menu_minipanels_' . $menu . '_enabled', FALSE)) {
