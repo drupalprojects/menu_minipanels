@@ -81,10 +81,9 @@ Drupal.behaviors.menuMiniPanels = function(context) {
 
   // Unmark target element as selected.
   MenuMiniPanels.setCallback('beforeHide', function(qTip, event, content) {
-    var $target = $(qTip.elements.target.get(0));
-    if ($target !== undefined) {
-      $target.removeClass('qtip-hover');
-    }
+    // Forceably remove the class off all DOM elements, avoid problems
+    // of it not being properly removed in certain scenarios.
+    $('.qtip-hover').removeClass('qtip-hover');
   });
 };
 

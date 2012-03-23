@@ -13,6 +13,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #1496980 by DamienMcKenna: "Undefined index" editing menus, slight cleanup.
 #1441214 by DamienMcKenna: Added a note to README.txt about menu link titles
   not working as tooltips due to how qTip works.
+#1425046 by DamienMcKenna, jwilson3: Hover class could get stuck in certain
+  scenarios.
 
 
 Menu_MiniPanels 6.x-1.3-rc3, 2012-01-26
