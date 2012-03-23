@@ -312,8 +312,8 @@ function _menu_minipanels_hover_defaults() {
       'target_custom' => '',
       'type' =>  'absolute',
       'corner' => array(
-        'target' => 'topLeft',
-        'tooltip' => 'topRight',
+        'target' => 'bottomLeft',
+        'tooltip' => 'topLeft',
       ),
       'adjust' => array(
         'x' => 0,
@@ -322,7 +322,7 @@ function _menu_minipanels_hover_defaults() {
         'screen' => 'false',
         'scroll' => 'true',
         'resize' => 'true',
-      )
+      ),
     ),
     'show' => array(
       'delay' => 0,
@@ -331,29 +331,29 @@ function _menu_minipanels_hover_defaults() {
       ),
       'effect' => array(
         'type' => 'slide',
-        'length' => 0
-      )
+        'length' => 0,
+      ),
     ),
     'hide' => array(
       'fixed' => 'true',
       'effect' => array(
         'type' => 'slide',
-        'length' => 0
-      )
+        'length' => 0,
+      ),
     ),
     'style' => array(
       'name' => 'light',
       'width' => array(
         'min' => 0,
-        'max' => 250
+        'max' => 250,
       ),
       'border' => array(
         'width' => 3,
         'radius' => 0,
-        'color' => '#d3d3d3'
+        'color' => '#d3d3d3',
       ),
-      'tip' => 'topLeft',
-    )
+      'tip' => 'none',
+    ),
   );
 
   // Implement hook_menu_minipanels_defaults_alter() in a module to override
