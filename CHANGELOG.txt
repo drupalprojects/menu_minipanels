@@ -13,6 +13,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1496980 by DamienMcKenna: Slight cleanup.
 #1199790 by DamienMcKenna: Follow-up to avoid enabling any shortcut sets that
   may exist.
+#1441214 by DamienMcKenna: Added a note to README.txt about menu link titles
+  not working as tooltips due to how qTip works.
 
 
 Menu_MiniPanels 7.x-1.0-rc3, 2012-01-26
