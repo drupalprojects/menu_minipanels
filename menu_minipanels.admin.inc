@@ -9,6 +9,25 @@
 function menu_minipanels_admin() {
   $form = array();
 
+  // Give shortcuts to the menu-edit pages.
+  $result = db_query("SELECT * FROM {menu_custom} ORDER BY title", array(), array('fetch' => PDO::FETCH_ASSOC));
+  $header = array(t('Title'), array('data' => t('Can be used?')));
+  $rows = array();
+  foreach ($result as $menu) {
+    $row = array(theme('menu_admin_overview', array('title' => $menu['title'], 'name' => $menu['menu_name'])));
+    if (variable_get('menu_minipanels_' . $menu['menu_name'] . '_enabled', TRUE)) {
+      $label = 'Yes';
+    }
+    else {
+      $label = 'No';
+    }
+    $row[] = array('data' => l(t($label), 'admin/structure/menu/manage/' . $menu['menu_name'] . '/edit', array('query' => array('destination' => 'admin/config/content/menu_minipanels'))));
+    $rows[] = $row;
+  }
+  $form['menus'] = array(
+    '#markup' => theme('table', array('header' => $header, 'rows' => $rows)),
+  );
+
   // Additional global settings.
   $form['menu_minipanels_show_admin'] = array(
     '#title' => 'Load on admin pages',

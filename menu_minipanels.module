@@ -150,65 +150,68 @@ function menu_minipanels_menu() {
  * Add the minipanel selector & associated settings to the menu item editor.
  */
 function menu_minipanels_form_menu_edit_item_alter(&$form, $form_state, $form_id) {
-  // Load minipanels.
-  ctools_include('plugins', 'panels');
-  $panel_minis = panels_mini_load_all();
+  // Check if this menu is enabled.
+  if (variable_get('menu_minipanels_' . $form['original_item']['#value']['menu_name'] . '_enabled', TRUE)) {
+    // Load minipanels.
+    ctools_include('plugins', 'panels');
+    $panel_minis = panels_mini_load_all();
 
-  // If no Mini Panels are found, leave a message.
-  if (empty($panel_minis)) {
-    drupal_set_message(t('No Mini Panels are available, some need to be added via the <a href="!link" title="Mini Panels administrator">Mini Panels admin</a> for the Menu_MiniPanels module to work.', array('!link' => url('admin/structure/panels/settings/panels-mini'))), 'warning');
-  }
-
-  // Mini Panels are available.
-  else {
-    // Load the admin code necessary for this.
-    module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
-
-    // Load the JS necessary for the admin.
-    drupal_add_js(drupal_get_path('module', 'menu_minipanels') . '/js/menu_minipanels_admin.js', array('scope' => 'footer'));
-
-    // The 'options' element already exists, just need to tweak it.
-    $form['options']['#tree'] = TRUE;
-    $form['options']['#type'] = 'markup';
-    $form['options']['#weight'] = '50';
-    unset($form['options']['#value']['attributes']);
-
-    // Create options for select box
-    $options = array('' => '- None -');
-    foreach ($panel_minis as $panel_mini) {
-      // If the admin title is empty, use the minipanel name.
-      if (!empty($panel_mini->admin_title)) {
-        $title = check_plain($panel_mini->admin_title);
-      }
-      else {
-        $title = check_plain($panel_mini->name);
-      }
-      $options[check_plain($panel_mini->name)] = check_plain($title);
+    // If no Mini Panels are found, leave a message.
+    if (empty($panel_minis)) {
+      drupal_set_message(t('No Mini Panels are available, some need to be added via the <a href="!link" title="Mini Panels administrator">Mini Panels admin</a> for the Menu_MiniPanels module to work.', array('!link' => url('admin/structure/panels/settings/panels-mini'))), 'warning');
     }
-    asort($options);
 
-    $item = $form['original_item']['#value'];
-    $form['options']['minipanel'] = array(
-      '#type' => 'select',
-      '#title' => t('Menu minipanel'),
-      '#description' => t('Choose the minipanel to display.'),
-      '#default_value' => isset($item['options']['minipanel']) ? $item['options']['minipanel'] : '',
-      '#options' => $options,
-      '#required' => FALSE,
-    );
+    // Mini Panels are available.
+    else {
+      // Load the admin code necessary for this.
+      module_load_include('inc', 'menu_minipanels', 'menu_minipanels.admin');
 
-    // $form['#validate'][] = 'menu_minipanels_menu_edit_item_validate';
+      // Load the JS necessary for the admin.
+      drupal_add_js(drupal_get_path('module', 'menu_minipanels') . '/js/menu_minipanels_admin.js', array('scope' => 'footer'));
 
-    if (!isset($form['original_item']['#value']['options']['menu_minipanels_hover'])) {
-      $form['original_item']['#value']['options']['menu_minipanels_hover'] = array();
+      // The 'options' element already exists, just need to tweak it.
+      $form['options']['#tree'] = TRUE;
+      $form['options']['#type'] = 'markup';
+      $form['options']['#weight'] = '50';
+      unset($form['options']['#value']['attributes']);
+
+      // Create options for select box
+      $options = array('' => '- None -');
+      foreach ($panel_minis as $panel_mini) {
+        // If the admin title is empty, use the minipanel name.
+        if (!empty($panel_mini->admin_title)) {
+          $title = check_plain($panel_mini->admin_title);
+        }
+        else {
+          $title = check_plain($panel_mini->name);
+        }
+        $options[check_plain($panel_mini->name)] = check_plain($title);
+      }
+      asort($options);
+
+      $item = $form['original_item']['#value'];
+      $form['options']['minipanel'] = array(
+        '#type' => 'select',
+        '#title' => t('Menu minipanel'),
+        '#description' => t('Choose the minipanel to display.'),
+        '#default_value' => isset($item['options']['minipanel']) ? $item['options']['minipanel'] : '',
+        '#options' => $options,
+        '#required' => FALSE,
+      );
+
+      // $form['#validate'][] = 'menu_minipanels_menu_edit_item_validate';
+
+      if (!isset($form['original_item']['#value']['options']['menu_minipanels_hover'])) {
+        $form['original_item']['#value']['options']['menu_minipanels_hover'] = array();
+      }
+      _menu_minipanels_hover_settings_form($form['options'], $form['original_item']['#value']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
+
+      // This is prepended to the array to ensure it is executed before
+      // menu_edit_item_submit.  If it is executed after menu_edit_item_submit,
+      // then the menu_minipanels_hover array will be saved to the database
+      // anyway, and the intercept would be pointless.
+      array_unshift($form['#submit'], 'menu_minipanels_menu_edit_item_submit');
     }
-    _menu_minipanels_hover_settings_form($form['options'], $form['original_item']['#value']['options']['menu_minipanels_hover'], variable_get('menu_minipanels_hover', _menu_minipanels_hover_defaults()));
-
-    // This is prepended to the array to ensure it is executed before
-    // menu_edit_item_submit.  If it is executed after menu_edit_item_submit,
-    // then the menu_minipanels_hover array will be saved to the database
-    // anyway, and the intercept would be pointless.
-    array_unshift($form['#submit'], 'menu_minipanels_menu_edit_item_submit');
   }
 }
 
@@ -216,13 +219,45 @@ function menu_minipanels_form_menu_edit_item_alter(&$form, $form_state, $form_id
  * If no minipanel is set, stop minipanel settings being saved.
  */
 function menu_minipanels_menu_edit_item_submit($form, &$form_state) {
-  if ($form_state['values']['options']['minipanel'] == '') {
+  if (empty($form_state['values']['options']['minipanel'])) {
     unset($form_state['values']['options']['menu_minipanels_hover']);
   }
   else {
     // Store mlid for later use in uniquely identifiying menu configs in the
     // Javascript.
     $form_state['values']['options']['menu_minipanels_hover']['mlid'] = $form_state['values']['mlid'];
+  }
+}
+
+/**
+ * Implementation of hook_form_FORM_ID_alter().
+ */
+function menu_minipanels_form_menu_edit_menu_alter(&$form, &$form_state) {
+  // Control whether the menu is enabled.
+  $var_name = 'menu_minipanels_' . $form['menu_name']['#default_value'] . '_enabled';
+  $form['menu_minipanels'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Allow to be used with Menu_MiniPanels'),
+    '#default_value' => variable_get($var_name, TRUE),
+    '#description' => t('When this is enabled the Menu_MiniPanels options will be available when editing individual menu items. Disabling this for menus that don\'t need it will give a small performance gain.'),
+  );
+
+  $form['#submit'][] = 'menu_minipanels_form_menu_edit_menu_submit';
+
+  // Adjust the weight of the submit button so it shows at the end.
+  $form['submit']['#weight'] = 1000;
+}
+
+/**
+ * Submission callback for the menu_edit_menu form.
+ */
+function menu_minipanels_form_menu_edit_menu_submit($form, &$form_state) {
+  $var_name = 'menu_minipanels_' . $form_state['values']['menu_name'] . '_enabled';
+  if (!empty($form_state['values']['menu_minipanels'])) {
+    variable_set($var_name, TRUE);
+  }
+  else {
+    variable_set($var_name, FALSE);
   }
 }
 
@@ -451,40 +486,41 @@ function menu_minipanels_page_alter(&$page) {
     return;
   }
 
-  // The path to this module.
-  $path = drupal_get_path('module', 'menu_minipanels');
-
-  // Load the module's custom CSS.
-  drupal_add_css($path . '/css/menu_minipanels.css');
-
-  // This module's custom JS.
-  drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
-
-  // Load the qTip script.
-  drupal_add_js($qtip_path, array('scope' => 'footer'));
-
-  // Most themes will call primary and secondary links on every page.
-  // They are usually themed by a function call inside page.tpl.php so we
-  // can't wait until theme_links is called, because by that time, $closure
-  // has already been created, and therefore our code would not be included.
-  // Therefore, we ought to load any mini panels primary and secondary links
-  // may have.
-  if (theme_get_setting('toggle_main_menu')) {
-    menu_minipanels_prepare_links(menu_main_menu());
-  }
-  if (theme_get_setting('toggle_secondary_menu')) {
-    menu_minipanels_prepare_links(menu_secondary_menu());
+  // Load each of the menus that are configured as menu_minipanels. This
+  // happens during hook_init() due to needing to work around the execution
+  // path of Drupal 6.
+  $load_requirements = FALSE;
+  foreach (menu_get_names() as $menu) {
+    if (variable_get('menu_minipanels_' . $menu . '_enabled', FALSE)) {
+      $load_requirements = TRUE;
+      menu_minipanels_prepare_links(menu_navigation_links($menu));
+    }
   }
 
-  // Compile the output of each of the requested MiniPanels.
-  $output = '';
-  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
-    $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
-  }
+  // If menus are actually needed, load the required scripts & CSS.
+  if ($load_requirements) {
+    // The path to this module.
+    $path = drupal_get_path('module', 'menu_minipanels');
 
-  if (!empty($output)) {
-    $page['page_bottom']['menu_minipanels'] = array(
-      '#markup' => $output,
-    );
+    // Load the module's custom CSS.
+    drupal_add_css($path . '/css/menu_minipanels.css');
+
+    // This module's custom JS.
+    drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
+
+    // Load the qTip script.
+    drupal_add_js($qtip_path, array('scope' => 'footer'));
+
+    // Compile the output of each of the requested MiniPanels.
+    $output = '';
+    foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
+      $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
+    }
+
+    if (!empty($output)) {
+      $page['page_bottom']['menu_minipanels'] = array(
+        '#markup' => $output,
+      );
+    }
   }
 }

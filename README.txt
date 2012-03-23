@@ -18,6 +18,8 @@ Installation
    (http://drupal.org/project/libraries).
 4. Enable the module.
 5. Visit "Menu Minipanels Settings" to configure default settings for qTip.
+6. Visit the "Edit menu" page for each menu (not menu item) to ensure the
+   correct menus are enabled for use with Menu MiniPanels.
 
 
 Tips
