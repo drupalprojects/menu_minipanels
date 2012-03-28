@@ -509,10 +509,10 @@ function menu_minipanels_page_alter(&$page) {
     drupal_add_css($path . '/css/menu_minipanels.css');
 
     // This module's custom JS.
-    drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer'));
+    drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer', 'weight' => -100));
 
     // Load the qTip script.
-    drupal_add_js($qtip_path, array('scope' => 'footer'));
+    drupal_add_js($qtip_path, array('scope' => 'footer', 'weight' => -99));
 
     // Compile the output of each of the requested MiniPanels.
     $output = '';

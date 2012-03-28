@@ -1,3 +1,9 @@
+Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
+---------------------------------------
+#1505112 by DamienMcKenna: Updated drupal_add_js() calls to ensure the module's
+  files load before any custom style JS files are loaded.
+
+
 Menu_MiniPanels 7.x-1.0-rc4, 2012-03-23
 ---------------------------------------
 #1370840 by DuaelFr: Stop searching for the JS file at the first matching path.
