@@ -67,7 +67,7 @@ function menu_minipanels_init() {
   // path of Drupal 6.
   $load_requirements = FALSE;
   foreach (menu_get_names() as $menu) {
-    if (variable_get('menu_minipanels_' . $menu . '_enabled', TRUE)) {
+    if (variable_get('menu_minipanels_' . $menu . '_enabled', FALSE)) {
       $load_requirements = TRUE;
       menu_minipanels_preprocess_links_at_init(menu_navigation_links($menu));
     }
@@ -195,7 +195,7 @@ function menu_minipanels_form_menu_edit_item_alter(&$form, $form_state) {
   // Check to see whether the menu form exists.
   if (isset($form['menu']['original_item']['#value']['menu_name'])) {
     // Check if this menu is enabled.
-    if (variable_get('menu_minipanels_' . $form['menu']['original_item']['#value']['menu_name'] . '_enabled', TRUE)) {
+    if (variable_get('menu_minipanels_' . $form['menu']['original_item']['#value']['menu_name'] . '_enabled', FALSE)) {
 
       // Load minipanels.
       ctools_include('plugins', 'panels');
@@ -284,7 +284,7 @@ function menu_minipanels_form_menu_edit_menu_alter(&$form, &$form_state) {
   $form['menu_minipanels'] = array(
     '#type' => 'checkbox',
     '#title' => t('Allow to be used with Menu_MiniPanels'),
-    '#default_value' => variable_get($var_name, TRUE),
+    '#default_value' => variable_get($var_name, FALSE),
     '#description' => t('When this is enabled the Menu_MiniPanels options will be available when editing individual menu items. Disabling this for menus that don\'t need it will give a small performance gain.'),
   );
 

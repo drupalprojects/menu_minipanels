@@ -14,7 +14,7 @@ function menu_minipanels_admin() {
   $header = array(t('Title'), array('data' => t('Can be used?')));
   $rows = array();
   while ($menu = db_fetch_array($result)) {
-    if (variable_get('menu_minipanels_' . $menu['menu_name'] . '_enabled', TRUE)) {
+    if (variable_get('menu_minipanels_' . $menu['menu_name'] . '_enabled', FALSE)) {
       $label = 'Yes';
     }
     else {
