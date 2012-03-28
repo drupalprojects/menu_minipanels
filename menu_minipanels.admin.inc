@@ -15,7 +15,7 @@ function menu_minipanels_admin() {
   $rows = array();
   foreach ($result as $menu) {
     $row = array(theme('menu_admin_overview', array('title' => $menu['title'], 'name' => $menu['menu_name'])));
-    if (variable_get('menu_minipanels_' . $menu['menu_name'] . '_enabled', TRUE)) {
+    if (variable_get('menu_minipanels_' . $menu['menu_name'] . '_enabled', FALSE)) {
       $label = 'Yes';
     }
     else {

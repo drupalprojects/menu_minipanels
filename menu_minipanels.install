@@ -108,10 +108,10 @@ function _menu_minipanels_enable_menus() {
 
   foreach ($result as $menu) {
     if (in_array($menu, $ignore_menus)) {
-      variable_get('menu_minipanels_' . $menu . '_enabled', FALSE);
+      variable_set('menu_minipanels_' . $menu . '_enabled', FALSE);
     }
     else {
-      variable_get('menu_minipanels_' . $menu . '_enabled', TRUE);
+      variable_set('menu_minipanels_' . $menu . '_enabled', TRUE);
     }
   }
 }
@@ -140,3 +140,11 @@ function menu_minipanels_update_7101() {
 
   return $ret;
 }
+
+/**
+ * Rerun update 7101.
+ */
+function menu_minipanels_update_7102() {
+  return array();
+}
+
