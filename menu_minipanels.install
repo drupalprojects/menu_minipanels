@@ -145,6 +145,7 @@ function menu_minipanels_update_7101() {
  * Rerun update 7101.
  */
 function menu_minipanels_update_7102() {
+  menu_minipanels_update_7101();
   return array();
 }
 
