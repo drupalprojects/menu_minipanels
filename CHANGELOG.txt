@@ -4,6 +4,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
   file must be loaded after the module's JS that it may be necessary to load
   it from the theme.
 #1199790 by DamienMcKenna: Fixed update 6101.
+#1199790 by DamienMcKenna: Slight code cleanup on the update scripts.
 
 
 Menu_MiniPanels 6.x-1.3-rc4, 2012-03-23
