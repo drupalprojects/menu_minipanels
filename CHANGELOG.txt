@@ -3,6 +3,7 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1505112 by DamienMcKenna: Updated drupal_add_js() calls to ensure the module's
   files load before any custom style JS files are loaded.
 #1199790 by DamienMcKenna: Fixed update 7101.
+#1199790 by DamienMcKenna: Slight code cleanup on the update scripts.
 
 
 Menu_MiniPanels 7.x-1.0-rc4, 2012-03-23

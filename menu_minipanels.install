@@ -124,28 +124,22 @@ function _menu_minipanels_enable_menus() {
  * Warn the user to re-save their menu configurations.
  */
 function menu_minipanels_update_7100() {
-  drupal_set_message('Recent changes to the Menu MiniPanels module require that any menus with attached MiniPanels have their configuration re-saved.');
+  drupal_set_message(t('Recent changes to the Menu MiniPanels module require that any menus with attached MiniPanels have their configuration re-saved.'));
+}
+
+/**
+ * // Placeholder.
+ */
+function menu_minipanels_update_7101() {
+  // Do nothing.
 }
 
 /**
  * Change the menu configurations to the new structure.
  */
-function menu_minipanels_update_7101() {
-  $ret = array();
-
+function menu_minipanels_update_7102() {
   // Allow each menu to be menu_minipanel-ized, with some exceptions.
   _menu_minipanels_enable_menus();
 
-  drupal_set_message("The menus have been converted to use the new Menu MiniPanels settings, though you should still check each menu to ensure that it is correctly enabled via each menu's edit page. You may also want to disable ones which are not necessary for a small performance improvement.");
-
-  return $ret;
+  drupal_set_message(t('The menus have been converted to use the new Menu MiniPanels settings, though you should still check each menu to ensure that it is correctly enabled via each menu\'s edit page. You may also want to disable ones which are not necessary for a small performance improvement.'));
 }
-
-/**
- * Rerun update 7101.
- */
-function menu_minipanels_update_7102() {
-  menu_minipanels_update_7101();
-  return array();
-}
-
