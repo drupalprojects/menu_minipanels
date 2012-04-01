@@ -156,8 +156,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#title' => t('Show effect configuration'), 
     '#collapsible' => TRUE, 
     '#collapsed' => FALSE,
-  );
-  
+  );  
   $base_form['menu_minipanels_hover']['show']['delay'] = array(
     '#type' => 'textfield',
     '#title' => t('Delay'),
@@ -165,7 +164,6 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#default_value' => isset($menu_minipanels_hover['show']['delay']) ? $menu_minipanels_hover['show']['delay'] : $defaults['show']['delay'],
     '#required' => FALSE,
   );
-
   $when_options = array(
     'click' => t('Click'),
     'dblclick' => t('Double Click'),
@@ -205,7 +203,13 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#collapsible' => TRUE, 
     '#collapsed' => FALSE,
   );
-  
+  $base_form['menu_minipanels_hover']['hide']['delay'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Delay'),
+    '#description' => t('How long (in milliseconds) the tooltip should wait before hiding.'),
+    '#default_value' => isset($menu_minipanels_hover['hide']['delay']) ? $menu_minipanels_hover['hide']['delay'] : $defaults['hide']['delay'],
+    '#required' => TRUE,
+  );
   $base_form['menu_minipanels_hover']['hide']['fixed'] = array(
     '#type' => 'select',
     '#title' => t('Fixed'),
@@ -335,6 +339,7 @@ function _menu_minipanels_hover_defaults() {
       ),
     ),
     'hide' => array(
+      'delay' => 0,
       'fixed' => 'true',
       'effect' => array(
         'type' => 'slide',
