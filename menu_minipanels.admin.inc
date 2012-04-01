@@ -25,7 +25,7 @@ function menu_minipanels_admin() {
     $rows[] = $row;
   }
   $form['menus'] = array(
-    '#markup' => theme('table', array('header' => $header, 'rows' => $rows)),
+    '#markup' => theme('table', array('caption' => t('Menu selection'), 'header' => $header, 'rows' => $rows)),
   );
 
   // Additional global settings.
