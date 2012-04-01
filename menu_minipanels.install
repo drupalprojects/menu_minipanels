@@ -143,3 +143,11 @@ function menu_minipanels_update_7102() {
 
   drupal_set_message(t('The menus have been converted to use the new Menu MiniPanels settings, though you should still check each menu to ensure that it is correctly enabled via each menu\'s edit page. You may also want to disable ones which are not necessary for a small performance improvement.'));
 }
+
+/**
+ * Inform the user about the settings page moving.
+ */
+function menu_minipanels_update_7103() {
+  menu_cache_clear_all();
+  drupal_set_message(t('Please note that the <a href=":url">Menu_MiniPanels configuration page</a> has been relocated.', array(':url' => 'admin/config/user-interface/menu_minipanels')));
+}

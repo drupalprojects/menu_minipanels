@@ -122,7 +122,7 @@ function menu_minipanels_get_qtip_path() {
  */
 function menu_minipanels_help($path, $arg) {
   switch ($path) {
-    case 'admin/config/content/menu_minipanels':
+    case 'admin/config/user-interface/menu_minipanels':
       return '<p>'. t('The menu minipanels module integrates the very popular qTip tooltip library into Drupal. Visit the <a href="!reference_url">qTip reference</a> to learn about the various configuration options.', array('!reference_url' => 'http://craigsworks.com/projects/qtip/')) .'</p>';
   }
 }
@@ -132,9 +132,9 @@ function menu_minipanels_help($path, $arg) {
  */
 function menu_minipanels_menu() {
   $items = array();
-  $items['admin/config/content/menu_minipanels'] = array(
+  $items['admin/config/user-interface/menu_minipanels'] = array(
     'title' => 'Menu MiniPanels',
-    'description' => 'Configure the Menu MiniPanels module.',
+    'description' => 'Configure defaults for the Menu MiniPanels module.',
     'page callback' => 'drupal_get_form',
     'page arguments' =>  array('menu_minipanels_admin'),
     'access arguments' => array('administer site configuration'),

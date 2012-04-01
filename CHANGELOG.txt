@@ -4,6 +4,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   files load before any custom style JS files are loaded.
 #1199790 by DamienMcKenna: Fixed update 7101.
 #1199790 by DamienMcKenna: Slight code cleanup on the update scripts.
+#1337710 by DamienMcKenna: Moved the menu path to the correct location, and
+  slightly improved the settings menu item's description.
 
 
 Menu_MiniPanels 7.x-1.0-rc4, 2012-03-23
