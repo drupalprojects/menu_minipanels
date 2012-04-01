@@ -7,6 +7,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #1199790 by DamienMcKenna: Slight code cleanup on the update scripts.
 #1337710 by DamienMcKenna: Slightly improved the settings menu item's
   description.
+#1387914 by DamienMcKenna: Updated the README.txt file.
 
 
 Menu_MiniPanels 6.x-1.3-rc4, 2012-03-23
