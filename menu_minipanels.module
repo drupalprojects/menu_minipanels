@@ -176,7 +176,7 @@ function menu_minipanels_menu() {
   $items = array();
   $items['admin/settings/menu_minipanels'] = array(
     'title' => 'Menu MiniPanels',
-    'description' => 'Configure the Menu MiniPanels module.',
+    'description' => 'Configure defaults for the Menu MiniPanels module.',
     'page callback' => 'drupal_get_form',
     'page arguments' =>  array('menu_minipanels_admin'),
     'access arguments' => array('administer site configuration'),
