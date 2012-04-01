@@ -7,6 +7,7 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1337710 by DamienMcKenna: Moved the menu path to the correct location, and
   slightly improved the settings menu item's description.
 #1387914 by DamienMcKenna: Updated the README.txt file.
+#1216546 by DamienMcKenna: Added support for the Hide Delay setting.
 
 
 Menu_MiniPanels 7.x-1.0-rc4, 2012-03-23

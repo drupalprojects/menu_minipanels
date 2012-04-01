@@ -397,6 +397,9 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   if (isset($menu_config['hide']['effect']['length']) && $menu_config['hide']['effect']['length'] == '') {
     unset($menu_config['hide']['effect']['length']);
   }
+  if (isset($menu_config['hide']['effect']['delay']) && $menu_config['hide']['effect']['delay'] == '') {
+    unset($menu_config['hide']['effect']['delay']);
+  }
   if (isset($menu_config['show']['effect']['delay']) && $menu_config['show']['effect']['delay'] == '') {
     unset($menu_config['show']['effect']['delay']);
   }
