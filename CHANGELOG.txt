@@ -10,6 +10,7 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1216546 by DamienMcKenna: Added support for the Hide Delay setting.
 #1508774 by DamienMcKenna: Added the 'configure' directive to the info file so
   that a link to the settings page shows on the main modules page.
+#1508776 by DamienMcKenna: Show the qTip library status on the settings page.
 
 
 Menu_MiniPanels 7.x-1.0-rc4, 2012-03-23
