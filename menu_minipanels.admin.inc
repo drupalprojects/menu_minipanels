@@ -9,6 +9,19 @@
 function menu_minipanels_admin() {
   $form = array();
 
+  // Show the current status of the qTip library.
+  include_once('includes/install.inc');
+  module_load_include('install', 'menu_minipanels');
+  $status = menu_minipanels_requirements('runtime');
+  $form['status'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('qTip Library Status'),
+    '#description' => '<p>' . $status['menu_minipanels']['value'] . "</p>\n",
+  );
+  if (!empty($status['menu_minipanels']['description'])) {
+    $form['status']['#description'] .= '<p>' . $status['menu_minipanels']['description'] . "</p>\n";
+  }
+
   // Give shortcuts to the menu-edit pages.
   $result = db_query("SELECT * FROM {menu_custom} ORDER BY title");
   $header = array(t('Title'), array('data' => t('Can be used?')));

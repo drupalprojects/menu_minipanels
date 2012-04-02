@@ -9,6 +9,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
   description.
 #1387914 by DamienMcKenna: Updated the README.txt file.
 #1216546 by DamienMcKenna: Added support for the Hide Delay setting.
+#1508776 by DamienMcKenna: Show the qTip library status on the settings page.
 
 
 Menu_MiniPanels 6.x-1.3-rc4, 2012-03-23
