@@ -303,7 +303,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
 
   $base_form['menu_minipanels_hover']['style']['border']['radius'] = array(
     '#type' => 'textfield',
-    '#title' => t('Border radius'),
+    '#title' => t('Border radius (px)'),
     '#description' => t('Determines the roundness of the tooltip border.'),
     '#default_value' => isset($menu_minipanels_hover['style']['border']['radius']) ? $menu_minipanels_hover['style']['border']['radius'] : $defaults['style']['border']['radius'],
     '#required' => TRUE,
