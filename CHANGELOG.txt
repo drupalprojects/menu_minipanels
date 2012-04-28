@@ -1,3 +1,8 @@
+Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
+---------------------------------------
+#1440474 by davidwhthomas, DamienMcKenna: Allow pages to be skipped by path.
+
+
 Menu_MiniPanels 7.x-1.0-rc5, 2012-04-08
 ---------------------------------------
 #1505112 by DamienMcKenna: Updated drupal_add_js() calls to ensure the module's

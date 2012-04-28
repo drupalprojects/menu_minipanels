@@ -25,6 +25,7 @@ function menu_minipanels_install() {
  */
 function menu_minipanels_uninstall() {
   variable_del('menu_minipanels_hover');
+  variable_del('menu_minipanels_exclude_paths');
   foreach (menu_get_names() as $menu) {
     variable_del('menu_minipanels_' . $menu . '_enabled');
   }
@@ -150,4 +151,20 @@ function menu_minipanels_update_7102() {
 function menu_minipanels_update_7103() {
   menu_cache_clear_all();
   drupal_set_message(t('Please note that the <a href=":url">Menu_MiniPanels configuration page</a> has been relocated.', array(':url' => 'admin/config/user-interface/menu_minipanels')));
+}
+
+/**
+ * Change from the show_admin to the exclude_pages variable.
+ */
+function menu_minipanels_update_7104() {
+  // Convert the existing show_admin variable.
+  if (variable_get('menu_minipanels_show_admin', TRUE)) {
+    variable_set('menu_minipanels_exclude_paths', "admin\nadmin/*");
+  }
+  else {
+    variable_set('menu_minipanels_exclude_paths', '');
+  }
+
+  // Delete the existing show_admin variable.
+  variable_del('menu_minipanels_show_admin');
 }
