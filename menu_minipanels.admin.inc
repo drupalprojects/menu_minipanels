@@ -34,8 +34,8 @@ function menu_minipanels_admin() {
       $label = 'No';
     }
     $row = array(
-      $menu['title'],
-      l(t($label), 'admin/build/menu-customize/' . $menu['menu_name'] . '/edit', array('query' => array('destination' => 'admin/settings/menu_minipanels'))),
+      l($menu['title'], 'admin/build/menu-customize/' . $menu['menu_name'] . '/edit', array('query' => array('destination' => 'admin/settings/menu_minipanels'), 'attributes' => array('title' => t('Edit this menu')))),
+      l(t($label), 'admin/settings/menu_minipanels/toggle/' . $menu['menu_name'], array('query' => array('destination' => 'admin/settings/menu_minipanels'), 'attributes' => array('title' => t('Toggle this menu')))),
     );
     $rows[] = $row;
   }
@@ -413,4 +413,27 @@ function menu_minipanels_menu_minipanels_styles() {
   );
   
   return $options_style;
+}
+
+/**
+ * Toggle the status of a menu.
+ */
+function menu_minipanels_menu_toggle($menu) {
+  // Some security precations.
+  $menu = check_plain($menu);
+
+  // First ensure the menu item actually exists.
+  $result = db_result(db_query("SELECT menu_name FROM {menu_custom} WHERE menu_name = '%s'", array($menu)));
+  if (!empty($result)) {
+    if (variable_get('menu_minipanels_' . $menu . '_enabled', FALSE)) {
+      variable_set('menu_minipanels_' . $menu . '_enabled', FALSE);
+    }
+    else {
+      variable_set('menu_minipanels_' . $menu . '_enabled', TRUE);
+    }
+
+    drupal_set_message(t('Menu :menu has been toggled.', array(':menu' => $menu)));
+  }
+
+  drupal_goto('admin/config/user-interface/menu_minipanels');
 }
