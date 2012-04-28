@@ -140,6 +140,15 @@ function menu_minipanels_menu() {
     'access arguments' => array('administer site configuration'),
     'file' => 'menu_minipanels.admin.inc',
   );
+  $items['admin/config/user-interface/menu_minipanels/toggle'] = array(
+    'title' => 'Toggle menu',
+    'description' => '',
+    'page callback' => 'menu_minipanels_menu_toggle',
+    'page arguments' =>  array(5),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'menu_minipanels.admin.inc',
+    'type' => MENU_CALLBACK,
+  );
 
   return $items;
 }
