@@ -68,8 +68,10 @@ function menu_minipanels_init() {
   $load_requirements = FALSE;
   foreach (menu_get_names() as $menu) {
     if (variable_get('menu_minipanels_' . $menu . '_enabled', FALSE)) {
-      $load_requirements = TRUE;
-      menu_minipanels_preprocess_links_at_init(menu_navigation_links($menu));
+      // Check whether qTip actually needs to be loaded.
+      if (menu_minipanels_preprocess_links_at_init(menu_navigation_links($menu))) {
+        $load_requirements = TRUE;
+      }
     }
   }
 
@@ -358,8 +360,12 @@ function menu_minipanels_theme_registry_alter(&$vars) {
  * See @menu_minipanels_init().
  */
 function menu_minipanels_preprocess_links_at_init($links) {
+  // Track whether the qTip code needs to be loaded.
+  $load_qtip = FALSE;
+
   foreach ($links as $link) {
     if (!empty($link['minipanel'])) {
+      $load_qtip = TRUE;
       $prefix = '';
       if (!empty($link['attributes']['class'])) {
         $prefix = $link['attributes']['class'] . ' ';
@@ -367,6 +373,8 @@ function menu_minipanels_preprocess_links_at_init($links) {
       $link['attributes']['class'] = $prefix . _menu_minipanels_include($link['minipanel'], $link['menu_minipanels_hover']);
     }
   }
+
+  return $load_qtip;
 }
 
 /**
