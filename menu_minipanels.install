@@ -25,6 +25,7 @@ function menu_minipanels_install() {
  */
 function menu_minipanels_uninstall() {
   variable_del('menu_minipanels_hover');
+  variable_del('menu_minipanels_exclude_paths');
   foreach (menu_get_names() as $menu) {
     variable_del('menu_minipanels_' . $menu . '_enabled');
   }
@@ -132,6 +133,24 @@ function menu_minipanels_update_6102() {
   _menu_minipanels_enable_menus();
 
   drupal_set_message(t('The menus have been converted to use the new Menu MiniPanels settings, though you should still check each menu to ensure that it is correctly enabled via each menu\'s edit page. You may also want to disable ones which are not necessary for a small performance improvement.'));
+
+  return array();
+}
+
+/**
+ * Change from the show_admin to the exclude_pages variable.
+ */
+function menu_minipanels_update_6103() {
+  // Convert the existing show_admin variable.
+  if (variable_get('menu_minipanels_show_admin', TRUE)) {
+    variable_set('menu_minipanels_exclude_paths', "admin\nadmin/*");
+  }
+  else {
+    variable_set('menu_minipanels_exclude_paths', '');
+  }
+
+  // Delete the existing show_admin variable.
+  variable_del('menu_minipanels_show_admin');
 
   return array();
 }

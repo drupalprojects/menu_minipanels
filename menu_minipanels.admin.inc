@@ -44,11 +44,13 @@ function menu_minipanels_admin() {
   );
 
   // Additional global settings.
-  $form['menu_minipanels_show_admin'] = array(
-    '#title' => 'Load on admin pages',
-    '#type' => 'checkbox',
-    '#default_value' => variable_get('menu_minipanels_show_admin', TRUE),
-    '#description' => t('Optionally hide on the admin pages.'),
+
+  // Control which pages are excluded from having megamenus.
+  $form['menu_minipanels_exclude_paths'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Don\'t show Menu_Minipanels on specific pages'),
+    '#default_value' => variable_get('menu_minipanels_exclude_paths', "admin\nadmin/*"),
+    '#description' => t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>')),
   );
 
   // Default settings.

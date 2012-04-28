@@ -426,8 +426,8 @@ function menu_minipanels_preprocess_page_hidden(&$variables) {
  * See @_menu_minipanels_include.
  */
 function menu_minipanels_footer() {
-  // Optionally ignore admin pages.
-  if (arg(0) == 'admin' && !variable_get('menu_minipanels_show_admin', TRUE)) {
+  // Optionally ignore certain pages.
+  if (menu_minipanels_excluded_path()) {
     return;
   }
 
@@ -572,4 +572,34 @@ function _menu_minipanels_render_panel($minipanel_name) {
   $panel_mini->context = $panel_mini->display->context = ctools_context_load_contexts($panel_mini);
   $panel_mini->display->css_id = panels_mini_get_id($panel_mini->name);
   return panels_render_display($panel_mini->display);
+}
+
+/**
+ * Check if current path should be excluded.
+ */
+function menu_minipanels_excluded_path() {
+  // By default don't exclude the page.
+  $exclude_path_match = FALSE;
+
+  // By default ignore the admin pages.
+  $exclude_paths = drupal_strtolower(variable_get('menu_minipanels_exclude_paths', "admin\nadmin/*"));
+
+  // Don't bother checking anything if the setting is empty.
+  if (!empty($exclude_paths)) {
+    // Check the current raw path first.
+    $exclude_path_match = drupal_match_path($_GET['q'], $exclude_paths);
+
+    // If there isn't already a patch, check for a possible alias.
+    if (!$exclude_path_match) {
+      // Get the current path.
+      $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+
+      // If the path *is* different to the current raw URL, check it too.
+      if ($path != $_GET['q']) {
+        $exclude_path_match = drupal_match_path($path, $exclude_paths);
+      }
+    }
+  }
+
+  return $exclude_path_match;
 }
