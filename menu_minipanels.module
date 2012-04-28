@@ -8,41 +8,19 @@
  *
  * Technical Overview:
  *
- * There's no way for this code to know what menu items will be used on what
- * pages.
- *
- * This presents a problem.
- *
- * Generally, menu trees are rendered in one of two ways: theme_links and
- * theme_menu_tree.
- *
- * theme_menu_tree() is easy to intercept, as it's usually called within a
- * module, block or preprocess_page, and therefore our code can still get any
- * menu_minipanels js and html included in $closure.
- *
- * However, theme_links is used by most themes for $primary_links and
- * $secondary_links.
- *
- * Because the theme_links function is usually called within page.tpl.php,
- * rather than in a preprocess_page function, it is called *after* $closure
- * is created. Therefore, our general method of including the appropriate js
- * config and panels html output wont work.
- *
- * The method I have used is to assume that primary_links and secondary_links
- * will always be used on a page, so load them in menu_minipanels_init(), find
- * any menu minipanel items, and add the code to the queue for $closure that
- * way. Then still intercept the theming functions in order to add the class
- * names.
- *
- * There's no clean way to get around this as far as I can see, *without*
- * inserting a menu_minipanels closure function call at the end of a theme.
- *
- * That is of course a piece of cake for technical users, but I want this
- * module to be able to be used out of the box by the widest range of users
- * possible. Hackers gonna hack anyway.
- *
- * I may include a configuration option for technical users at a later date if
- * there is any demand.
+ * Due to the Drupal 6 execution path it is necessary to do this in multiple
+ * steps:
+ * 1. During hook_init() check each menu to see if there are any menus with
+ *    minipanels configured.
+ * 2. The hook_theme_registry_alter() function is used to replace the existing
+ *    preprocess function for links and menu links.
+ * 3. When links or menu links are being displayed they will first be ran
+ *    through the preprocess function defined in step 2, this adds a class
+ *    to help identify the menu item.
+ * 4. The template_preprocess_page() function is added at the page level which
+ *    compiles the output of each menu and passes it to another function where
+ *    it is stored in a static variable.
+ * 5. The hook_footer() function is used to append the final output.
  */
 
 /**
@@ -62,7 +40,7 @@ function menu_minipanels_init() {
     return;
   }
 
-  // Load each of the menus that are configured as menu_minipanels. This
+  // Load each of the menus that are configured for menu_minipanels. This
   // happens during hook_init() due to needing to work around the execution
   // path of Drupal 6.
   $load_requirements = FALSE;
