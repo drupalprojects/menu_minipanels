@@ -1,3 +1,7 @@
+Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
+---------------------------------------
+
+
 Menu_MiniPanels 7.x-1.0-rc6, 2012-04-28
 ---------------------------------------
 #1440474 by davidwhthomas, DamienMcKenna: Allow pages to be skipped by path.
