@@ -1,6 +1,8 @@
 Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 ---------------------------------------
 #1264738 by DamienMcKenna: Added a note about 404 pages and Navigation404.
+#1553144 by DamienMcKenna: Removed some unnecessary code from
+  menu_minipanels_prepare_links().
 
 
 Menu_MiniPanels 7.x-1.0-rc6, 2012-04-28
