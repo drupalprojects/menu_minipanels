@@ -333,8 +333,7 @@ function menu_minipanels_theme_registry_alter(&$vars) {
 }
 
 /**
- * Ensure that we capture any mini panel menus that are set in $primary_links
- * or $secondary_links. This is run on every page load.
+ * Ensure that we capture any mini panel menus. This is run on every page load.
  * See @menu_minipanels_init().
  */
 function menu_minipanels_preprocess_links_at_init($links) {
@@ -344,11 +343,7 @@ function menu_minipanels_preprocess_links_at_init($links) {
   foreach ($links as $link) {
     if (!empty($link['minipanel'])) {
       $load_qtip = TRUE;
-      $prefix = '';
-      if (!empty($link['attributes']['class'])) {
-        $prefix = $link['attributes']['class'] . ' ';
-      }
-      $link['attributes']['class'] = $prefix . _menu_minipanels_include($link['minipanel'], $link['menu_minipanels_hover']);
+      _menu_minipanels_include($link['minipanel'], $link['menu_minipanels_hover']);
     }
   }
 
