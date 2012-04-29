@@ -1,5 +1,6 @@
 Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 ---------------------------------------
+#1264738 by DamienMcKenna: Added a note about 404 pages and Navigation404.
 
 
 Menu_MiniPanels 7.x-1.0-rc6, 2012-04-28

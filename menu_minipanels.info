@@ -5,3 +5,6 @@ package = "Menu"
 configure = admin/config/user-interface/menu_minipanels
 dependencies[] = menu
 dependencies[] = panels_mini
+
+; Not a dependency, but strongly recommended.
+;dependencies[] = navigation404

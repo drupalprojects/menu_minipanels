@@ -56,6 +56,11 @@ the pointer is over the minipanel, so this is a work-around.
 
 Known Issues
 ------------
+Due to a bug/feature in Drupal 7, no menus will be displayed on error pages,
+e.g. 404 / File Not Found pages. The best way to resolve this is to use the
+Navigation404 module, which will make all menus and minipanels be displayed
+again.
+
 If an error "Invalid calling object" shows on IE9's Javascript console, there
 may be another script or plugin loading on the page which is conflicting. In
 one case it was caused by DivX Player (http://drupal.org/node/1379542), once it
