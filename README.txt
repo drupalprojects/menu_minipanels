@@ -56,6 +56,9 @@ the pointer is over the minipanel, so this is a work-around.
 
 Known Issues
 ------------
+Due to how the menu system works in Drupal 6 it is not currently possible to
+display menu minipanels on 404 pages, even when using Blocks404.
+
 If an error "Invalid calling object" shows on IE9's Javascript console, there
 may be another script or plugin loading on the page which is conflicting. In
 one case it was caused by DivX Player (http://drupal.org/node/1379542), once it
