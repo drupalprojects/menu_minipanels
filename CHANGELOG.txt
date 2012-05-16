@@ -5,6 +5,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #1264738 by DamienMcKenna: Added a note about 404 pages.
 #1580072 by codycraven: Revert to using template_preprocess_page() for better
   compatibility with other modules.
+#1580312 by codycraven: Improved the custom JS to be cleaner and more
+  compatible with theming changes.
 
 
 Menu_MiniPanels 6.x-1.3-rc6, 2012-04-28
