@@ -105,14 +105,14 @@ function _menu_minipanels_enable_menus() {
   $ignore_menus = array('devel', 'navigation');
 
   // Only work with the custom menus, don't look at the shortcut sets.
-  $result = db_query("SELECT * FROM {menu_custom} ORDER BY title", array(), array('fetch' => PDO::FETCH_ASSOC));
+  $result = db_query("SELECT menu_name FROM {menu_custom} ORDER BY title", array(), array('fetch' => PDO::FETCH_ASSOC));
 
   foreach ($result as $menu) {
-    if (in_array($menu, $ignore_menus)) {
-      variable_set('menu_minipanels_' . $menu . '_enabled', FALSE);
+    if (in_array($menu['menu_name'], $ignore_menus)) {
+      variable_set('menu_minipanels_' . $menu['menu_name'] . '_enabled', FALSE);
     }
     else {
-      variable_set('menu_minipanels_' . $menu . '_enabled', TRUE);
+      variable_set('menu_minipanels_' . $menu['menu_name'] . '_enabled', TRUE);
     }
   }
 }
@@ -167,4 +167,14 @@ function menu_minipanels_update_7104() {
 
   // Delete the existing show_admin variable.
   variable_del('menu_minipanels_show_admin');
+}
+
+/**
+ * Ensure that the menus are correctly enabled.
+ */
+function menu_minipanels_update_7105() {
+  // This may have been inserted by accident.
+  variable_del('menu_minipanels_Array_enabled');
+
+  _menu_minipanels_enable_menus();
 }
