@@ -436,20 +436,6 @@ function _menu_minipanels_link_class_name($minipanel_name) {
 }
 
 /**
- * Code based on panels_mini_block() in panels_mini.module
- */
-function _menu_minipanels_render_panel($minipanel_name) {
-  $panel_mini = panels_mini_load($minipanel_name);
-  if (empty($panel_mini)) {
-    return '';
-  }
-  ctools_include('context');
-  $panel_mini->context = $panel_mini->display->context = ctools_context_load_contexts($panel_mini);
-  $panel_mini->display->css_id = panels_mini_get_id($panel_mini->name);
-  return panels_render_display($panel_mini->display);
-}
-
-/**
  * Implements hook_page_alter().
  *
  * This function does two things:
@@ -503,7 +489,16 @@ function menu_minipanels_page_alter(&$page) {
     // Compile the output of each of the requested MiniPanels.
     $output = '';
     foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
-      $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
+      $panel = panels_mini_block_view($minipanel_name);
+      // Convert the block to a render array.
+      $panel['#markup'] = $panel['content'];
+      unset($panel['content']);
+      unset($panel['subject']);
+      // Wrap the minipanel.
+      $panel['#prefix'] = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">';
+      $panel['#suffix'] = '</div>';
+      // Add it to the output stack.
+      $page['page_bottom']['menu_minipanels'][] = $panel;
     }
 
     if (!empty($output)) {

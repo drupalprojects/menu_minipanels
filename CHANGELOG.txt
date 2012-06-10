@@ -4,6 +4,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1553144 by DamienMcKenna: Removed some unnecessary code from
   menu_minipanels_prepare_links().
 #1586122 by DamienMcKenna: Bug in how menus were enabled, should work now.
+#1396032 by DamienMckenna: Manually re-load contextual menus on all qTip popups
+  and cleans up the output code to better use the render API.
 
 
 Menu_MiniPanels 7.x-1.0-rc6, 2012-04-28

@@ -87,6 +87,36 @@
         // of it not being properly removed in certain scenarios.
         $('.qtip-hover').removeClass('qtip-hover');
       });
+
+      // Integrate with the core Contextual module.
+      MenuMiniPanels.setCallback('onRender', function(qTip, event, content) {
+        $('div.menu-minipanels div.contextual-links-wrapper', context).each(function () {
+          var $wrapper = $(this);
+          // Remove the popup link added from the first time the Contextual
+          // module processed the links.
+          $wrapper.children('a.contextual-links-trigger').detach();
+          // Continue as normal.
+          var $region = $wrapper.closest('.contextual-links-region');
+          var $links = $wrapper.find('ul.contextual-links');
+          var $trigger = $('<a class="contextual-links-trigger" href="#" />').text(Drupal.t('Configure')).click(
+            function () {
+              $links.stop(true, true).slideToggle(100);
+              $wrapper.toggleClass('contextual-links-active');
+              return false;
+            }
+          );
+          // Attach hover behavior to trigger and ul.contextual-links.
+          $trigger.add($links).hover(
+            function () { $region.addClass('contextual-links-region-active'); },
+            function () { $region.removeClass('contextual-links-region-active'); }
+          );
+          // Hide the contextual links when user clicks a link or rolls out of
+          // the .contextual-links-region.
+          $region.bind('mouseleave click', Drupal.contextualLinks.mouseleave);
+          // Prepend the trigger.
+          $wrapper.prepend($trigger);
+        });
+      });
     }
   };
 })(jQuery);
