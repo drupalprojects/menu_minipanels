@@ -70,6 +70,9 @@ The qTip library takes over the tooltip display DOM events so it is not
 possible to display normal link title tooltips on menu items which have
 minipanels attached.
 
+When also using the Menu Attributes module, use at least v7.x-1.0-rc2 of that
+module as earlier versions had a bug that conflicted with Menu MiniPanels.
+
 
 Author
 ------
