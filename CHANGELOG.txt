@@ -1,4 +1,4 @@
-Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
+Menu_MiniPanels 6.x-1.3-rc7, 2012-06-17
 ---------------------------------------
 #1553144 by DamienMcKenna: Removed some unnecessary code from
   menu_minipanels_preprocess_links_at_init().
