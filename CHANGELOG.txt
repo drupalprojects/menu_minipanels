@@ -9,6 +9,7 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1604638 by DamienMcKenna: Added a note to the README.txt about a compatibility
   problem with old versions of Menu_Attributes.
 #1425046 by jwilson3: Hover class could still get stuck in certain scenarios.
+Added a note about compatibility problems with JavaScript widgets.
 
 
 Menu_MiniPanels 7.x-1.0-rc6, 2012-04-28

@@ -61,6 +61,11 @@ e.g. 404 / File Not Found pages. The best way to resolve this is to use the
 Navigation404 module, which will make all menus and minipanels be displayed
 again.
 
+There are compatibility problems between the qTip library and other JavaScript
+-enabled widgets that cause the widgets to not trigger when placed within a
+minipanel. This is noted to cause problems with Quicktabs, Commerce widgets,
+maps from Google Maps and other sources, and many others.
+
 If an error "Invalid calling object" shows on IE9's Javascript console, there
 may be another script or plugin loading on the page which is conflicting. In
 one case it was caused by DivX Player (http://drupal.org/node/1379542), once it
