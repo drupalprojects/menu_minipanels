@@ -352,7 +352,6 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   }
 
   $mlid = $menu_config['mlid'];
-  unset($menu_config['mlid']);
   
   // The same panel/mlid may be added multiple times, if the same menu is added
   // to a page more than once, i.e. the primary links, plus primary links also
