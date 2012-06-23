@@ -23,9 +23,9 @@ Drupal.behaviors.menuMiniPanels = function(context) {
 
         // Specify a custom target.
         if (setting.position.target == 'custom') {
-          var target = $(setting.position.target_custom);
-          if (target.length > 0) {
-            setting.position.target = target;
+          var $target = $(setting.position.target_custom);
+          if ($target.length > 0) {
+            setting.position.target = $target;
           }
           else {
             setting.position.target = false;
@@ -81,9 +81,9 @@ Drupal.behaviors.menuMiniPanels = function(context) {
     $('.qtip-hover').removeClass('qtip-hover');
 
     // Add the hover class to the current item.
-    var target = $(qTip.elements.target.get(0));
-    if (target !== undefined) {
-      target.addClass('qtip-hover');
+    var $target = $(qTip.elements.target.get(0));
+    if ($target !== undefined) {
+      $target.addClass('qtip-hover');
     }
   });
 
