@@ -8,8 +8,8 @@
  * arrays specified in the page footer.
  */
 Drupal.behaviors.menuMiniPanels = function(context) {
-  $.each(Drupal.settings.menuMinipanels.panels, function () {
-    var setting = this;
+  for (i in Drupal.settings.menuMinipanels.panels) {
+    var setting = Drupal.settings.menuMinipanels.panels[i];
     $('a.menu-minipanel-' + setting.mlid + ':not(.minipanel-processed)')
       .filter(function () {
         // Prevent links in qTips from generating qTips themselves, prevents
@@ -59,12 +59,12 @@ Drupal.behaviors.menuMiniPanels = function(context) {
         ];
 
         // Set function for each allowed callback.
-        $.each(allowedNames, function() {
-          var name = this;
+        for (i in allowedNames) {
+          var name = allowedNames[i];
           setting.api[name] = function(event, content) {
             return MenuMiniPanels.runCallback(name, this, event, content);
           };
-        });
+        }
 
         // Record what DOM element launched this qTip.
         setting.activator = 'a.menu-minipanel-' + setting.mlid;
@@ -72,7 +72,7 @@ Drupal.behaviors.menuMiniPanels = function(context) {
         // Initialize the qTip.
         $(this).qtip(setting);
       });
-  });
+  }
 
   // Mark target element as selected.
   MenuMiniPanels.setCallback('beforeShow', function(qTip, event, content) {
