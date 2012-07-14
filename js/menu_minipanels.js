@@ -59,12 +59,12 @@ Drupal.behaviors.menuMiniPanels = function(context) {
         ];
 
         // Set function for each allowed callback.
-        for (i in allowedNames) {
-          var name = allowedNames[i];
+        $.each(allowedNames, function() {
+          var name = this;
           setting.api[name] = function(event, content) {
             return MenuMiniPanels.runCallback(name, this, event, content);
           };
-        }
+        });
 
         // Record what DOM element launched this qTip.
         setting.activator = 'a.menu-minipanel-' + setting.mlid;

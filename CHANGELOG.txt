@@ -3,6 +3,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #1580312 by DamienMcKenna: Makes the $var JS variable naming consistent.
 #1661730 by DamienMcKenna: Replaced $.each with for() loop (minor performance
   improvement).
+#1683872 by DamienMcKenna: Fixed callbacks, they were broken by the changes in
+  #1661730.
 
 
 Menu_MiniPanels 6.x-1.3-rc7, 2012-06-17
