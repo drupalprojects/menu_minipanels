@@ -4,6 +4,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   more compatible with theming changes.
 #1661730 by DamienMcKenna: Replaced $.each with for() loop (minor performance
   improvement).
+#1683872 by DamienMcKenna: Fixed callbacks, they were broken by the changes in
+  #1661730.
 
 
 Menu_MiniPanels 7.x-1.0-rc7, 2012-06-17
