@@ -462,12 +462,25 @@ function menu_minipanels_page_alter(&$page) {
   // to use menu_get_names() here as the data is cached, and it won't be
   // possible that the shortcut sets have been accidentally added.
   $load_requirements = FALSE;
+  $enabled_menus = array();
   foreach (menu_get_names() as $menu) {
     if (variable_get('menu_minipanels_' . $menu . '_enabled', FALSE)) {
+      $enabled_menus[] = $menu;
+
       // Check whether qTip actually needs to be loaded.
       if (menu_minipanels_prepare_links(menu_navigation_links($menu))) {
         $load_requirements = TRUE;
       }
+    }
+  }
+
+  // If the main menu is enabled and the main & secondary menus both point to
+  // the same menu, load the second level of that menu.
+  $primary_menu = variable_get('menu_main_links_source', 'main-menu');
+  $secondary_menu = variable_get('menu_secondary_links_source', 'user-menu');
+  if (in_array($primary_menu, $enabled_menus) && $primary_menu == $secondary_menu) {
+    if (menu_minipanels_prepare_links(menu_navigation_links($primary_menu, 1))) {
+      $load_requirements = TRUE;
     }
   }
 
