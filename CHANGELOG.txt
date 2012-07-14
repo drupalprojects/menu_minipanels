@@ -5,6 +5,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
   improvement).
 #1683872 by DamienMcKenna: Fixed callbacks, they were broken by the changes in
   #1661730.
+#1633136 by DamienMcKenna: If the primary and secondary menus are the same,
+  also process the second level of that menu.
 
 
 Menu_MiniPanels 6.x-1.3-rc7, 2012-06-17
