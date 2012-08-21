@@ -8,6 +8,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   #1661730.
 #1633136 by DamienMcKenna: If the main menu and secondary menu are the same,
   also process the second level of that menu.
+#1728018 by DamienMcKenna: Restructured the output generation so it happens
+  earlier in the page cycle to help avoid problems with other modules.
 
 
 Menu_MiniPanels 7.x-1.0-rc7, 2012-06-17

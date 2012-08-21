@@ -14,11 +14,10 @@
  *    preprocess function for links and menu links.
  * 2. When links or menu links are being displayed they will first be ran
  *    through the preprocess function defined in step 2, this adds a class
- *    to help identify the menu item.
- * 3. The template_preprocess_page() function is added at the page level which
- *    compiles the output of each menu and passes it to another function where
- *    it is stored in a static variable.
- * 4. The hook_page_alter() function is used to append the final output.
+ *    to help identify the menu item; the final panel is rendered during this
+ *    process and statically cached for later retrieval.
+ * 3. The hook_page_alter() function loads the output previously generated and
+ *    appends it to the footer.
  */
 
 /**
@@ -311,16 +310,24 @@ function menu_minipanels__preprocess_link($link) {
 }
 
 /**
- * Stores all rendered minipanels through the page load.
- * Will later be used by @menu_minipanels_footer to add all required minipanels to $closure.
- * See @menu_minipanels_footer and @_menu_minipanels_include
+ * Stores the generated output of all rendered minipanels. Will later be used
+ * by @menu_minipanels_preprocess_page to display the generated output.
+ *
  * @param Int $mlid - the menu item id that needs the minipanel rendered.
  * @param String $minipanel_name - the name of the minipanel to render.
  */
 function menu_minipanels_panels($mlid = NULL, $minipanel_name = NULL) {
   static $panels = array();
   if ($minipanel_name != NULL) {
-    $panels[$mlid] = $minipanel_name;
+    $panel = panels_mini_block_view($minipanel_name);
+    // Convert the block to a render array.
+    $panel['#markup'] = $panel['content'];
+    unset($panel['content']);
+    unset($panel['subject']);
+    // Wrap the minipanel.
+    $panel['#prefix'] = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">';
+    $panel['#suffix'] = '</div>';
+    $panels[] = $panel;
   }
   else {
     return $panels;
@@ -498,26 +505,8 @@ function menu_minipanels_page_alter(&$page) {
     // Load the qTip script.
     drupal_add_js($qtip_path, array('scope' => 'footer', 'weight' => -99));
 
-    // Compile the output of each of the requested MiniPanels.
-    $output = '';
-    foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
-      $panel = panels_mini_block_view($minipanel_name);
-      // Convert the block to a render array.
-      $panel['#markup'] = $panel['content'];
-      unset($panel['content']);
-      unset($panel['subject']);
-      // Wrap the minipanel.
-      $panel['#prefix'] = '<div class="menu-minipanels menu-minipanel-' . $mlid . '">';
-      $panel['#suffix'] = '</div>';
-      // Add it to the output stack.
-      $page['page_bottom']['menu_minipanels'][] = $panel;
-    }
-
-    if (!empty($output)) {
-      $page['page_bottom']['menu_minipanels'] = array(
-        '#markup' => $output,
-      );
-    }
+    // Load the output.
+    $page['page_bottom']['menu_minipanels'] = menu_minipanels_panels();
   }
 }
 
