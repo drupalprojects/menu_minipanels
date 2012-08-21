@@ -16,11 +16,10 @@
  *    preprocess function for links and menu links.
  * 3. When links or menu links are being displayed they will first be ran
  *    through the preprocess function defined in step 2, this adds a class
- *    to help identify the menu item.
- * 4. The template_preprocess_page() function is added at the page level which
- *    compiles the output of each menu and passes it to another function where
- *    it is stored in a static variable.
- * 5. The hook_footer() function is used to append the final output.
+ *    to help identify the menu item; the final panel is rendered during this
+ *    process and statically cached for later retrieval.
+ * 4. The template_preprocess_page() function loads the output previously
+ *    generated and appends it to the footer.
  */
 
 /**
@@ -395,67 +394,34 @@ function menu_minipanels_preprocess_menu_item_link($link) {
 }
 
 /**
- * The panels need to be rendered *after* init so as to not cause theme
- * problems, but *before* closure, so as be sure that panels css gets
- * included.
- * 
- * We don't do anything with variables, we just use preprocess_page() as its at
- * called at time time.
+ * Implements template_preprocess_page().
+ *
+ * Output the generated MiniPanels.
  */
 function menu_minipanels_preprocess_page(&$variables) {
-  $output = '';
-
-  // Compile the output of each of the requested MiniPanels.
-  foreach (menu_minipanels_panels(NULL, NULL) as $mlid => $minipanel_name) {
-    $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
-  }
-
-  menu_minipanels_html($output);
-
-  // Regenerate closure to pick up any CSS additions needed for the panels.
-  $variables['closure'] = theme('closure');
-}
-
-/**
- * Implements hook_footer().
- *
- * Add all the required minipanel output to the closure.
- * See @_menu_minipanels_include.
- */
-function menu_minipanels_footer() {
   // Optionally ignore certain pages.
   if (menu_minipanels_excluded_path()) {
     return;
   }
 
-  return menu_minipanels_html();
-}
-
-function menu_minipanels_html($html = NULL) {
-  static $stored = '';
-  if ($html != NULL) {
-    $stored = $html;
-  }
-  else {
-    return $stored;
-  }
+  // Display the previously generated output.
+  $variables['footer'] .= "\n" . menu_minipanels_panels();
 }
 
 /**
- * Stores the names of all rendered minipanels through the page load.
- * Will later be used by @menu_minipanels_footer to add all required minipanels
- * to $closure.
- * See @menu_minipanels_footer and @_menu_minipanels_include.
+ * Stores the generated output of all rendered minipanels. Will later be used
+ * by @menu_minipanels_preprocess_page to display the generated output.
+ *
  * @param Int $mlid - the menu item id that needs the minipanel rendered.
  * @param String $minipanel_name - the name of the minipanel to render.
  */
 function menu_minipanels_panels($mlid = NULL, $minipanel_name = NULL) {
-  static $panels = array();
+  static $output = '';
   if ($minipanel_name != NULL) {
-    $panels[$mlid] = $minipanel_name;
+    $output .= '<div class="menu-minipanels menu-minipanel-' . $mlid . '">' . _menu_minipanels_render_panel($minipanel_name) . '</div>';
   }
   else {
-    return $panels;
+    return $output;
   }
 }
 
