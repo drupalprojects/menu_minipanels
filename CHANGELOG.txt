@@ -1,3 +1,7 @@
+Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
+---------------------------------------
+
+
 Menu_MiniPanels 7.x-1.0-rc8, 2012-08-21
 ---------------------------------------
 #1580312 by codycraven, DamienMcKenna: Improved the custom JS to be cleaner and
