@@ -26,8 +26,8 @@
  * Implements hook_init().
  */
 function menu_minipanels_init() {
-  // Optionally ignore admin pages.
-  if (arg(0) == 'admin' && variable_get('menu_minipanels_show_admin', TRUE)) {
+  // Optionally ignore certain pages.
+  if (menu_minipanels_excluded_path()) {
     return;
   }
 
