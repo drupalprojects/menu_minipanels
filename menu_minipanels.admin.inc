@@ -141,9 +141,9 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
 
   $type_options = array(
     'absolute' => t('Absolute'),
-    'relative' => t('Fixed'),
-    'static' => t('Relative'),
-    'relative' => t('Static'),
+    'fixed' => t('Fixed'),
+    'relative' => t('Relative'),
+    'static' => t('Static'),
   );
   $base_form['menu_minipanels_hover']['position']['type'] = array(
     '#type' => 'select',
