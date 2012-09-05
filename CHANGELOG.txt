@@ -3,6 +3,7 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 #1718012 by DamienMcKenna: Optional style setting fields were required; also
   reorganized the style settings fieldset for a slight UX improvement.
 #1775482 by DamienMcKenna: Position Type selections are incorrect.
+#1218174 by DamienMcKenna: Allow the position container to be changed.
 
 
 Menu_MiniPanels 7.x-1.0-rc8, 2012-08-21
