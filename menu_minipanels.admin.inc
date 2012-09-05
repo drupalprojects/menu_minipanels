@@ -154,6 +154,14 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
     '#required' => TRUE,
   );
 
+  $base_form['menu_minipanels_hover']['position']['container'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Container'),
+    '#description' => t('Allows control over where within the page\'s DOM structure the minipanel will be inserted. This defaults to $(document.body), i.e. at the end of the page\'s content.'),
+    '#default_value' => isset($menu_minipanels_hover['position']['container']) ? $menu_minipanels_hover['position']['container'] : $defaults['position']['container'],
+    '#required' => FALSE,
+  );
+
   $base_form['menu_minipanels_hover']['position']['corner'] = array();
   $base_form['menu_minipanels_hover']['position']['corner']['target'] = array(
     '#type' => 'select',
@@ -342,6 +350,7 @@ function _menu_minipanels_hover_defaults() {
       'target' =>  'element',
       'target_custom' => '',
       'type' =>  'absolute',
+      'container' => '',
       'corner' => array(
         'target' => 'bottomLeft',
         'tooltip' => 'topLeft',
