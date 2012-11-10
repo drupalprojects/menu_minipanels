@@ -204,7 +204,7 @@ function menu_minipanels_form_menu_edit_item_alter(&$form, $form_state) {
 
       // If no Mini Panels are found, leave a message.
       if (empty($panel_minis)) {
-        drupal_set_message(t('No Mini Panels are available, some need to be added via the <a href="!link" title="Mini Panels administrator">Mini Panels admin</a> for the Menu_MiniPanels module to work.', array('!link' => url('admin/structure/panels/settings/panels-mini'))), 'warning');
+        drupal_set_message(t('No Mini Panels are available, some need to be added via the <a href="!link" title="Mini Panels administrator">Mini Panels admin</a> for the Menu_MiniPanels module to work.', array('!link' => url('admin/build/mini-panels'))), 'warning');
       }
 
       // Mini Panels are available.
