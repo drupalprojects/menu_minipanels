@@ -49,7 +49,7 @@ function menu_minipanels_init() {
       $enabled_menus[] = $menu;
 
       // Check whether qTip actually needs to be loaded.
-      if (menu_minipanels_preprocess_links_at_init(menu_navigation_links($menu))) {
+      if (menu_minipanels_prepare_links(menu_navigation_links($menu))) {
         $load_requirements = TRUE;
       }
     }
@@ -339,7 +339,7 @@ function menu_minipanels_theme_registry_alter(&$vars) {
  * Ensure that we capture any mini panel menus. This is run on every page load.
  * See @menu_minipanels_init().
  */
-function menu_minipanels_preprocess_links_at_init($links) {
+function menu_minipanels_prepare_links($links) {
   // Track whether the qTip code needs to be loaded.
   $load_qtip = FALSE;
 
@@ -356,7 +356,7 @@ function menu_minipanels_preprocess_links_at_init($links) {
 /**
  * See @menu_minipanels_theme_registry_alter().
  * Also see @menu_minipanels_init() and
- * menu_minipanels_preprocess_links_at_init().
+ * menu_minipanels_prepare_links().
  */
 function menu_minipanels_preprocess_links($links, $attributes = array('class' => 'links')) {
   foreach ($links as &$link) {
@@ -366,7 +366,7 @@ function menu_minipanels_preprocess_links($links, $attributes = array('class' =>
         $prefix = $link['attributes']['class'] . ' ';
       }
       // Only set the class names, don't include the code. That has already
-      // been done earlier in @menu_minipanels_preprocess_links_at_init().
+      // been done earlier in @menu_minipanels_prepare_links().
       $link['attributes']['class'] = $prefix . _menu_minipanels_link_class_name($link['menu_minipanels_hover']['mlid']);
     }
   }
