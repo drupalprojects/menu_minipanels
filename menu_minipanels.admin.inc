@@ -334,7 +334,7 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
  * Provide sensible defaults to the qTip configuration form.
  */
 function _menu_minipanels_hover_defaults() {
-  $defaults = array(
+  $original_defaults = $defaults = array(
     'position' => array(
       'target' =>  'element',
       'target_custom' => '',
@@ -391,7 +391,8 @@ function _menu_minipanels_hover_defaults() {
   // the settings above.
   drupal_alter('menu_minipanels_defaults', $defaults);
 
-  return $defaults;
+  // Ensure that no values are accidentally removed.
+  return array_replace_recursive($original_defaults, $defaults);
 }
 
 /**
