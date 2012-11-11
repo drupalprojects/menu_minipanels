@@ -416,6 +416,9 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   if (isset($menu_config['style']['width']) && empty($menu_config['style']['width'])) {
     unset($menu_config['style']['width']);
   }
+  if (isset($menu_config['position']['container']) && empty($menu_config['position']['container'])) {
+    unset($menu_config['position']['container']);
+  }
 
   $settings = array(
     'menuMinipanels' => array(
