@@ -1,4 +1,4 @@
-Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
+Menu_MiniPanels 6.x-1.3-rc9, 2012-11-13
 ---------------------------------------
 #1718012 by DamienMcKenna: Optional style setting fields were required; also
   reorganized the style settings fieldset for a slight UX improvement.
