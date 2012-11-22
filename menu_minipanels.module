@@ -76,6 +76,11 @@ function menu_minipanels_init() {
     // This module's custom JS.
     drupal_add_js($path . '/js/menu_minipanels.js');
 
+    // Optional callbacks.
+    if (variable_get('menu_minipanels_default_callbacks', TRUE)) {
+      drupal_add_js($path . '/js/menu_minipanels.callbacks.js');
+    }
+
     // Load the qTip script.
     drupal_add_js($qtip_path);
   }
