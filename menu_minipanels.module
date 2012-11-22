@@ -420,8 +420,8 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
     unset($menu_config['position']['container']);
   }
   // Must have all both for this to work correctly.
-  if (isset($menu_config['position']['adjust']['x']) && empty($menu_config['position']['adjust']['x']))
-    || (isset($menu_config['position']['adjust']['y']) && empty($menu_config['position']['adjust']['y'])){
+  if ((isset($menu_config['position']['adjust']['x']) && empty($menu_config['position']['adjust']['x']))
+    || (isset($menu_config['position']['adjust']['y']) && empty($menu_config['position']['adjust']['y']))) {
     unset($menu_config['position']['adjust']['x']);
     unset($menu_config['position']['adjust']['y']);
   }
