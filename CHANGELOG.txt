@@ -2,7 +2,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
 ---------------------------------------
 #1847292 by patrickd: Drush Make integration for automatic downloading of the
   necessary qTip library.
-
+#1844338 by willvincent, DamienMcKenna: Workaround for older versions of PHP
+  that don't have the array_replace_recursive function.
 
 Menu_MiniPanels 7.x-1.0-rc9, 2012-11-13
 ---------------------------------------
