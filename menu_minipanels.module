@@ -419,6 +419,15 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   if (isset($menu_config['position']['container']) && empty($menu_config['position']['container'])) {
     unset($menu_config['position']['container']);
   }
+  // Must have all both for this to work correctly.
+  if (isset($menu_config['position']['adjust']['x']) && empty($menu_config['position']['adjust']['x']))
+    || (isset($menu_config['position']['adjust']['y']) && empty($menu_config['position']['adjust']['y'])){
+    unset($menu_config['position']['adjust']['x']);
+    unset($menu_config['position']['adjust']['y']);
+  }
+  if (empty($menu_config['position']['adjust'])) {
+    unset($menu_config['position']['adjust']);
+  }
 
   $settings = array(
     'menuMinipanels' => array(
