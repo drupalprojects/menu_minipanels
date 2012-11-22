@@ -184,14 +184,14 @@ function _menu_minipanels_hover_settings_form(&$base_form, $menu_minipanels_hove
   $base_form['menu_minipanels_hover']['position']['adjust']['x'] = array(
     '#type' => 'textfield',
     '#title' => t('Horizontal adjustment (px)'),
-    '#description' => t('Increment by which to increase the x value of the tooltip coordinate, in pixels. To decrease, use a minus number.'),
+    '#description' => t('Increment by which to increase the x value of the tooltip coordinate, in pixels. To decrease, use a minus number. Both the Horizontal and Vertical values are required, and neither may be "0", if they are to be used.'),
     '#default_value' => isset($menu_minipanels_hover['position']['adjust']['x']) ? $menu_minipanels_hover['position']['adjust']['x'] : $defaults['position']['adjust']['x'],
     '#required' => TRUE,
   );
   $base_form['menu_minipanels_hover']['position']['adjust']['y'] = array(
     '#type' => 'textfield',
     '#title' => t('Vertical adjustment (px)'),
-    '#description' => t('Increment by which to increase the y value of the tooltip coordinate, in pixels. To decrease, use a minus number.'),
+    '#description' => t('Increment by which to increase the y value of the tooltip coordinate, in pixels. To decrease, use a minus number. Both the Horizontal and Vertical values are required, and neither may be "0", if they are to be used.'),
     '#default_value' => isset($menu_minipanels_hover['position']['adjust']['y']) ? $menu_minipanels_hover['position']['adjust']['y'] : $defaults['position']['adjust']['y'],
     '#required' => TRUE,
   );
