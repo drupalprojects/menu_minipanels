@@ -152,6 +152,10 @@ item which activated a given MiniPanel is available from the string
 "qTip.options.activator", thus the object itself is available as
 $(qTip.options.activator).
 
+If either the "beforeShow", "beforeHide" or 'onRender' callbacks are to be used
+then the default callbacks must be disabled via the module's main settings
+page; see menu_minipanels.callbacks.js for further details.
+
 An example usage would be to make the menu item retain its 'active' state when
 its MiniPanel is displayed. Note: the module already adds the class
 "qtip-hover" to the menu items, this example shows how to add another class.

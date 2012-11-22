@@ -53,6 +53,12 @@ minipanel to display, allowing it to be themed to match the normal :hover
 state.  There is not currently a way to make it retain the :hover state while
 the pointer is over the minipanel, so this is a work-around.
 
+If custom callbacks are needed it may be worthwhile to disable the default
+callback JavaScript code via the main settings page; it is suggested to copy
+the existing menu_minipanels.callbacks.js file's contents into a new file in
+either another module or a theme and customize from there. Note: this must be
+done in order to use the "beforeShow", "beforeHide" or 'onRender' callbacks.
+
 
 Known Issues
 ------------

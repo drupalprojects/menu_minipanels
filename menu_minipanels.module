@@ -514,6 +514,11 @@ function menu_minipanels_page_alter(&$page) {
     // This module's custom JS.
     drupal_add_js($path . '/js/menu_minipanels.js', array('scope' => 'footer', 'weight' => -100));
 
+    // Optional callbacks.
+    if (variable_get('menu_minipanels_default_callbacks', TRUE)) {
+      drupal_add_js($path . '/js/menu_minipanels.callbacks.js');
+    }
+
     // Load the qTip script.
     drupal_add_js($qtip_path, array('scope' => 'footer', 'weight' => -99));
 

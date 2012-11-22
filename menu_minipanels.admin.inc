@@ -52,6 +52,14 @@ function menu_minipanels_admin() {
     '#description' => t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>')),
   );
 
+  // Optionally exclude the default callbacks.
+  $form['menu_minipanels_default_callbacks'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Load default JS callbacks'),
+    '#default_value' => variable_get('menu_minipanels_default_callbacks', TRUE),
+    '#description' => t('By default some custom JavaScript will load to automatically add the "qtip-hover" CSS class on the menu item that triggered the current MiniPanel to display. Should this site not need this functionality, or should the site need to expand upon that functionality, disabling this option will stop the optional default JS from loading. See the menu_minipanels.callbacks.js file for full details.'),
+  );
+
   // Default settings.
   $form['defaults'] = array(
     '#type' => 'fieldset',

@@ -25,6 +25,7 @@ function menu_minipanels_install() {
  */
 function menu_minipanels_uninstall() {
   variable_del('menu_minipanels_hover');
+  variable_del('menu_minipanels_default_callbacks');
   variable_del('menu_minipanels_exclude_paths');
   foreach (menu_get_names() as $menu) {
     variable_del('menu_minipanels_' . $menu . '_enabled');
