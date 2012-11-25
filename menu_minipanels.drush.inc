@@ -31,8 +31,8 @@ function menu_minipanels_drush_download() {
   }
   else {
     $path = drush_get_context('DRUSH_DRUPAL_ROOT');
-    if (module_exists('libraries')) {
-      $path .= '/' . libraries_get_path('qtip');
+    if (module_exists('libraries') && $lib_path = libraries_get_path('qtip')) {
+      $path .= '/' . $lib_path;
     }
     else {
       $path .= '/sites/all/libraries/qtip';

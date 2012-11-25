@@ -16,6 +16,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
   should be loaded.
 #1849694 by DamienMcKenna: Disable integration with the Admin Menu and Devel
   modules.
+#1849710 by DamienMcKenna: Drush download-qtip command could fail when the
+  Libraries API module is installed.
 
 
 Menu_MiniPanels 6.x-1.3-rc9, 2012-11-13
