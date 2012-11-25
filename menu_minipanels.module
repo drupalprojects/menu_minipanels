@@ -48,9 +48,14 @@ function menu_minipanels_init() {
     if (variable_get('menu_minipanels_' . $menu . '_enabled', FALSE)) {
       $enabled_menus[] = $menu;
 
-      // Check whether qTip actually needs to be loaded.
-      if (menu_minipanels_prepare_links(menu_navigation_links($menu))) {
-        $load_requirements = TRUE;
+      // Loop through each level of the menu tree and see whether qTip needs to
+      // be loaded.
+      $level = 0;
+      while ($items = menu_navigation_links($menu, $level)) {
+        if (menu_minipanels_prepare_links($items)) {
+          $load_requirements = TRUE;
+        }
+        $level++;
       }
     }
   }
