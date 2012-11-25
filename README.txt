@@ -30,6 +30,13 @@ Installation: Manual
  5. Enable the module from the modules admin page (admin/modules).
 
 
+Installation: Drush Make
+------------------------
+ 1. Add menu_minipanels to a .make file (see http://drupal.org/node/1006620).
+ 2. Execute the Drush Make file.
+ 3. Enable via the installation profile or manually on the modules admin page.
+
+
 Configuration
 -------------
  * Visit the "Menu Minipanels" settings page
