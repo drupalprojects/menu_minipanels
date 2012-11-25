@@ -115,13 +115,16 @@ function menu_minipanels_requirements($phase) {
  * Allow each menu to be menu_minipanel-ized, with some exceptions.
  */
 function _menu_minipanels_enable_menus() {
-  // Ignore the Devel and Navigation menus, those have to be manually enabled.
-  $ignore_menus = array('devel', 'navigation');
+  // Ignore the Navigation, Admin Menu and Devel menus, those have to be
+  // manually enabled.
+  $ignore_menus = array('navigation', 'admin_menu', 'devel');
+  foreach ($ignore_menus as $menu) {
+    variable_set('menu_minipanels_' . $menu . '_enabled', FALSE);
+  }
+
+  // Enable all of the custom menus that isn't already disabled.
   foreach (menu_get_names() as $menu) {
-    if (in_array($menu, $ignore_menus)) {
-      variable_set('menu_minipanels_' . $menu . '_enabled', FALSE);
-    }
-    else {
+    if (!in_array($menu, $ignore_menus)) {
       variable_set('menu_minipanels_' . $menu . '_enabled', TRUE);
     }
   }
@@ -165,6 +168,16 @@ function menu_minipanels_update_6103() {
 
   // Delete the existing show_admin variable.
   variable_del('menu_minipanels_show_admin');
+
+  return array();
+}
+
+/**
+ * Disable the menu for the Admin Menu and Devel modules.
+ */
+function menu_minipanels_update_6104() {
+  variable_set('menu_minipanels_admin_menu_enabled', FALSE);
+  variable_set('menu_minipanels_devel_enabled', FALSE);
 
   return array();
 }
