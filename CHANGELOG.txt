@@ -18,6 +18,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
   modules.
 #1849710 by DamienMcKenna: Drush download-qtip command could fail when the
   Libraries API module is installed.
+#1608448 by DamienMcKenna: Updated the README.txt to mention the Drush Make
+  integration.
 
 
 Menu_MiniPanels 6.x-1.3-rc9, 2012-11-13
