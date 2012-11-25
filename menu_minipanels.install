@@ -24,11 +24,30 @@ function menu_minipanels_install() {
  * Implements hook_uninstall().
  */
 function menu_minipanels_uninstall() {
+  // Delete variables.
   variable_del('menu_minipanels_hover');
   variable_del('menu_minipanels_default_callbacks');
   variable_del('menu_minipanels_exclude_paths');
   foreach (menu_get_names() as $menu) {
     variable_del('menu_minipanels_' . $menu . '_enabled');
+  }
+
+  // Remove menu item settings.
+  $results = db_query("SELECT menu_name, mlid, options FROM {menu_links} WHERE options LIKE ('%menu_minipanels%')");
+  foreach ($results as $menu) {
+    // The menu item's options are serialized.
+    $options = unserialize($menu->options);
+    unset($options['minipanel']);
+    unset($options['menu_minipanels_hover']);
+
+    // Update the menu item record.
+    db_update('menu_links')
+      ->fields(array(
+        'options' => serialize($options),
+      ))
+      ->condition('menu_name', $menu->menu_name)
+      ->condition('mlid', $menu->mlid)
+      ->execute();
   }
 }
 

@@ -10,6 +10,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   be non-zero in order for them to work.
 #1798938 by DamienMcKenna: Separated the bundled qTip JS callback code so it
   may be overridden & customized.
+#1021372 by DamienMcKenna: Remove each menu item's configuration in
+  hook_uninstall().
 
 
 Menu_MiniPanels 7.x-1.0-rc9, 2012-11-13
