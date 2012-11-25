@@ -31,8 +31,8 @@ function menu_minipanels_drush_download() {
   }
   else {
     $path = drush_get_context('DRUSH_DRUPAL_ROOT');
-    if (module_exists('libraries')) {
-      $path .= '/' . libraries_get_path('qtip');
+    if (module_exists('libraries') && $lib_path = libraries_get_path('qtip')) {
+      $path .= '/' . $lib_path;
     }
     else {
       $path .= '/sites/all/libraries/qtip';
@@ -53,7 +53,7 @@ function menu_minipanels_drush_download() {
   system_retrieve_file($url, './' . $tmp_file, FALSE, FILE_EXISTS_REPLACE);
 
   if (file_exists($tmp_file) || drush_get_context('DRUSH_SIMULATE')) {
-    if (!drush_shell_exec("unzip %s", $tmp_file)) {
+    if (!drush_shell_exec("unzip -o %s", $tmp_file)) {
       drush_op('chdir', $olddir);
       return drush_set_error('DRUSH_PM_DOWNLOAD_FAILED', 'Drush was unable to extract qTip from ' . $tmp_file . ', ensure the \'unzip\' command is in your command path. You may also manually extract the file.');
     }
