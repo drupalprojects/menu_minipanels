@@ -14,6 +14,8 @@ Menu_MiniPanels 7.x-1.x-dev, xxxx-xx-xx
   hook_uninstall().
 #1840360 by DamienMcKenna: Check the entire menu tree when determining if qTip
   should be loaded.
+#1849694 by DamienMcKenna: Disable integration with the Admin Menu and Devel
+  modules.
 
 
 Menu_MiniPanels 7.x-1.0-rc9, 2012-11-13
