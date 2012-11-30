@@ -476,34 +476,32 @@ function menu_minipanels_menu_toggle($menu) {
  * v5.3 and newer, thus older versions of PHP need an alternative.
  */
 if (!function_exists('array_replace_recursive')) {
-  function array_replace_recursive($array, $array1) {
-    function recurse($array, $array1) {
-      foreach ($array1 as $key => $value) {
-        // Create new key in $array, if it is empty or not an array.
-        if (!isset($array[$key]) || (isset($array[$key]) && !is_array($array[$key]))) {
-          $array[$key] = array();
-        }
+  // Taken from: http://php.net/manual/en/function.array-replace-recursive.php
+  function array_replace_recursive($base, $replacements) {
+    foreach (array_slice(func_get_args(), 1) as $replacements) {
+      $bref_stack = array(&$base);
+      $head_stack = array($replacements);
 
-        // Overwrite the value in the base array.
-        if (is_array($value)) {
-          $value = recurse($array[$key], $value);
+      do {
+        end($bref_stack);
+
+        $bref = &$bref_stack[key($bref_stack)];
+        $head = array_pop($head_stack);
+
+        unset($bref_stack[key($bref_stack)]);
+
+        foreach (array_keys($head) as $key) {
+          if (isset($key, $bref) && is_array($bref[$key]) && is_array($head[$key])) {
+            $bref_stack[] = &$bref[$key];
+            $head_stack[] = $head[$key];
+          }
+          else {
+            $bref[$key] = $head[$key];
+          }
         }
-        $array[$key] = $value;
-      }
-      return $array;
+      } while(count($head_stack));
     }
 
-    // Handle the arguments, merge one by one.
-    $args = func_get_args();
-    $array = $args[0];
-    if (!is_array($array)) {
-      return $array;
-    }
-    for ($i = 1; $i < count($args); $i++) {
-      if (is_array($args[$i])) {
-        $array = recurse($array, $args[$i]);
-      }
-    }
-    return $array;
+    return $base;
   }
 }
