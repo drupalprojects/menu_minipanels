@@ -2,6 +2,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 ---------------------------------------
 #1854870 by DamienMcKenna: Replaced the array_replace_recursive() function with
   one taken from php.net.
+#1851816 by DamienMcKenna: Cleaned up handling of default values and settings
+  for the shared settings form, resolves errors in 1.3.
 
 
 Menu_MiniPanels 6.x-1.3, 2012-11-24
