@@ -22,11 +22,9 @@ function menu_minipanels_admin() {
     $row = array();
     $row[] = array(
       'data' => l($menu['title'], 'admin/structure/menu/manage/' . $menu['menu_name'] . '/edit', array(
-        'query' => array(
-          'destination' => 'admin/config/content/menu_minipanels'),
-          'attributes' => array('title' => t('Edit this menu')),
-        ),
-      ),
+        'query' => array('destination' => 'admin/config/content/menu_minipanels'),
+        'attributes' => array('title' => t('Edit this menu')),
+      )),
     );
     if (variable_get('menu_minipanels_' . $menu['menu_name'] . '_enabled', FALSE)) {
       $label = 'Yes';
