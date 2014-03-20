@@ -34,8 +34,8 @@ function menu_minipanels_admin() {
     }
     $row[] = array(
       'data' => l(t($label), 'admin/config/user-interface/menu_minipanels/toggle/' . $menu['menu_name'], array(
-        'attributes' => array('title' => t('Toggle this menu'))),
-      ),
+        'attributes' => array('title' => t('Toggle this menu')),
+      )),
     );
     $rows[] = $row;
   }
