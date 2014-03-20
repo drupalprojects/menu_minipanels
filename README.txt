@@ -1,8 +1,22 @@
 Menu MiniPanels
 
-Allows an administrator to specify a minipanel to be associated with a Drupal
-menu item.  When that menu item is hovered or clicked (as per config), the
-minipanel content will be shown using the qTip javascript library
+Menu MiniPanels provides a flexible "mega menu" solution for Drupal by
+allowing a minipanel to be associated with a Drupal menu item. When that
+menu item is hovered, the minipanel content will be shown using standard
+CSS :hover techniques enhanced by CSS3 transition effects.
+
+
+Important note:
+
+Version 2 of Menu MiniPanels removed all JavaScript dependencies including
+the qTip tooltip library, in favor of simplified CSS-based hover effects,
+resulting in a much streamlined configuration UI.  If and when pure CSS
+solutions become available for touch devices, they will be considered and
+included.  Until then, the module integrates cleanly with Nice_Menus and
+Superfish which can provide enhanced functionality for mobile and touch
+devices, as well as old browser support.  Additionally, contributions of
+JS + CSS recipes for customizing the look and feel of the mega menus in
+your theme is welcome in the issue queue.
 
 
 Installation: Drush
@@ -11,23 +25,15 @@ Installation: Drush
       drush dl menu_minipanels panels ctools
  2. Enable the modules:
       drush en -y menu_minipanels
- 3. Download the qTip library:
-      drush download-qtip
 
 
 Installation: Manual
 --------------------
- 1. Download the menu_minipanels module, along with its dependencies - Panels
+ 1. Download the Menu MiniPanels module, along with its dependencies - Panels
     and CTools; move them to your site's sites/all/modules/contrib directory.
- 2. Visit http://craigsworks.com/projects/qtip/download/ and download the
-    *minified* qTip version.
- 3. Extract the archive and find the file named: jquery.qtip-1.0.0-rc3.min.js
- 4. Place this file in the sites/all/libraries/qtip directory of your Drupal
-    installation so that the file is available at:
-      sites/all/libraries/qtip/jquery.qtip-1.0.0-rc3.min.js
-    This path may be adjusted using the Libraries API module
-    (http://drupal.org/project/libraries).
- 5. Enable the module from the modules admin page (admin/modules).
+ 2. Enable the module from the modules admin page (admin/modules).
+ 3. Optionally, download the Nice Menus, Superfish, or DHTML Menu module and
+    any respective dependencies, and enable from the admin page (admin/modules).
 
 
 Installation: Drush Make
@@ -39,32 +45,55 @@ Installation: Drush Make
 
 Configuration
 -------------
- * Visit the "Menu Minipanels" settings page
-   (admin/config/user-interface/menu_minipanels) to configure several defaults;
-   this will help give the site a consistent look across all menus.
- * Use the "Menu selection" table on the settings page to control which menus
-   are configured to work with Menu_MiniPanels.
- * Create a minipanel for the content to be displayed - documentation on using
-   Panels: http://drupal.org/node/496278
- * After selecting a minipanel the qTip configuration options will appear;
-   these options mirror qTip's regular configuration:
-     http://craigsworks.com/projects/qtip/docs/reference/
- * Once finished configuring the options, save the menu item as normal - this
-   will cause the menu item to be instantly activated and display.
+ 1. Enable at least one menu in the "Menu selection" table in the module
+    configuration page (admin/config/user-interface/menu_minipanels).
+ 2. Optionally, disable minipanels from being displayed on certain URLs in
+    your website on the configuration page. By default, menu minipanels are
+    disabled on admin pages.
+ 3. Create a minipanel (admin/structure/mini-panels). Refer to Panels
+    documentation for help with minipanels: http://drupal.org/node/496278
+ 4. Associate a minipanel with a menu item: Edit the menu item, select a
+    minipanel from the dropdown. Note: This dropdown is only visible to
+    menus enabled in configuration step 1 above.
+ 5. Optionally, create/configure/enable a Superfish or Nice Menus block into
+    a region of your theme or into a panel layout.
+ 6. Visit any page where the menu is not disabled, and hover the menu item.
+ 6. Configure the look and feel of the Menu MiniPanel:
+    * If using Superfish, Nice Menus, or DHTML Menu, first configure the
+      hover effect in the respective menu block edit screen or module
+      configuration page, then modify the look and feel (color, background,
+      borders, shadow, etc) in your theme's CSS, overriding the defaults
+      provided by those modules. Please refer to the documentation
+      of these respective modules for additional configuration guidance.
+    * Otherwise, configure the hover effect, position, and the look and feel
+      in your theme's CSS, overriding the defaults provided by the module.
+      Layout examples (left, right, centered) may be found in the
+      menu_minipanels.css file packaged with this module.
 
 
-Tips
-----
-The module will add the class "qtip-hover" to the menu item which triggered the
-minipanel to display, allowing it to be themed to match the normal :hover
-state.  There is not currently a way to make it retain the :hover state while
-the pointer is over the minipanel, so this is a work-around.
+Updating Menu MiniPanels
+------------------------
+WARNING: Version 2 of Menu MiniPanels marks a brave departure from Version 1,
+ and updating should not be considered lightly.
 
-If custom callbacks are needed it may be worthwhile to disable the default
-callback JavaScript code via the main settings page; it is suggested to copy
-the existing menu_minipanels.callbacks.js file's contents into a new file in
-either another module or a theme and customize from there. Note: this must be
-done in order to use the "beforeShow", "beforeHide" or 'onRender' callbacks.
+Updating from Version 1 to Version 2 requires a *manual process* of migrating
+configurations from Menu Minipanels UI into a combination of helper modules
+and custom CSS code.  Once you update the module, you will lose any custom
+hover effects, menu positioning, and qTip styles. It is recommended to make
+a copy of your site, in order to refer back to the original configurations
+and visual styles as you reconfigure the helper modules and write the
+changes into CSS.
+
+ 1. Update the module and remove qTip from your libraries folder.
+ 2. Optionally, install and configure other menu helper modules such as
+    Nice Menus, Superfish or DHTML Menu, to replace the desired hover
+    effect previously configured by Menu MiniPanels.
+ 3. Convert any remaining configurations into CSS that were previously
+    defined in custom qTip javascript config files, or in the admin UI
+    from Version 1 of this module. See code examples in menu_minipanels.css
+    for placement and layout.
+ 4. Specific migration questions can be filed as support requests in the
+    issue queue on drupal.org
 
 
 Known Issues
@@ -74,20 +103,6 @@ e.g. 404 / File Not Found pages. The best way to resolve this is to use the
 Navigation404 module, which will make all menus and minipanels be displayed
 again.
 
-There are compatibility problems between the qTip library and other JavaScript
--enabled widgets that cause the widgets to not trigger when placed within a
-minipanel. This is noted to cause problems with Quicktabs, Commerce widgets,
-maps from Google Maps and other sources, and many others.
-
-If an error "Invalid calling object" shows on IE9's Javascript console, there
-may be another script or plugin loading on the page which is conflicting. In
-one case it was caused by DivX Player (http://drupal.org/node/1379542), once it
-was removed the problem ended.
-
-The qTip library takes over the tooltip display DOM events so it is not
-possible to display normal link title tooltips on menu items which have
-minipanels attached.
-
 When also using the Menu Attributes module, use at least v7.x-1.0-rc2 of that
 module as earlier versions had a bug that conflicted with Menu MiniPanels.
 
@@ -96,6 +111,7 @@ Author
 ------
 Maintainer: Willie Seabrook (http://drupal.org/user/373883)
 Co-maintainer: Damien McKenna (http://drupal.org/user/108450)
+Co-maintainer: James Wilson (https://drupal.org/user/220177)
 
 Thanks to uk (http://drupal.org/user/1100194) for greatly contributing on the
 Drupal 7 port.

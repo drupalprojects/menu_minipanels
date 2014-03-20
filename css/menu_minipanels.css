@@ -3,9 +3,152 @@
  * Custom CSS for the Menu_MiniPanels module.
  */
 
-div.qtip {
-  z-index: 6000;
+/*
+ * Effects.
+ */
+
+/*
+ * 1. The default minipanel hover effect uses CSS3 transitions to scroll down.
+ *
+ * 2. CSS3 cannot transition between height:0; and height:auto; so we use
+ *    max-height as a fallback solution. Override the max-height and transition
+ *    speed to values that makes sense for your menu minipanels in your theme.
+ *
+ * 3. a non-zero z-index is required; any value will work, adjust in your
+ *    theme as needed.
+ *
+ * 4. By default, the minipanel is positioned below the menu link. See examples
+ *    further below for other positioning.
+ */
+li > .menu-minipanel-panel {
+  position: absolute;
+  top: 100%; /*  4. */
+  z-index: 99; /*  3. */
+  max-height: 0; /*  2. */
+  overflow: hidden; /*  2. */
+  -webkit-transition: max-height 0.15s ease-out; /*  1. */
+  -moz-transition: max-height 0.15s ease-out; /*  1. */
+  -ms-transition: max-height 0.15s ease-out; /*  1. */
+  -o-transition: max-height 0.15s ease-out; /*  1. */
+  transition: max-height 0.15s ease-out; /*  1. */
 }
-div.menu-minipanels {
-  display: none;
+li:hover > .menu-minipanel-panel {
+  max-height: 500px; /*  2. */
+  -webkit-transition: max-height 0.25s ease-in; /*  1. */
+  -moz-transition: max-height 0.25s ease-in; /*  1. */
+  -ms-transition: max-height 0.25s ease-in; /*  1. */
+  -o-transition: max-height 0.25s ease-in; /*  1. */
+  transition: max-height 0.25s ease-in; /*  1. */
+}
+
+
+/*
+ * Default theming.
+ */
+
+/* Remove list style from minipanel wrappers. */
+.menu-minipanel-panel,
+.menu-minipanel-panel > li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Provide a solid background color for menu minipanels. */
+.menu-minipanel-panel .panel-display {
+  background-color: #fff;
+}
+
+
+/**
+ * Example layout styles for various kinds of alignment.
+ */
+
+/* Centered */
+.menu-minipanel-panel {
+  left: 50%;
+  right: inherit;
+  overflow-y: visible;
+  max-width: 300px; /* Centered mega-menus require a max-width */
+  margin-left: -150px; /* Half of max-width */
+}
+
+/* Right aligned */
+.menu-minipanel-panel {
+  right: 0;
+  left: inherit;
+  margin-left: 0;
+  max-width: inherit;
+}
+
+/* Left aligned (default) */
+.menu-minipanel-panel {
+  left: 0;
+  right: inherit;
+  margin-left: 0;
+  max-width: inherit;
+}
+
+
+/* Target minipanels using their machine name (replace underscores in machine name with hyphens). */
+.menu-minipanel-MINI-PANEL-MACHINE-NAME-HERE {
+  /* Custom layout or positioning rules here */
+}
+.menu-minipanel-MINI-PANEL-MACHINE-NAME-HERE .panel-display {
+  /* Custom style rules here */
+}
+li:hover > .menu-minipanel-MINI-PANEL-MACHINE-NAME-HERE {
+  /* Custom hover effects here. */
+}
+
+/* Target specific minipanels using the adjacent (+) selector. Replace NNN with the mlid. */
+.menu-minipanel-NNN + .menu-minipanel-panel {
+  /* Custom layout or positioning rules here */
+}
+.menu-minipanel-NNN + .menu-minipanel-panel .panel-display {
+  /* Custom style rules here */
+}
+li:hover > .menu-minipanel-NNN + .menu-minipanel-panel {
+  /* Custom hover effects here. */
+}
+
+
+/*
+ * Superfish, Nice menus, and DHTML Menu module integration.
+ */
+
+/* Superfish, Nice menus, and DHTML Menu provide their own theming. */
+.dhtml-menu .menu-minipanel-panel .panel-display,
+.nice-menu .menu-minipanel-panel .panel-display,
+.sf-menu .menu-minipanel-panel .panel-display {
+  background-color: transparent;
+}
+
+/* Disable CSS3 transitions; Superfish, Nice menus, and DHTML Menu handle this via JS. */
+li.dhtml-menu > .menu-minipanel-panel,
+.nice-menu li > .menu-minipanel-panel,
+.sf-menu li > .menu-minipanel-panel {
+  z-index: inherit;
+  max-height: inherit;
+  overflow: inherit;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+li.dhtml-menu:hover > .menu-minipanel-panel,
+.nice-menu li:hover > .menu-minipanel-panel,
+.sf-menu li:hover > .menu-minipanel-panel {
+  max-height: inherit;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -ms-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+
+/* DHTML Menu has its own logic for positioning elements. */
+li.dhtml-menu > .menu-minipanel-panel {
+  position: inherit;
 }

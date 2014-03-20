@@ -8,14 +8,6 @@
  * Implements hook_install().
  */
 function menu_minipanels_install() {
-  // Check the requirements.
-  $requirements = menu_minipanels_requirements('runtime');
-  // See if an error was returned.
-  if (!empty($requirements['menu_minipanels']['severity']) && $requirements['menu_minipanels']['severity'] == REQUIREMENT_ERROR) {
-    // Return the message.
-    drupal_set_message($requirements['menu_minipanels']['description'], 'warning');
-  }
-
   // Allow each menu to be menu_minipanel-ized, with some exceptions.
   _menu_minipanels_enable_menus();
 }
@@ -49,72 +41,6 @@ function menu_minipanels_uninstall() {
       ->condition('mlid', $menu->mlid)
       ->execute();
   }
-}
-
-/**
- * Implements hook_requirements().
- */
-function menu_minipanels_requirements($phase) {
-  $t = get_t();
-  $requirements = array();
-  if ($phase == 'runtime') {
-    $qtip_path = FALSE;
-    $filename = 'jquery.qtip-1.0.0-rc3.min.js';
-    $module_path = drupal_get_path('module', 'menu_minipanels');
-
-    // An array of possible paths, in descending order of preference.
-    $possible_paths = array(
-      // Ideally should be stored here.
-      'sites/all/libraries/qtip',
-      // Legacy paths, including some possible incorrect ones, but the
-      // performance hit should be negligible.
-      $module_path . '/js/lib/qtip',
-      $module_path . '/js/lib',
-      $module_path . '/js/qtip',
-      $module_path . '/js',
-      $module_path . '/qtip',
-      $module_path,
-    );
-
-    // Proper Libraries API support.
-    if (function_exists('libraries_get_path')) {
-      $lib_path = libraries_get_path('qtip');
-      if (!empty($lib_path) && !in_array($lib_path, $possible_paths)) {
-        array_unshift($possible_paths, $lib_path);
-      }
-    }
-
-    // Check each of the paths.
-    foreach ($possible_paths as $path) {
-      // If the file exists, this is the one we'll use.
-      if (file_exists($path . '/' . $filename)) {
-        $qtip_path = $path . '/' . $filename;
-        continue;
-      }
-    }
-
-    // If the file was not found, leave a message for the user.
-    if (empty($qtip_path)) {
-      $requirements['menu_minipanels'] = array(
-        'description' => $t('The module is enabled but the qTip library has not been downloaded. This module will not work without qTip! Please see README.txt in the menu_minipanels directory for instructions on how to download qTip, or use <a href="http://drupal.org/project/drush">Drush</a> to download it via the following command:<br /><pre>drush download-qtip</pre>'),
-        'severity' => REQUIREMENT_ERROR,
-        'title' => $t('Menu MiniPanels'),
-        'value' => $t('qTip library not found'),
-      );
-    }
-
-    // Seeing as we're running this check at all, lets update the stored path.
-    else {
-      $requirements['menu_minipanels'] = array(
-        'severity' => REQUIREMENT_OK,
-        'title' => $t('Menu MiniPanels'),
-        'value' => $t('qTip library in use: <em>!path</em>.', array('!path' => $qtip_path)),
-      );
-      $cid = 'menu_minipanels_qtip_path';
-      cache_set($cid, $qtip_path);
-    }
-  }
-  return $requirements;
 }
 
 /**
@@ -163,7 +89,7 @@ function menu_minipanels_update_7102() {
   // Allow each menu to be menu_minipanel-ized, with some exceptions.
   _menu_minipanels_enable_menus();
 
-  drupal_set_message(t('The menus have been converted to use the new Menu MiniPanels settings, though you should still check each menu to ensure that it is correctly enabled via each menu\'s edit page. You may also want to disable ones which are not necessary for a small performance improvement.'));
+  drupal_set_message(t("The menus have been converted to use the new Menu MiniPanels settings, though you should still check each menu to ensure that it is correctly enabled via each menu's edit page. You may also want to disable ones which are not necessary for a small performance improvement."));
 }
 
 /**
