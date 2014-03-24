@@ -231,6 +231,11 @@ function menu_minipanels_theme_link($link) {
     $link['options']['attributes']['class'][] = 'menu-minipanel';
     $link['options']['attributes']['class'][] = 'menu-minipanel-' . $link['options']['menu_minipanels_hover']['mlid'];
 
+    // Superfish and Nice Menus functionality depend on a menuparent class.
+    if (!in_array('menuparent', $link['options']['attributes']['class'])) {
+      $link['options']['attributes']['class'][] = 'menuparent';
+    }
+
     // Render the mini panel.
     if (!menu_minipanels_excluded_path()) {
       $minipanel = theme('menu_minipanel', array('minipanel_name' => $link['options']['minipanel'], 'mlid' => $link['options']['menu_minipanels_hover']['mlid']));
