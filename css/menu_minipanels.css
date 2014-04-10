@@ -152,3 +152,20 @@ li.dhtml-menu:hover > .menu-minipanel-panel,
 li.dhtml-menu > .menu-minipanel-panel {
   position: inherit;
 }
+
+/* Reset list styles inside Mini Panels inside Superfish menus. */
+.sf-menu .panel-display ul,
+.sf-menu .panel-display li {
+  left: inherit;
+  left: initial;
+  position: inherit;
+  position: initial;
+  top: inherit;
+  top: initial;
+  width: inherit;
+  width: initial;
+  z-index: inherit;
+  z-index: initial;
+  float: inherit;
+  float: initial;
+}
