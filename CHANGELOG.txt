@@ -1,5 +1,5 @@
-Menu_MiniPanels 7.x-2.x-dev, xxxx-xx-xx
----------------------------------------
+Menu_MiniPanels 7.x-2.0-beta1, 2014-06-19
+-----------------------------------------
 #2215425 by jwilson3: Reset list styles in MiniPanels inside Superfish menus.
 #2215425 by jwilson3: Improve superfish/nice_menus integration.
 #2215425 by jwilson3, esteewhy: Replace qTip with superfish, nice_menus, or
