@@ -7,6 +7,8 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #2106821 by acouch: Retain processed menu settings in JS.
 #1947590 by wadmiraal, DamienMcKenna: JS errors when no menus enabled.
 By DamienMcKenna: Fix duplicate update hook from #2213851.
+#1960204 by james.williams, DamienMcKenna: Use Menu_MiniPanels option failed
+  when creating new menus.
 
 
 Menu_MiniPanels 6.x-1.4, 2012-12-01

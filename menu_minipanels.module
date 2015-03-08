@@ -292,7 +292,8 @@ function menu_minipanels_menu_edit_item_submit($form, &$form_state) {
  */
 function menu_minipanels_form_menu_edit_menu_alter(&$form, &$form_state) {
   // Control whether the menu is enabled.
-  $var_name = 'menu_minipanels_' . $form['menu_name']['#value'] . '_enabled';
+  $menu_name = !empty($form['menu_name']['#value']) ? $form['menu_name']['#value'] : '_new_menu_';
+  $var_name = 'menu_minipanels_' . $menu_name . '_enabled';
   $form['menu_minipanels'] = array(
     '#type' => 'checkbox',
     '#title' => t('Allow to be used with Menu_MiniPanels'),
@@ -310,7 +311,9 @@ function menu_minipanels_form_menu_edit_menu_alter(&$form, &$form_state) {
  * Submission callback for the menu_edit_menu form.
  */
 function menu_minipanels_form_menu_edit_menu_submit($form, &$form_state) {
-  $var_name = 'menu_minipanels_' . $form_state['values']['menu_name'] . '_enabled';
+  // When a menu is first created it doesn't have the "menu-" prefix.
+  $menu_name = $form['#insert'] ? 'menu-' . $form_state['values']['menu_name'] : $form_state['values']['menu_name'];
+  $var_name = 'menu_minipanels_' . $menu_name . '_enabled';
   if (!empty($form_state['values']['menu_minipanels'])) {
     variable_set($var_name, TRUE);
   }
