@@ -234,7 +234,9 @@ function menu_minipanels_form_menu_edit_menu_alter(&$form, &$form_state) {
  * Submission callback for the menu_edit_menu form.
  */
 function menu_minipanels_form_menu_edit_menu_submit($form, &$form_state) {
-  $var_name = 'menu_minipanels_' . $form_state['values']['menu_name'] . '_enabled';
+  // When a menu is first created it doesn't have the "menu-" prefix.
+  $menu_name = !empty($form['#insert']) ? 'menu-' . $form_state['values']['menu_name'] : $form_state['values']['menu_name'];
+  $var_name = 'menu_minipanels_' . $menu_name . '_enabled';
   if (!empty($form_state['values']['menu_minipanels'])) {
     variable_set($var_name, TRUE);
   }
