@@ -72,6 +72,9 @@ Drupal.behaviors.menuMiniPanels = function(context) {
         // Initialize the qTip.
         $(this).qtip(setting);
       });
+
+    // Update the settings so they may be used elsewhere.
+    Drupal.settings.menuMinipanels.panels[i] = setting;
   }
 };
 

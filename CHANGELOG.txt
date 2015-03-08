@@ -4,6 +4,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #2213851 by jiff, jwilson3: Change theme registry modifications to improve
   performance and fix compatibility with devel_themer.
 #1874246 by netdream, bryanhirsch, anwonac: Download qTip from GitHub.
+#2106821 by acouch: Retain processed menu settings in JS.
 
 
 Menu_MiniPanels 6.x-1.4, 2012-12-01
