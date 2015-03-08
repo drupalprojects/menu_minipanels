@@ -186,7 +186,7 @@ function menu_minipanels_update_6104() {
  * Clear the theme cache so that the updated theme registry changes will take
  * effect.
  */
-function menu_minipanels_update_6104() {
+function menu_minipanels_update_6105() {
   cache_clear_all('theme_registry', 'cache', TRUE);
 
   return array();

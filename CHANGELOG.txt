@@ -6,6 +6,7 @@ Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 #1874246 by netdream, bryanhirsch, anwonac: Download qTip from GitHub.
 #2106821 by acouch: Retain processed menu settings in JS.
 #1947590 by wadmiraal, DamienMcKenna: JS errors when no menus enabled.
+By DamienMcKenna: Fix duplicate update hook from #2213851.
 
 
 Menu_MiniPanels 6.x-1.4, 2012-12-01
