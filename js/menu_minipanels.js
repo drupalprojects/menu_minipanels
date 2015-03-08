@@ -10,6 +10,10 @@
    */
   Drupal.behaviors.menuMiniPanels = {
     attach: function(context, settings) {
+      if (typeof Drupal.settings.menuMinipanels === 'undefined') {
+        return;
+      }
+
       for (i in Drupal.settings.menuMinipanels.panels) {
         var setting = Drupal.settings.menuMinipanels.panels[i];
         $('a.menu-minipanel-' + setting.mlid + ':not(.minipanel-processed)')
