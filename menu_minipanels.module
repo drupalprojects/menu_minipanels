@@ -517,6 +517,11 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
     unset($menu_config['position']['adjust']['x']);
     unset($menu_config['position']['adjust']['y']);
   }
+  else {
+    // Qtip expects an integer to compute position.
+    settype($menu_config['position']['adjust']['x'], 'int');
+    settype($menu_config['position']['adjust']['y'], 'int');
+  }
   if (empty($menu_config['position']['adjust'])) {
     unset($menu_config['position']['adjust']);
   }

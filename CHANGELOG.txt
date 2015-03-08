@@ -1,5 +1,6 @@
 Menu_MiniPanels 6.x-1.x-dev, xxxx-xx-xx
 ---------------------------------------
+#1883070 by tom friedhof: Vertical and Horizontal alignment must be integers.
 
 
 Menu_MiniPanels 6.x-1.4, 2012-12-01
