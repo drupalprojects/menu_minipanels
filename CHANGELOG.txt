@@ -1,5 +1,7 @@
 Menu_MiniPanels 7.x-2.x-dev, xxxx-xx-xx
 ---------------------------------------
+#1960204 by james.williams: Use Menu_MiniPanels option failed when creating new
+  menus.
 
 
 Menu_MiniPanels 7.x-2.0-beta1, 2014-06-19
