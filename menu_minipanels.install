@@ -181,3 +181,13 @@ function menu_minipanels_update_6104() {
 
   return array();
 }
+
+/**
+ * Clear the theme cache so that the updated theme registry changes will take
+ * effect.
+ */
+function menu_minipanels_update_6104() {
+  cache_clear_all('theme_registry', 'cache', TRUE);
+
+  return array();
+}

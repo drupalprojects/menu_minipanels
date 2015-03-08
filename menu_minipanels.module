@@ -322,12 +322,6 @@ function menu_minipanels_form_menu_edit_menu_submit($form, &$form_state) {
 /**
  * Implements hook_theme_registry_alter().
  *
- * Theme preprocess functions aren't called if the theme is in a function.
- *
- * This hacks a preprocess function for theme_menu_item_link() in a way that
- * won't interfere with other themes or modules that override
- * theme_menu_item_link().
- *
  * theme_menu_item_link() is overridden because to print menus, themes and
  * modules generally use menu_tree_output(), and menu_tree_output() calls
  * theme_menu_item_link().
@@ -339,11 +333,11 @@ function menu_minipanels_form_menu_edit_menu_submit($form, &$form_state) {
  * will not work.
  */
 function menu_minipanels_theme_registry_alter(&$vars) {
-  $vars['links']['old function'] = $vars['links']['function'];
-  $vars['links']['function'] = 'menu_minipanels_preprocess_links';
+  $vars['menu_minipanels_theme_links_default'] = $vars['links'];
+  $vars['links']['function'] = 'menu_minipanels_theme_links';
 
-  $vars['menu_item_link']['old function'] = $vars['menu_item_link']['function'];
-  $vars['menu_item_link']['function'] = 'menu_minipanels_preprocess_menu_item_link';
+  $vars['menu_minipanels_theme_menu_item_link_default'] = $vars['menu_item_link'];
+  $vars['menu_item_link']['function'] = 'menu_minipanels_theme_menu_item_link';
 }
 
 /**
@@ -365,11 +359,14 @@ function menu_minipanels_prepare_links($links) {
 }
 
 /**
- * See @menu_minipanels_theme_registry_alter().
- * Also see @menu_minipanels_init() and
- * menu_minipanels_prepare_links().
+ * This replacement theme function adds minipanels support to theme_links()
+ * without disturbing themes that may also implement this theme function.
+ *
+ * @see menu_minipanels_theme_registry_alter().
+ * @see menu_minipanels_init().
+ * @see menu_minipanels_prepare_links().
  */
-function menu_minipanels_preprocess_links($links, $attributes = array('class' => 'links')) {
+function menu_minipanels_theme_links($links, $attributes = array('class' => 'links')) {
   foreach ($links as &$link) {
     if (!empty($link['minipanel'])) {
       $prefix = '';
@@ -381,14 +378,16 @@ function menu_minipanels_preprocess_links($links, $attributes = array('class' =>
       $link['attributes']['class'] = $prefix . _menu_minipanels_link_class_name($link['menu_minipanels_hover']['mlid']);
     }
   }
-  $registry = theme_get_registry();
-  return $registry['links']['old function']($links, $attributes);
+  return theme('menu_minipanels_theme_links_default', $links);
 }
 
 /**
- * See @menu_minipanels_theme_registry_alter.
+ * This replacement theme function adds minipanels support to theme_links()
+ * without disturbing themes that may also implement this theme function.
+ *
+ * @see menu_minipanels_theme_registry_alter.
  */
-function menu_minipanels_preprocess_menu_item_link($link) {
+function menu_minipanels_theme_menu_item_link($link) {
   $matches = array();
   if (!empty($link['options']['minipanel'])) {
     if (empty($link['localized_options'])) {
@@ -400,8 +399,7 @@ function menu_minipanels_preprocess_menu_item_link($link) {
     }
     $link['localized_options']['attributes']['class'] = $prefix . _menu_minipanels_include($link['options']['minipanel'], $link['options']['menu_minipanels_hover']);
   }
-  $registry = theme_get_registry();
-  return $registry['menu_item_link']['old function']($link);
+  return theme('menu_minipanels_theme_menu_item_link_default', $link);
 }
 
 /**
@@ -450,7 +448,7 @@ function menu_minipanels_panels($mlid = NULL, $minipanel_name = NULL) {
  */
 function _menu_minipanels_include($minipanel_name, $menu_config) {
   $mlid = $menu_config['mlid'];
-  
+
   // The same panel/mlid may be added multiple times, if the same menu is added
   // to a page more than once, i.e. the primary links, plus primary links also
   // added as a block.
@@ -461,7 +459,7 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
   else {
     return _menu_minipanels_link_class_name($mlid);
   }
-    
+
   // qTip interprets the absence of the 'position' array element as 'false'.
   // specifying 'false' doesn't work.
   if ($menu_config['position']['target'] == 'element') {
