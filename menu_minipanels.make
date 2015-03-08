@@ -7,6 +7,6 @@ core = 6.x
 
 ; Download the qTip v1 library.
 libraries[qtip][download][type] = "get"
-libraries[qtip][download][url] = "http://craigsworks.com/projects/qtip/download/package/production/development/"
+libraries[qtip][download][url] = "https://raw.github.com/Craga89/qTip1/master/1.0.0-rc3/jquery.qtip-1.0.0-rc3.min.js"
 libraries[qtip][directory_name] = "qtip"
 libraries[qtip][destination] = "libraries"
