@@ -207,3 +207,11 @@ function menu_minipanels_update_7106() {
   variable_set('menu_minipanels_admin_menu_enabled', FALSE);
   variable_set('menu_minipanels_devel_enabled', FALSE);
 }
+
+/**
+ * Clear the theme cache so that the updated theme registry changes will take
+ * effect.
+ */
+function menu_minipanels_update_7107() {
+  drupal_theme_rebuild();
+}

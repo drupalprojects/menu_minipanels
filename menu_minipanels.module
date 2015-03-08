@@ -267,8 +267,11 @@ function menu_minipanels_form_menu_edit_menu_submit($form, &$form_state) {
  * *before* $closure.
  */
 function menu_minipanels_theme_registry_alter(&$vars) {
-  $vars['link']['old function'] = $vars['link']['function'];
-  $vars['link']['function'] = 'menu_minipanels__preprocess_link';
+  // Copy the original `link` theme function into our namespace, then override
+  // the original function with our version.  The original will be invoked by
+  // our version.
+  $vars['menu_minipanels_theme_link_default'] = $vars['link'];
+  $vars['link']['function'] = 'menu_minipanels_theme_link';
 }
 
 /**
@@ -290,10 +293,13 @@ function menu_minipanels_prepare_links($links) {
 }
 
 /**
- * Menu callback for theme_link.
- * See @menu_minipanels_theme_registry_alter.
+ * This replacement theme function adds minipanels support to theme_link()
+ * without disturbing themes that may also implement this function.
+ *
+ * @see menu_minipanels_theme_registry_alter()
+ * @see theme_link()
  */
-function menu_minipanels__preprocess_link($link) {
+function menu_minipanels_theme_link($link) {
   $matches = array();
   if (!empty($link['options']['minipanel'])) {
     $prefix = '';
@@ -305,8 +311,7 @@ function menu_minipanels__preprocess_link($link) {
     }
     $link['options']['attributes']['class'][] = _menu_minipanels_include($link['options']['minipanel'], $link['options']['menu_minipanels_hover']);
   }
-  $registry = theme_get_registry();
-  return $registry['link']['old function']($link);
+  return theme('menu_minipanels_theme_link_default', $link);
 }
 
 /**
@@ -426,7 +431,7 @@ function _menu_minipanels_include($minipanel_name, $menu_config) {
     unset($menu_config['position']['adjust']['y']);
   }
   else {
-    // Qtip expects an integer to compute position
+    // Qtip expects an integer to compute position.
     settype($menu_config['position']['adjust']['x'], 'int');
     settype($menu_config['position']['adjust']['y'], 'int');
   }
